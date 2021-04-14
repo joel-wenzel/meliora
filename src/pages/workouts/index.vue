@@ -42,8 +42,7 @@ export default defineComponent({
     const hasDefs = computed(() => workoutDefs.value && workoutDefs.value.length > 0)
 
     function addWorkoutDef() {
-      _ctx.root.$store.dispatch('routine/addWorkoutDef', {
-        id: 'abc',
+    _ctx.root.$store.dispatch('routine/addWorkoutDef', {
         name: 'joel',
         workout: [
           {
