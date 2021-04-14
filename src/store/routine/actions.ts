@@ -14,7 +14,7 @@ const actions: ActionTree<RoutineStateInterface, StateInterface> = {
       id: localId,
       ...payload
     })
-
+    
     // TODO if calling backend api be sure to replace the localid with backend id afterwards
     const workoutDefs = context.getters.workoutDefs
     localStorage.setItem('meliora.workoutDefs', JSON.stringify(workoutDefs))
