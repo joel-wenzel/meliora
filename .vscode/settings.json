@@ -1,0 +1,41 @@
+{
+  "vetur.validation.template": false,
+  "vetur.format.enable": true,
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "vetur.experimental.templateInterpolationService": true,
+  "vetur.validation.interpolation": true,
+  "workbench.iconTheme": "vscode-icons",
+  "emmet.includeLanguages": {
+    "vue-html": "html",
+    "vue": "html"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
+  },
+  "rainbowTags.allowEverywhere": true,
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "vetur.format.defaultFormatterOptions": {
+    "prettier": {
+      "semi": false,
+      "singleQuote": true,
+      "jsxSingleQuote": true
+    }
+  },
+  "vetur.format.defaultFormatter.js": "prettier-eslint",
+  "vetur.format.defaultFormatter.ts": "vscode-typescript",
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": false,
+    "source.fixAll": true
+  },
+  "prettier.eslintIntegration": true,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": true,
+  "typescript.format.semicolons": "remove",
+  "typescript.preferences.quoteStyle": "single",
+  "javascript.preferences.quoteStyle": "single"
+}
