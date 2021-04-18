@@ -1,23 +1,23 @@
-import { WorkoutDef } from '@/model/workout.model';
+import { Workout } from '@/model/workout.model';
 import { MutationTree } from 'vuex';
 import { RoutineStateInterface } from './state';
 
-export type PutWorkoutDefRequest = {
-  defId: string,
-  def: WorkoutDef
+export type PutWorkoutRequest = {
+  id: string,
+  workout: Workout
 }
 
 const mutation: MutationTree<RoutineStateInterface> = {
-  addWorkoutDef (state: RoutineStateInterface, payload: WorkoutDef) {
-    state.workoutDefs.push(payload)
+  addWorkout (state: RoutineStateInterface, payload: Workout) {
+    state.workouts.push(payload)
   },
-  updateWorkoutDef (state: RoutineStateInterface, payload: PutWorkoutDefRequest) {
+  updateWorkout (state: RoutineStateInterface, payload: PutWorkoutRequest) {
     // your code
-    let def = state.workoutDefs.find(def => def.id === payload.defId)
-    if(def) {
+    let workout = state.workouts.find(def => def.id === payload.id)
+    if(workout) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      def = {
-        ...payload.def
+      workout = {
+        ...payload.workout
       }
     }
   }

@@ -10,6 +10,25 @@
           </q-avatar>
           Title
         </q-toolbar-title>
+        
+        <q-btn flat round icon="mdi-dots-vertical">
+          <q-menu>
+          <q-list style="min-width: 100px">
+            <q-item clickable v-close-popup>
+              <q-item-section>Exercise List</q-item-section>
+            </q-item>
+            
+            <q-separator />
+            <q-item clickable v-close-popup>
+              <q-item-section>Settings</q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item clickable v-close-popup>
+              <q-item-section>Help &amp; Feedback</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+        </q-btn>
       </q-toolbar>
     </q-header>
 

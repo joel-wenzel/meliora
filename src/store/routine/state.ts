@@ -1,12 +1,12 @@
-import { WorkoutDef } from 'src/model/workout.model'
+import { Workout } from 'src/model/workout.model'
 
 export interface RoutineStateInterface {
-  workoutDefs: Array<WorkoutDef>;
+  workouts: Array<Workout>;
 }
 
 function state(): RoutineStateInterface {
   return {
-    workoutDefs: JSON.parse(localStorage.getItem('meliora.workoutDefs') || '[]')
+    workouts: JSON.parse(localStorage.getItem('meliora.workouts') || '[]')
   }
 };
 

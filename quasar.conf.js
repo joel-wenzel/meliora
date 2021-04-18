@@ -25,6 +25,7 @@ module.exports = configure(function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://v1.quasar.dev/quasar-cli/boot-files
     boot: [
+      'init',
       'composition-api',
       'axios',
     ],
@@ -84,7 +85,7 @@ module.exports = configure(function (/* ctx */) {
 
     // https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
-      iconSet: 'material-icons', // Quasar icon set
+      iconSet: 'mdi-v5', // Quasar icon set
       lang: 'en-us', // Quasar language pack
       config: {},
 
