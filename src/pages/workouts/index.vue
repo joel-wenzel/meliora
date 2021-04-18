@@ -41,34 +41,34 @@
       <q-btn color="primary" @click="createWorkout">Create Workout</q-btn>
     </div>
     <q-dialog
-      v-model="isCreating"
+      v-model="isEditing"
       persistent
       :maximized="true"
       transition-show="slide-up"
       transition-hide="slide-down"
     >
-      <add-workout></add-workout>
+      <edit-workout></edit-workout>
     </q-dialog>
   </q-page>
 </template>
 
 <script lang="ts">
-import AddWorkout from './components/AddWorkout.vue'
+import EditWorkout from './components/EditWorkout.vue'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
 export default defineComponent({
-  components: { AddWorkout},
+  components: { EditWorkout},
   setup(_props, _ctx) {
     const workouts = computed(() => _ctx.root.$store.getters['routine/workouts'])
 
     const hasDefs = computed(() => workouts.value && workouts.value.length > 0)
 
-    const isCreating = ref<boolean>(false)
+    const isEditing = ref<boolean>(false)
 
     function createWorkout() {
-      isCreating.value = true
+      isEditing.value = true
     }
-    return { workouts, isCreating, createWorkout, hasDefs }
+    return { workouts, isEditing, createWorkout, hasDefs }
   }
 })
 </script>
