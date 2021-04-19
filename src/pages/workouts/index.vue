@@ -72,7 +72,9 @@ import { Workout } from '@/model/workout.model'
 export default defineComponent({
   components: { EditWorkout },
   setup(_props, _ctx) {
-    const workouts = computed(() => _ctx.root.$store.getters['workouts/workouts'])
+    const workouts = computed(
+      () => _ctx.root.$store.getters['workouts/workouts']
+    )
 
     const newDefaultWorkoutName = computed(() => {
       const index = (workouts.value.length as number) + 1
@@ -93,10 +95,18 @@ export default defineComponent({
       isEditing.value = true
       workoutEdit.value = workout
     }
-    return { workouts, isCreating, isEditing, createWorkout, editWorkout, workoutEdit, hasDefs, newDefaultWorkoutName }
-  }
+    return {
+      workouts,
+      isCreating,
+      isEditing,
+      createWorkout,
+      editWorkout,
+      workoutEdit,
+      hasDefs,
+      newDefaultWorkoutName,
+    }
+  },
 })
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
