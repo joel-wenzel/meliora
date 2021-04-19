@@ -12,7 +12,7 @@ export type Routine = {
 export type Workout = {
   id: string
   name: string
-  workout: Array<WorkoutExercise>
+  exercises: Array<WorkoutExercise>
 }
 
 export type WorkoutExercise = Exercise & {

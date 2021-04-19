@@ -1,7 +1,7 @@
 <template>
-  <q-card>
+  <q-card class="column">
     <q-toolbar class="bg-primary text-white">
-      <q-toolbar-title> Add Workout </q-toolbar-title>
+      <q-toolbar-title> {{isNew ? 'Add' : 'Edit'}} Workout </q-toolbar-title>
       <q-space />
       <q-btn dense flat icon="mdi-close" v-close-popup>
         <q-tooltip content-class="bg-white text-primary"></q-tooltip>
@@ -63,16 +63,26 @@
           </q-item-section>
         </q-item>
       </q-list>
-    </q-card-section>
-
-    <q-card-actions>
       <q-btn
         icon="mdi-plus"
         label="Add Exercise"
         unelevated
+        outline
         color="secondary"
         class="full-width"
         @click="addExercise"
+      ></q-btn>
+    </q-card-section>
+
+    <q-card-actions class="q-mt-auto">
+      <q-btn
+        icon="mdi-save"
+        label="Done"
+        unelevated
+        color="primary"
+        class="full-width"
+        @click="done"
+        v-close-popup
       ></q-btn>
     </q-card-actions>
   </q-card>
@@ -81,15 +91,32 @@
 <script lang="ts">
 import ExerciseList from './ExerciseList.vue'
 
-import { WorkoutExercise } from '@/model/workout.model'
-import { defineComponent, ref } from '@vue/composition-api'
+import { Workout, WorkoutExercise } from '@/model/workout.model'
+import { defineComponent, PropType, ref } from '@vue/composition-api'
 
 export default defineComponent({
   components: { ExerciseList },
+  props: {
+    isNew: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    workout: {
+      type: Object as PropType<Workout>,
+      required: false,
+      default: null,
+    },
+    defaultName: {
+      type: String,
+      required: false,
+      default: 'My Workout'
+    }
+  },
   setup(_props, _ctx) {
 
-    const name = ref<string>('Workout 1')
-    const exercises = ref<Array<WorkoutExercise>>([])
+    const name = ref<string>(_props.isNew ? _props.defaultName : _props.workout.name)
+    const exercises = ref<Array<WorkoutExercise>>(_props.isNew ? [] : _props.workout.exercises)
 
     function addExercise() {
       exercises.value.push({
@@ -100,8 +127,24 @@ export default defineComponent({
       })
     }
 
+    function done() {
+      if (_props.isNew) {
+        _ctx.root.$store.dispatch('workouts/addWorkout', {
+          name: name.value,
+          exercises: exercises.value
+        })
+      }
+      else {
+        _ctx.root.$store.dispatch('workouts/updateWorkout', {
+          id: _props.workout.id,
+          name: name.value,
+          exercises: exercises.value
+        })
+      }
+    }
 
-    return { name, exercises, addExercise }
+
+    return { name, exercises, addExercise, done }
   },
 })
 </script>

@@ -1,6 +1,6 @@
 
-import { RoutineStateInterface } from './routine/state';
-import routineModule from './routine'
+import { WorkoutsStateInterface as WorkoutsStateInterface } from './workouts/state';
+import workoutsModule from './workouts'
 import { store } from 'quasar/wrappers';
 import Vuex from 'vuex';
 import exercisesModule, { ExercisesStateInterface } from './exercises'
@@ -16,7 +16,7 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  routine: RoutineStateInterface;
+  workouts: WorkoutsStateInterface;
   exercises: ExercisesStateInterface
 }
 
@@ -25,8 +25,13 @@ export default store(function ({ Vue }) {
 
   const Store = new Vuex.Store<StateInterface>({
     modules: {
-      routine: routineModule,
+      workouts: workoutsModule,
       exercises: exercisesModule,
+    },
+    actions: {
+      clearData(context) {
+        localStorage.clear()
+      }
     },
 
     // enable strict mode (adds overhead!)

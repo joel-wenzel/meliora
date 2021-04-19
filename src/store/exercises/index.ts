@@ -8,7 +8,7 @@ import mutations from './mutations';
 export type ExercisesStateInterface = Array<Exercise>
 
 export function state(): ExercisesStateInterface {
-  return JSON.parse(localStorage.getItem('meliora.exercises') || '[]')
+  return JSON.parse(localStorage.getItem('meliora.exercises') || '[{"id": "1", "name": "Squat"}]')
 };
 
 
