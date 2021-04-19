@@ -44,7 +44,7 @@ export default defineComponent({
     exercise: {
       type: Object as PropType<WorkoutExercise>,
       required: true,
-    }
+    },
   },
   setup(_props, _ctx) {
     const localEx = ref(_props.exercise)
@@ -62,6 +62,4 @@ export default defineComponent({
 })
 </script>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

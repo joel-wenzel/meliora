@@ -1,7 +1,7 @@
 <template>
   <q-card class="column">
     <q-toolbar class="bg-primary text-white">
-      <q-toolbar-title> {{isNew ? 'Add' : 'Edit'}} Workout </q-toolbar-title>
+      <q-toolbar-title> {{ isNew ? 'Add' : 'Edit' }} Workout </q-toolbar-title>
       <q-space />
       <q-btn dense flat icon="mdi-close" v-close-popup>
         <q-tooltip content-class="bg-white text-primary"></q-tooltip>
@@ -110,13 +110,16 @@ export default defineComponent({
     defaultName: {
       type: String,
       required: false,
-      default: 'My Workout'
-    }
+      default: 'My Workout',
+    },
   },
   setup(_props, _ctx) {
-
-    const name = ref<string>(_props.isNew ? _props.defaultName : _props.workout.name)
-    const exercises = ref<Array<WorkoutExercise>>(_props.isNew ? [] : _props.workout.exercises)
+    const name = ref<string>(
+      _props.isNew ? _props.defaultName : _props.workout.name
+    )
+    const exercises = ref<Array<WorkoutExercise>>(
+      _props.isNew ? [] : _props.workout.exercises
+    )
 
     function addExercise() {
       exercises.value.push({
@@ -131,18 +134,16 @@ export default defineComponent({
       if (_props.isNew) {
         _ctx.root.$store.dispatch('workouts/addWorkout', {
           name: name.value,
-          exercises: exercises.value
+          exercises: exercises.value,
         })
-      }
-      else {
+      } else {
         _ctx.root.$store.dispatch('workouts/updateWorkout', {
           id: _props.workout.id,
           name: name.value,
-          exercises: exercises.value
+          exercises: exercises.value,
         })
       }
     }
-
 
     return { name, exercises, addExercise, done }
   },

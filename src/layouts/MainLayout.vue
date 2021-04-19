@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh LpR fFf">
     <q-header elevated class="bg-primary text-white">
-      <q-toolbar >
+      <q-toolbar>
         <!-- <q-btn dense flat round icon="mdi-menu" @click="leftDrawerOpen = !leftDrawerOpen" /> -->
 
         <q-toolbar-title>
@@ -10,26 +10,30 @@
           </q-avatar>
           Title
         </q-toolbar-title>
-        
+
         <q-btn flat round icon="mdi-dots-vertical">
           <q-menu>
-          <q-list style="min-width: 100px">
-            <q-item clickable v-close-popup>
-              <q-item-section>Exercise List</q-item-section>
-            </q-item>
-            <q-separator />
-            <q-item clickable v-close-popup>
-              <q-item-section>Settings</q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="$store.dispatch('clearData')">
-              <q-item-section>Clear Data</q-item-section>
-            </q-item>
-            <q-separator />
-            <q-item clickable v-close-popup>
-              <q-item-section>Help &amp; Feedback</q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
+            <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup>
+                <q-item-section>Exercise List</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item clickable v-close-popup>
+                <q-item-section>Settings</q-item-section>
+              </q-item>
+              <q-item
+                clickable
+                v-close-popup
+                @click="$store.dispatch('clearData')"
+              >
+                <q-item-section>Clear Data</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item clickable v-close-popup>
+                <q-item-section>Help &amp; Feedback</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
         </q-btn>
       </q-toolbar>
     </q-header>
@@ -78,7 +82,6 @@
 </template>
 
 <script lang="ts">
-
 import { defineComponent, ref } from '@vue/composition-api'
 
 export default defineComponent({
@@ -87,8 +90,7 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false)
 
-
     return { leftDrawerOpen }
-  }
-});
+  },
+})
 </script>

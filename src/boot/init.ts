@@ -6,11 +6,13 @@ export default boot(({ Vue }) => {
 
   Vue.directive('focus-select', {
     bind(el) {
-      const inputEl = el instanceof HTMLInputElement ? el : el.querySelector('input, textarea')
-      inputEl?.addEventListener('focus', event => {
+      const inputEl =
+        el instanceof HTMLInputElement
+          ? el
+          : el.querySelector('input, textarea')
+      inputEl?.addEventListener('focus', (event) => {
         ;(event.target as HTMLInputElement).select()
       })
     },
-    
   })
 })

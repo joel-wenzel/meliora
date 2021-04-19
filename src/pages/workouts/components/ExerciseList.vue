@@ -31,14 +31,20 @@
 </template>
 <script lang="ts">
 import { Exercise } from '@/model/workout.model'
-import { computed, defineComponent, Ref, ref, SetupContext, watch } from '@vue/composition-api'
+import {
+  computed,
+  defineComponent,
+  Ref,
+  ref,
+  SetupContext,
+  watch,
+} from '@vue/composition-api'
 import { QSelect } from 'node_modules/quasar/dist/types'
 
 export default defineComponent({
-
   setup(_props, _ctx) {
     const exerciseSelect = ref<QSelect>()
-    
+
     const exerciseList = computed(() => {
       return _ctx.root.$store.getters.exercises as Array<Exercise>
     })
@@ -48,24 +54,30 @@ export default defineComponent({
       exerciseSelect.value?.refresh()
     })
 
-    return { exerciseList, exerciseSelect, ...setupNewExercise(exerciseList, exerciseSelect, _ctx) }
+    return {
+      exerciseList,
+      exerciseSelect,
+      ...setupNewExercise(exerciseList, exerciseSelect, _ctx),
+    }
   },
 })
 
-function setupNewExercise(exerciseList: Ref, exerciseSelect: Ref, ctx: SetupContext) {
+function setupNewExercise(
+  exerciseList: Ref,
+  exerciseSelect: Ref,
+  ctx: SetupContext
+) {
   const newExerciseText = ref<string>('')
 
-
   async function createExercise() {
-
     if (newExerciseText.value.length > 0) {
-      let selected = exerciseList.value.find(ex => ex.name === newExerciseText.value)
+      let selected = exerciseList.value.find(
+        (ex) => ex.name === newExerciseText.value
+      )
       if (!selected) {
-
         selected = await ctx.root.$store.dispatch('addExercise', {
-          name: newExerciseText.value
+          name: newExerciseText.value,
         })
-        
       }
       newExerciseText.value = ''
       ctx.emit('input', selected.id)

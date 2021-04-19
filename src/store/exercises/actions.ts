@@ -12,7 +12,7 @@ const actions: ActionTree<ExercisesStateInterface, StateInterface> = {
 
     const newEx = {
       id: localId,
-      ...payload
+      ...payload,
     }
     context.commit('addExercise', newEx)
 
@@ -21,7 +21,7 @@ const actions: ActionTree<ExercisesStateInterface, StateInterface> = {
     localStorage.setItem('meliora.exercises', JSON.stringify(exercises))
 
     return newEx
-  }
+  },
 }
 
 export default actions

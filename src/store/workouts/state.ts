@@ -1,13 +1,13 @@
 import { Workout } from 'src/model/workout.model'
 
 export interface WorkoutsStateInterface {
-  workouts: Array<Workout>;
+  workouts: Array<Workout>
 }
 
 function state(): WorkoutsStateInterface {
   return {
-    workouts: JSON.parse(localStorage.getItem('meliora.workouts') || '[]')
+    workouts: JSON.parse(localStorage.getItem('meliora.workouts') || '[]'),
   }
-};
+}
 
-export default state;
+export default state
