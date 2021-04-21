@@ -9,7 +9,7 @@
         <q-card-section>
           <div class="text-h6 capitalize">{{ session.title }}</div>
           <q-item-label caption lines="1">
-            {{ session.date.format('dddd, MMMM DD') }}
+            {{ session.date ? session.date.format('dddd, MMMM DD') : 'tbd' }}
           </q-item-label>
         </q-card-section>
         <q-card-section class="q-pt-none">
@@ -35,9 +35,11 @@
 
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
+import useSessionManager from './session-manager'
 
 export default defineComponent({
   setup(_props, _ctx) {
+    const { nextSessions } = useSessionManager(_ctx.root.$store)
     // _ctx.root.$store.dispatch('sessions/addSession', {
     //   workoutId: 'eeb061d7-b55d-4cf2-ae2d-c00d3eb44ea8',
     //   workoutName: 'Day 1',
@@ -76,7 +78,8 @@ export default defineComponent({
     const sessions = computed(() => {
       const last = _ctx.root.$store.getters['sessions/last']
       last.title = 'last'
-      return [last]
+
+      return [last, ...nextSessions.value]
     })
     return { sessions }
   },

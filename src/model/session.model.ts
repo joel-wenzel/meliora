@@ -8,6 +8,7 @@ export type Session = {
   workoutName: string
   exercises: Array<SessionExercise>
   bodyWeight: number
+  completed?: boolean
 }
 
 export type SessionExercise = {
