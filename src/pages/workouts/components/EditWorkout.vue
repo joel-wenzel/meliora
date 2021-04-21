@@ -36,7 +36,7 @@
 
         <q-item v-for="(exercise, index) in exercises" :key="index">
           <q-item-section class="col-7">
-            <exercise-list v-model="exercise.id" dense></exercise-list>
+            <exercise-list v-model="exercise.exerciseId" dense></exercise-list>
           </q-item-section>
 
           <q-item-section>
@@ -124,7 +124,8 @@ export default defineComponent({
     function addExercise() {
       exercises.value.push({
         id: '',
-        name: 'Squat',
+        exerciseId: '',
+        name: '',
         targetReps: 5,
         targetSets: 5,
       })

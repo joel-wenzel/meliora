@@ -1,8 +1,10 @@
+import { SessionsStateInterface } from './sessions/index'
 import { WorkoutsStateInterface as WorkoutsStateInterface } from './workouts/state'
 import workoutsModule from './workouts'
 import { store } from 'quasar/wrappers'
 import Vuex from 'vuex'
 import exercisesModule, { ExercisesStateInterface } from './exercises'
+import sessionsModule from './sessions'
 
 /*
  * If not building with SSR mode, you can
@@ -15,6 +17,7 @@ export interface StateInterface {
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   workouts: WorkoutsStateInterface
   exercises: ExercisesStateInterface
+  sessions: SessionsStateInterface
 }
 
 export default store(function ({ Vue }) {
@@ -24,6 +27,7 @@ export default store(function ({ Vue }) {
     modules: {
       workouts: workoutsModule,
       exercises: exercisesModule,
+      sessions: sessionsModule,
     },
     actions: {
       clearData() {

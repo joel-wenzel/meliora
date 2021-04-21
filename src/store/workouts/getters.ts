@@ -10,7 +10,8 @@ const getters: GetterTree<WorkoutsStateInterface, StateInterface> = {
         exercises: workout.exercises.map((exercise) => {
           return {
             ...exercise,
-            name: root.exercises.find((ex) => ex.id === exercise.id)?.name,
+            name: root.exercises.find((ex) => ex.id === exercise.exerciseId)
+              ?.name,
           }
         }),
       }

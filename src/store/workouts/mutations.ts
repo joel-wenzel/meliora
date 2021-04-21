@@ -13,10 +13,18 @@ const mutation: MutationTree<WorkoutsStateInterface> = {
   },
   updateWorkout(state: WorkoutsStateInterface, payload: PutWorkoutRequest) {
     // your code
-    const index = state.workouts.findIndex((def) => def.id === payload.id)
+    const index = state.workouts.findIndex(
+      (workout) => workout.id === payload.id
+    )
     if (index > -1) {
       state.workouts[index].name = payload.workout.name
       state.workouts[index].exercises = payload.workout.exercises
+    }
+  },
+  removeWorkout(state: WorkoutsStateInterface, payload: string) {
+    const index = state.workouts.findIndex((workout) => workout.id === payload)
+    if (index > -1) {
+      state.workouts.splice(index, 1)
     }
   },
 }

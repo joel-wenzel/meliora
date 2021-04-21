@@ -4,30 +4,38 @@
       <q-list class="rounded-borders" style="width: 100%">
         <q-item-label header>Workout Routine</q-item-label>
         <div v-for="workout in workouts" :key="workout.id">
-          <q-item clickable v-ripple @click="editWorkout(workout)">
-            <q-item-section avatar>
-              <q-avatar>
-                <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
-              </q-avatar>
-            </q-item-section>
+          <q-slide-item @right="deleteWorkout(workout.id)" right-color="red">
+            <template v-slot:right>
+              <div class="row items-center">
+                <span class="text-body1 q-mr-md">Delete Workout</span>
+                <q-icon name="mdi-delete" />
+              </div>
+            </template>
+            <q-item clickable v-ripple @click="editWorkout(workout)">
+              <q-item-section avatar>
+                <q-icon name="mdi-dumbbell" size="md"></q-icon>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label lines="1">{{ workout.name }}</q-item-label>
-              <q-item-label caption lines="3">
-                <p
-                  v-for="exercise in workout.exercises"
-                  :key="exercise.id"
-                  class="q-ma-none"
-                >
-                  {{ exercise.name }} {{ exercise.targetSets }} x
-                  {{ exercise.targetReps }}
-                </p>
-              </q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label class="text-body1" lines="1">{{
+                  workout.name
+                }}</q-item-label>
+              </q-item-section>
 
-            <q-item-section side top> 1 min ago </q-item-section>
-          </q-item>
-
+              <q-item-section>
+                <q-item-label caption lines="3">
+                  <p
+                    v-for="exercise in workout.exercises"
+                    :key="exercise.id"
+                    class="q-ma-none"
+                  >
+                    {{ exercise.targetSets }} x {{ exercise.targetReps }} -
+                    {{ exercise.name }}
+                  </p>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-slide-item>
           <q-separator inset="item" />
         </div>
       </q-list>
@@ -95,12 +103,18 @@ export default defineComponent({
       isEditing.value = true
       workoutEdit.value = workout
     }
+
+    async function deleteWorkout(id: string) {
+      await _ctx.root.$store.dispatch('workouts/deleteWorkout', id)
+    }
+
     return {
       workouts,
       isCreating,
       isEditing,
       createWorkout,
       editWorkout,
+      deleteWorkout,
       workoutEdit,
       hasDefs,
       newDefaultWorkoutName,

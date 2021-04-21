@@ -1,5 +1,3 @@
-import moment from 'moment'
-
 export type Exercise = {
   id: string
   name: string
@@ -16,22 +14,7 @@ export type Workout = {
 }
 
 export type WorkoutExercise = Exercise & {
+  exerciseId: string
   targetReps: number
   targetSets: number
-}
-
-export type Session = {
-  id: string
-  date: moment.Moment
-  workoutId: string
-  exercises: Array<SessionExercise>
-  bodyWeight: number
-}
-
-export type SessionExercise = {
-  id: string
-  exerciseId: string
-  reps: number
-  sets: number
-  weight: number
 }
