@@ -5,12 +5,14 @@ import { StateInterface } from '../index'
 
 const getters: GetterTree<SessionsStateInterface, StateInterface> = {
   sessions(state: SessionsStateInterface) {
-    return state.sessions.map((session) => {
-      return {
-        ...session,
-        date: moment(session.date),
-      }
-    })
+    return state.sessions
+      .map((session) => {
+        return {
+          ...session,
+          date: moment(session.date),
+        }
+      })
+      .sort((a, b) => a.date.diff(b.date))
   },
   last(state: SessionsStateInterface, getters) {
     const sessions = getters.sessions

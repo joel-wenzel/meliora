@@ -7,21 +7,26 @@
     >
       <q-card>
         <q-card-section>
-          <div class="text-h6">
-            {{ session.title }} - {{ session.date.format('dddd, MMMM DD') }}
-          </div>
+          <div class="text-h6 capitalize">{{ session.title }}</div>
+          <q-item-label caption lines="1">
+            {{ session.date.format('dddd, MMMM DD') }}
+          </q-item-label>
         </q-card-section>
         <q-card-section class="q-pt-none">
-          <div
-            class="text-subtitle2"
-            v-for="ex in session.exercises"
-            :key="ex.id"
-          >
-            {{ ex.exercise.name }} - {{ ex.sets }} / {{ ex.reps }} ({{
-              ex.weight
-            }}
-            lbs)
-          </div>
+          <q-list>
+            <q-item
+              v-for="ex in session.exercises"
+              :key="ex.id"
+              dense
+              class="q-pa-none"
+            >
+              <q-item-section>
+                {{ ex.exercise.name }}
+              </q-item-section>
+              <q-item-section> {{ ex.sets }} x {{ ex.reps }} </q-item-section>
+              <q-item-section>{{ ex.weight }} lbs</q-item-section>
+            </q-item>
+          </q-list>
         </q-card-section>
       </q-card>
     </div>
@@ -80,5 +85,9 @@ export default defineComponent({
 <style scoped>
 .day-card {
   height: fit-content;
+}
+
+.q-item--dense {
+  min-height: 22px;
 }
 </style>
