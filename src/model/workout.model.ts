@@ -1,6 +1,7 @@
 export type Exercise = {
   id: string
   name: string
+  lastWeightLifted?: number
 }
 
 export type Routine = {

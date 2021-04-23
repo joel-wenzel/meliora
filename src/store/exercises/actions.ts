@@ -17,11 +17,19 @@ const actions: ActionTree<ExercisesStateInterface, StateInterface> = {
     context.commit('addExercise', newEx)
 
     // TODO if calling backend api be sure to replace the localid with backend id afterwards
-    const exercises = context.getters.exercises
-    localStorage.setItem('meliora.exercises', JSON.stringify(exercises))
+    updateStorage(context)
 
     return newEx
   },
+  patchExercise(context, payload: Partial<Exercise>) {
+    context.commit('patchExercise', payload)
+    updateStorage(context)
+  },
+}
+
+function updateStorage(context) {
+  const exercises = context.getters.exercises
+  localStorage.setItem('meliora.exercises', JSON.stringify(exercises))
 }
 
 export default actions

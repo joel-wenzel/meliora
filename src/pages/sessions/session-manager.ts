@@ -22,7 +22,7 @@ export default function useSessionManager(
       const nextIndex = (lastWOIndex + current) % workouts.length
       const nextWorkout = workouts[nextIndex]
       sessions.push({
-        title: 'upcoming',
+        title: `next - ${nextWorkout.name}`,
         completed: false,
         workoutId: nextWorkout.id,
         workoutName: nextWorkout.name,

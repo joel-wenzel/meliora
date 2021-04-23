@@ -9,6 +9,10 @@ export type Session = {
   exercises: Array<SessionExercise>
   bodyWeight: number
   completed?: boolean
+  /**
+   * Transient for UI Display
+   */
+  title?: string
 }
 
 export type SessionExercise = {

@@ -34,12 +34,14 @@
 </template>
 
 <script lang="ts">
+import { Session } from '@/model/session.model'
 import { computed, defineComponent } from '@vue/composition-api'
+
 import useSessionManager from './session-manager'
 
 export default defineComponent({
   setup(_props, _ctx) {
-    const { nextSessions } = useSessionManager(_ctx.root.$store)
+    const { nextSessions } = useSessionManager(_ctx.root.$store, 1)
     // _ctx.root.$store.dispatch('sessions/addSession', {
     //   workoutId: 'eeb061d7-b55d-4cf2-ae2d-c00d3eb44ea8',
     //   workoutName: 'Day 1',
@@ -76,8 +78,8 @@ export default defineComponent({
     // })
 
     const sessions = computed(() => {
-      const last = _ctx.root.$store.getters['sessions/last']
-      last.title = 'last'
+      const last: Session = _ctx.root.$store.getters['sessions/last']
+      last.title = `last - ${last.workoutName}`
 
       return [last, ...nextSessions.value]
     })
