@@ -15,32 +15,14 @@
       v-on="$listeners"
     >
       <template #no-option>
-        <q-input
-          v-model="newExerciseText"
-          class="q-px-md"
-          placeholder="Add Exercise"
-          @keydown.enter="createExercise"
-        >
-          <template #append>
-            <q-btn color="secondary" outline unelevated @click="createExercise"
-              >Add</q-btn
-            >
-          </template>
-        </q-input>
+        <create-exercise-input
+          @selected="onExerciseSelect"
+        ></create-exercise-input>
       </template>
       <template #before-options>
-        <q-input
-          v-model="newExerciseText"
-          class="q-px-md"
-          placeholder="Add Exercise"
-          @keydown.enter="createExercise"
-        >
-          <template #append>
-            <q-btn color="secondary" outline unelevated @click="createExercise"
-              >Add</q-btn
-            >
-          </template>
-        </q-input>
+        <create-exercise-input
+          @selected="onExerciseSelect"
+        ></create-exercise-input>
       </template>
     </q-select>
     <q-dialog v-model="needsStartingWeight">
@@ -77,6 +59,7 @@
   </div>
 </template>
 <script lang="ts">
+import CreateExerciseInput from './CreateExerciseInput.vue'
 import { Exercise } from '@/model/workout.model'
 import {
   computed,
@@ -89,6 +72,7 @@ import {
 import { QSelect } from 'node_modules/quasar/dist/types'
 
 export default defineComponent({
+  components: { CreateExerciseInput },
   setup(_props, _ctx) {
     const exerciseSelect = ref<QSelect>()
 
@@ -104,46 +88,34 @@ export default defineComponent({
     return {
       exerciseList,
       exerciseSelect,
-      ...setupNewExercise(exerciseList, exerciseSelect, _ctx),
+      ...setupNewExercise(exerciseSelect, _ctx),
     }
   },
 })
 
-function setupNewExercise(
-  exerciseList: Ref,
-  exerciseSelect: Ref,
-  ctx: SetupContext
-) {
-  const newExerciseText = ref<string>('')
+function setupNewExercise(exerciseSelect: Ref, ctx: SetupContext) {
   const needsStartingWeight = ref<boolean>(false)
+  const newExerciseWeight = ref<number>(75)
   const lastCreatedEx = ref<Exercise>({
     id: '',
     name: '',
   })
-  const newExerciseWeight = ref<number>(75)
 
-  async function createExercise() {
-    if (newExerciseText.value.length > 0) {
-      let isNewExercise = false
-      let selected = exerciseList.value.find(
-        (ex) => ex.name === newExerciseText.value
-      )
-      if (!selected) {
-        isNewExercise = true
-        selected = await ctx.root.$store.dispatch('addExercise', {
-          name: newExerciseText.value,
-          lastWeightLifted: newExerciseWeight.value - 5,
-        })
-        lastCreatedEx.value = selected
-      }
+  function onExerciseSelect({
+    isNew,
+    exercise,
+  }: {
+    isNew: boolean
+    exercise: Exercise
+  }) {
+    if (isNew) {
+      lastCreatedEx.value = exercise
+    }
+    ctx.emit('input', exercise.id)
+    exerciseSelect.value.hidePopup()
 
-      newExerciseText.value = ''
-      ctx.emit('input', selected.id)
-      exerciseSelect.value.hidePopup()
-
-      if (isNewExercise) {
-        needsStartingWeight.value = true
-      }
+    if (isNew) {
+      needsStartingWeight.value = true
     }
   }
 
@@ -155,8 +127,7 @@ function setupNewExercise(
   }
 
   return {
-    createExercise,
-    newExerciseText,
+    onExerciseSelect,
     needsStartingWeight,
     lastCreatedEx,
     newExerciseWeight,

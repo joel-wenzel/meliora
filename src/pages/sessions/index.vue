@@ -79,9 +79,11 @@ export default defineComponent({
 
     const sessions = computed(() => {
       const last: Session = _ctx.root.$store.getters['sessions/last']
-      last.title = `last - ${last.workoutName}`
-
-      return [last, ...nextSessions.value]
+      if (last) {
+        last.title = `last - ${last.workoutName}`
+        return [last, ...nextSessions.value]
+      }
+      return nextSessions.value
     })
     return { sessions }
   },

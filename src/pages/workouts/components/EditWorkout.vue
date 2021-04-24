@@ -89,7 +89,7 @@
 </template>
 
 <script lang="ts">
-import ExerciseList from './ExerciseList.vue'
+import ExerciseList from '../../../components/ExerciseList.vue'
 
 import { Workout, WorkoutExercise } from '@/model/workout.model'
 import { defineComponent, PropType, ref } from '@vue/composition-api'

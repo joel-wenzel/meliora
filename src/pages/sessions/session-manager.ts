@@ -3,7 +3,7 @@ import { StateInterface } from '@/store'
 import { Store } from 'vuex'
 import { v4 as uuid } from 'uuid'
 import { computed } from '@vue/composition-api'
-import { Workout } from '@/model/workout.model'
+import { Exercise, Workout } from '@/model/workout.model'
 export default function useSessionManager(
   store: Store<StateInterface>,
   next = 2
@@ -12,15 +12,18 @@ export default function useSessionManager(
     const lastSession: Session = store.getters['sessions/last']
 
     const workouts: Array<Workout> = store.getters['workouts/workouts']
+    const exercises: Array<Exercise> = store.getters['exercises']
     const lastWOIndex = workouts.findIndex(
-      (wo) => wo.id === lastSession.workoutId
+      (wo) => wo.id === lastSession?.workoutId
     )
+
     let current = 1
     const sessions: Array<Partial<Session>> = []
     while (current <= next) {
-      current++
       const nextIndex = (lastWOIndex + current) % workouts.length
+
       const nextWorkout = workouts[nextIndex]
+
       sessions.push({
         title: `next - ${nextWorkout.name}`,
         completed: false,
@@ -33,10 +36,13 @@ export default function useSessionManager(
             reps: ex.targetReps,
             sets: ex.targetSets,
             // TODO how to keep track of the weight?
-            weight: 123,
+            weight:
+              (exercises.find((exe) => exe.id === ex.exerciseId)
+                ?.lastWeightLifted || 75) + 5,
           }
         }),
       })
+      current++
     }
 
     return sessions
