@@ -6,12 +6,19 @@ import moment from 'moment'
 import { Session } from '@/model/session.model'
 
 const actions: ActionTree<SessionsStateInterface, StateInterface> = {
-  addSession(context, payload: Partial<Session>) {
+  startSession(context, payload: string /* workoutId*/) {
     // TODO api persist here. Either localstorage or firebase
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    // context.commit('addSession', newSession)
-    // updateStorage(context)
-    // return newSession
+    const localId = uuid()
+
+    const newSession = {
+      ...payload,
+      id: localId,
+    }
+
+    context.commit('addSession', newSession)
+    updateStorage(context)
+    return newSession
   },
 }
 

@@ -2,41 +2,42 @@
   <q-page>
     <div
       class="col-6 q-pa-sm day-card"
-      v-for="session of sessions"
-      :key="session.id"
+      v-for="(session, index) of sessions"
+      :key="index"
     >
       <session-card :session="session" @edit="onEdit(session)"></session-card>
     </div>
-    <q-dialog
-      v-model="isEditing"
-      persistent
-      :maximized="true"
-      transition-show="slide-up"
-      transition-hide="slide-down"
-    >
-      <edit-session></edit-session>
-    </q-dialog>
   </q-page>
 </template>
 
 <script lang="ts">
-import EditSession from './components/EditSession.vue'
 import SessionCard from './components/SessionCard.vue'
-import { computed, defineComponent, provide, ref } from '@vue/composition-api'
-import { Session } from '@/model/session.model'
+import { computed, defineComponent } from '@vue/composition-api'
+import { Session, SessionDisplay } from '@/model/session.model'
 
 export default defineComponent({
-  components: { SessionCard, EditSession },
+  components: { SessionCard },
   setup(_props, _ctx) {
-    const activeSession = ref<Session>()
-    provide('activeSession', activeSession)
-
     const sessions = computed(() => {
-      const sessions: Array<Session> = []
-      const last = _ctx.root.$store.getters['sessions/last']
-      const next = _ctx.root.$store.getters['sessions/next']
+      const sessions: Array<SessionDisplay> = []
+      const last = _ctx.root.$store.getters['sessions/lastCompleted'] as Session
+      const next = _ctx.root.$store.getters['sessions/nextPreview']
       if (last) {
-        sessions.push(last)
+        sessions.push({
+          title: 'Last',
+          id: last.id,
+          workoutId: last.workoutId,
+          workoutName: last.workoutName,
+          date: last.date,
+          sessionExercises: last.exercises.map((ex) => {
+            return {
+              sets: ex.sets || ex.targetSets,
+              reps: ex.reps || ex.targetReps,
+              weight: ex.weight,
+              exerciseName: ex.exercise.name,
+            }
+          }),
+        })
       }
       if (next) {
         sessions.push(next)
@@ -44,13 +45,19 @@ export default defineComponent({
       return sessions
     })
 
-    const isEditing = ref<boolean>(false)
-    function onEdit(session) {
-      activeSession.value = session
-      isEditing.value = true
+    async function onEdit(session: SessionDisplay) {
+      let editId = session.id
+      if (!editId) {
+        const nextSession = await _ctx.root.$store.dispatch(
+          'sessions/startSession'
+        )
+        editId = nextSession.id
+      }
+
+      _ctx.root.$router.push({ path: editId, append: true })
     }
 
-    return { sessions, isEditing, onEdit }
+    return { sessions, onEdit }
   },
 })
 </script>

@@ -51,28 +51,28 @@
         <q-route-tab
           name="sessions"
           icon="mdi-home"
-          to="/sessions"
+          to="/main/sessions"
           label="sessions"
           exact
         />
         <q-route-tab
           name="history"
           icon="mdi-history"
-          to="/history"
+          to="/main/history"
           label="history"
           exact
         />
         <q-route-tab
           name="progress"
           icon="mdi-chart-timeline-variant"
-          to="/progress"
+          to="/main/progress"
           label="progress"
           exact
         />
         <q-route-tab
           name="workouts"
           icon="mdi-dumbbell"
-          to="/workouts"
+          to="/main/workouts"
           label="workouts"
           exact
         />

@@ -4,7 +4,7 @@
       <q-item-label overline lines="1">
         {{ session.workoutName }}
       </q-item-label>
-      <div class="text-h6 capitalize">{{ title }}</div>
+      <div class="text-h6 capitalize">{{ session.title }}</div>
       <q-item-label caption lines="1">
         {{ session.date ? session.date.format('dddd, MMMM DD') : 'tbd' }}
       </q-item-label>
@@ -12,17 +12,17 @@
     <q-card-section class="q-pt-none">
       <q-list>
         <q-item
-          v-for="ex in session.exercises"
-          :key="ex.id"
+          v-for="ex in session.sessionExercises"
+          :key="ex.exerciseName"
           dense
           class="q-pa-none"
         >
           <q-item-section>
-            {{ ex.exercise.name }}
+            {{ ex.exerciseName }}
           </q-item-section>
           <q-item-section>
-            {{ ex.sets || ex.targetSets }} x
-            {{ ex.reps || ex.targetReps }}
+            {{ ex.sets }} x
+            {{ ex.reps }}
           </q-item-section>
           <q-item-section>{{ ex.weight }} lbs</q-item-section>
         </q-item>
@@ -32,21 +32,18 @@
 </template>
 
 <script lang="ts">
-import { Session } from '@/model/session.model'
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { SessionDisplay } from '@/model/session.model'
+import { defineComponent, PropType } from '@vue/composition-api'
 
 export default defineComponent({
   props: {
     session: {
-      type: Object as PropType<Session>,
+      type: Object as PropType<SessionDisplay>,
       required: true,
     },
   },
   setup(_props, _ctx) {
-    const title = computed(() => {
-      return _props.session.completed ? 'last' : 'next'
-    })
-    return { title }
+    return {}
   },
 })
 </script>

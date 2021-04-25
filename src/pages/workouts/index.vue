@@ -25,7 +25,7 @@
               <q-item-section>
                 <q-item-label caption lines="3">
                   <p
-                    v-for="exercise in workout.exercises"
+                    v-for="exercise in workout.woExercises"
                     :key="exercise.id"
                     class="q-ma-none"
                   >

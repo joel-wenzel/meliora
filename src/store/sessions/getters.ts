@@ -1,10 +1,10 @@
+import { SessionDisplay } from './../../model/session.model'
 import { Session } from '@/model/session.model'
 import { Exercise, Workout } from '@/model/workout.model'
 import moment from 'moment'
 import { GetterTree } from 'vuex'
 import { SessionsStateInterface } from '.'
 import { StateInterface } from '../index'
-import { v4 as uuid } from 'uuid'
 
 const getters: GetterTree<SessionsStateInterface, StateInterface> = {
   sessions(state: SessionsStateInterface) {
@@ -17,9 +17,10 @@ const getters: GetterTree<SessionsStateInterface, StateInterface> = {
       })
       .sort((a, b) => a.date.diff(b.date))
   },
-  last(state: SessionsStateInterface, getters) {
-    const sessions = getters.sessions
-    return sessions[sessions.length - 1]
+  lastCompleted(state: SessionsStateInterface, getters) {
+    const sessions = getters.sessions as Array<Session>
+    const last = sessions.reverse().find((sess) => sess.completed)
+    return last
   },
   nextWorkout(state: SessionsStateInterface, getters, rootState, rootGetters) {
     const lastSession: Session = getters.last
@@ -36,32 +37,35 @@ const getters: GetterTree<SessionsStateInterface, StateInterface> = {
     const nextIndex = nextWOIndex % workouts.length
     return workouts[nextIndex]
   },
-  next(state: SessionsStateInterface, getters, rootState, rootGetters) {
+  nextPreview(state: SessionsStateInterface, getters, rootState, rootGetters) {
+    const sessions = getters.sessions as Array<Session>
+    const last = sessions[sessions.length]
+    if (last && !last.completed) {
+      return last
+    }
+
     const nextWorkout: Workout = getters.nextWorkout
     if (!nextWorkout) {
-      console.log('no workouts')
       return null
     }
 
     const exercises: Array<Exercise> = rootGetters['exercises']
 
     const newSession = {
-      id: uuid(),
-      completed: false,
+      title: 'Next',
       workoutId: nextWorkout.id,
       workoutName: nextWorkout.name,
-      exercises: nextWorkout.woExercises.map((ex) => {
+      sessionExercises: nextWorkout.woExercises.map((ex) => {
         return {
-          id: uuid(),
-          exercise: ex,
-          targetReps: ex.targetReps,
-          targetSets: ex.targetSets,
+          exerciseName: ex.name,
+          reps: ex.targetReps,
+          sets: ex.targetSets,
           weight:
             exercises.find((exe) => exe.id === ex.exerciseId)?.targetWeight ||
             75,
         }
       }),
-    } as Session
+    } as SessionDisplay
     return newSession
   },
 }

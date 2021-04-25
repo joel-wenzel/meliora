@@ -1,25 +1,14 @@
 import { Exercise } from './workout.model'
 import moment from 'moment'
 
-export type DisplaySession = {
-  /**
-   * Transient for UI Display
-   */
-  title: string
-} & Session
-
-export type SessionInput = {
+export type Session = {
+  id: string
+  date?: moment.Moment
   workoutId: string
-  workoutName: string
   exercises: Array<SessionExercise>
   bodyWeight?: number
   completed?: boolean
 }
-
-export type Session = {
-  id: string
-  date?: moment.Moment
-} & SessionInput
 
 export type SessionExercise = {
   id: string
@@ -28,5 +17,21 @@ export type SessionExercise = {
   targetSets: number
   reps?: number
   sets?: number
+  weight: number
+}
+
+export type SessionDisplay = {
+  id?: string
+  title: string
+  workoutId: string
+  workoutName: string
+  date?: moment.Moment
+  sessionExercises: Array<SessionExerciseDisplay>
+}
+
+export type SessionExerciseDisplay = {
+  sets: number
+  reps: number
+  exerciseName: string
   weight: number
 }

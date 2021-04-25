@@ -2,7 +2,7 @@ import { RouteConfig } from 'vue-router'
 
 const routes: RouteConfig[] = [
   {
-    path: '/',
+    path: '/main',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', redirect: 'sessions' },
@@ -10,7 +10,6 @@ const routes: RouteConfig[] = [
         path: 'sessions',
         component: () => import('src/pages/sessions/index.vue'),
       },
-
       {
         path: 'history',
         component: () => import('src/pages/history/index.vue'),
@@ -24,6 +23,20 @@ const routes: RouteConfig[] = [
         component: () => import('src/pages/workouts/index.vue'),
       },
     ],
+  },
+  {
+    path: '/full',
+    component: () => import('layouts/FullscreenLayout.vue'),
+    children: [
+      {
+        path: 'sessions/:id',
+        component: () => import('src/pages/sessions/edit-session/index.vue'),
+      },
+    ],
+  },
+  {
+    path: '',
+    redirect: '/main',
   },
 
   // Always leave this as last one,
