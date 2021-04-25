@@ -10,6 +10,7 @@ const routes: RouteConfig[] = [
         path: 'sessions',
         component: () => import('src/pages/sessions/index.vue'),
       },
+
       {
         path: 'history',
         component: () => import('src/pages/history/index.vue'),

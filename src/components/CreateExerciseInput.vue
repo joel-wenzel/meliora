@@ -20,7 +20,7 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 export default defineComponent({
   emits: ['selected'],
   props: {
-    defaultWeight: {
+    targetWeight: {
       type: Number,
       required: false,
       default: 75,
@@ -44,7 +44,7 @@ export default defineComponent({
           selected = await _ctx.root.$store.dispatch('addExercise', {
             name: newExerciseText.value,
             //subtract five pounds so the first session starts at the default weight
-            lastWeightLifted: _props.defaultWeight - 5,
+            targetWeight: _props.targetWeight,
           })
         }
         newExerciseText.value = ''

@@ -1,7 +1,7 @@
 export type Exercise = {
   id: string
   name: string
-  lastWeightLifted?: number
+  targetWeight?: number
 }
 
 export type Routine = {
@@ -11,7 +11,7 @@ export type Routine = {
 export type Workout = {
   id: string
   name: string
-  exercises: Array<WorkoutExercise>
+  woExercises: Array<WorkoutExercise>
 }
 
 export type WorkoutExercise = Exercise & {

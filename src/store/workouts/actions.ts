@@ -10,7 +10,7 @@ const actions: ActionTree<WorkoutsStateInterface, StateInterface> = {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const localId = uuid()
 
-    payload.exercises?.forEach((ex) => {
+    payload.woExercises?.forEach((ex) => {
       if (!ex.id) {
         ex.id = uuid()
       }

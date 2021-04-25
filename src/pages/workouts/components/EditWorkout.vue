@@ -118,7 +118,7 @@ export default defineComponent({
       _props.isNew ? _props.defaultName : _props.workout.name
     )
     const exercises = ref<Array<WorkoutExercise>>(
-      _props.isNew ? [] : _props.workout.exercises
+      _props.isNew ? [] : _props.workout.woExercises
     )
 
     function addExercise() {
@@ -135,13 +135,13 @@ export default defineComponent({
       if (_props.isNew) {
         _ctx.root.$store.dispatch('workouts/addWorkout', {
           name: name.value,
-          exercises: exercises.value,
+          woExercises: exercises.value,
         })
       } else {
         _ctx.root.$store.dispatch('workouts/updateWorkout', {
           id: _props.workout.id,
           name: name.value,
-          exercises: exercises.value,
+          woExercises: exercises.value,
         })
       }
     }

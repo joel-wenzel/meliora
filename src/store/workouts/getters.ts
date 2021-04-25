@@ -7,7 +7,7 @@ const getters: GetterTree<WorkoutsStateInterface, StateInterface> = {
     return state.workouts.map((workout) => {
       return {
         ...workout,
-        exercises: workout.exercises.map((exercise) => {
+        woExercises: workout.woExercises.map((exercise) => {
           return {
             ...exercise,
             name: root.exercises.find((ex) => ex.id === exercise.exerciseId)
@@ -16,6 +16,9 @@ const getters: GetterTree<WorkoutsStateInterface, StateInterface> = {
         }),
       }
     })
+  },
+  workout: (state: WorkoutsStateInterface) => (id) => {
+    return state.workouts.find((wo) => wo.id === id)
   },
 }
 

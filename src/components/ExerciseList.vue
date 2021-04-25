@@ -25,7 +25,7 @@
         ></create-exercise-input>
       </template>
     </q-select>
-    <q-dialog v-model="needsStartingWeight">
+    <q-dialog v-model="needsTargetWeight">
       <q-card>
         <q-card-section>
           <div class="text-overline">{{ lastCreatedEx.name }}</div>
@@ -39,7 +39,7 @@
         <q-card-section>
           <q-input
             type="number"
-            v-model="newExerciseWeight"
+            v-model="targetWeight"
             label="Starting Weight"
             :suffix="$labels.uom"
           >
@@ -50,7 +50,7 @@
             flat
             label="OK"
             color="primary"
-            @click="updateStartingWeight"
+            @click="updateTargetWeight"
             v-close-popup
           />
         </q-card-actions>
@@ -94,8 +94,8 @@ export default defineComponent({
 })
 
 function setupNewExercise(exerciseSelect: Ref, ctx: SetupContext) {
-  const needsStartingWeight = ref<boolean>(false)
-  const newExerciseWeight = ref<number>(75)
+  const needsTargetWeight = ref<boolean>(false)
+  const targetWeight = ref<number>(75)
   const lastCreatedEx = ref<Exercise>({
     id: '',
     name: '',
@@ -115,23 +115,23 @@ function setupNewExercise(exerciseSelect: Ref, ctx: SetupContext) {
     exerciseSelect.value.hidePopup()
 
     if (isNew) {
-      needsStartingWeight.value = true
+      needsTargetWeight.value = true
     }
   }
 
-  async function updateStartingWeight() {
+  async function updateTargetWeight() {
     await ctx.root.$store.dispatch('patchExercise', {
       id: lastCreatedEx.value?.id,
-      lastWeightLifted: newExerciseWeight.value - 5,
+      targetWeight: targetWeight.value,
     })
   }
 
   return {
     onExerciseSelect,
-    needsStartingWeight,
+    needsTargetWeight,
     lastCreatedEx,
-    newExerciseWeight,
-    updateStartingWeight,
+    targetWeight,
+    updateTargetWeight,
   }
 }
 </script>

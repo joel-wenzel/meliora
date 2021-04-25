@@ -9,23 +9,9 @@ const actions: ActionTree<SessionsStateInterface, StateInterface> = {
   addSession(context, payload: Partial<Session>) {
     // TODO api persist here. Either localstorage or firebase
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const localId = uuid()
-
-    const newSession = {
-      id: localId,
-      date: moment(),
-      ...payload,
-    }
-
-    newSession.exercises?.forEach((ex) => {
-      ex.id = ex.id || uuid()
-    })
-
-    context.commit('addSession', newSession)
-
-    updateStorage(context)
-
-    return newSession
+    // context.commit('addSession', newSession)
+    // updateStorage(context)
+    // return newSession
   },
 }
 

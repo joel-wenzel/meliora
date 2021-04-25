@@ -10,8 +10,7 @@ const mutation: MutationTree<ExercisesStateInterface> = {
     const index = state.findIndex((ex) => ex.id === payload.id)
     if (index > -1) {
       const existing = state[index]
-      state[index].lastWeightLifted =
-        payload.lastWeightLifted || existing.lastWeightLifted
+      state[index].targetWeight = payload.targetWeight || existing.targetWeight
       state[index].name = payload.name || existing.name
     }
   },

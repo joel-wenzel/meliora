@@ -1,6 +1,9 @@
+import { Store } from 'vuex'
+import { StateInterface } from '@/store'
 import fragment from 'vue-fragment'
 import { boot } from 'quasar/wrappers'
 import { weightUoM } from '../model/app.constants'
+import { BootFileParams } from '@quasar/app'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -8,7 +11,7 @@ declare module 'vue/types/vue' {
   }
 }
 
-export default boot(({ Vue }) => {
+export default boot(({ Vue, store }: BootFileParams<Store<StateInterface>>) => {
   Vue.use(fragment.Plugin)
 
   Vue.prototype.$labels = {

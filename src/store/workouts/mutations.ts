@@ -18,7 +18,7 @@ const mutation: MutationTree<WorkoutsStateInterface> = {
     )
     if (index > -1) {
       state.workouts[index].name = payload.workout.name
-      state.workouts[index].exercises = payload.workout.exercises
+      state.workouts[index].woExercises = payload.workout.woExercises
     }
   },
   removeWorkout(state: WorkoutsStateInterface, payload: string) {
