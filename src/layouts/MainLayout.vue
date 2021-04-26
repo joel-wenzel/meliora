@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh LpR fFf">
-    <q-header elevated class="bg-primary text-white">
+    <q-header v-if="!fullScreen" elevated class="bg-primary text-white">
       <q-toolbar>
         <!-- <q-btn dense flat round icon="mdi-menu" @click="leftDrawerOpen = !leftDrawerOpen" /> -->
 
@@ -43,36 +43,44 @@
     </q-drawer> -->
 
     <q-page-container>
-      <router-view />
+      <transition
+        appear
+        :enter-active-class="routeEnterAnim"
+        :leave-active-class="routeLeaveAnim"
+      >
+        <router-view :key="$route.path" />
+      </transition>
     </q-page-container>
-
-    <q-footer>
+    <q-dialog :value="showDialog" @hide="dismissDialog">
+      <component v-bind:is="dialogComp"></component>
+    </q-dialog>
+    <q-footer v-if="!fullScreen">
       <q-tabs dense no-caps class="shadow-2">
         <q-route-tab
           name="sessions"
           icon="mdi-home"
-          to="/main/sessions"
+          to="/sessions"
           label="sessions"
           exact
         />
         <q-route-tab
           name="history"
           icon="mdi-history"
-          to="/main/history"
+          to="/history"
           label="history"
           exact
         />
         <q-route-tab
           name="progress"
           icon="mdi-chart-timeline-variant"
-          to="/main/progress"
+          to="/progress"
           label="progress"
           exact
         />
         <q-route-tab
           name="workouts"
           icon="mdi-dumbbell"
-          to="/main/workouts"
+          to="/workouts"
           label="workouts"
           exact
         />
@@ -82,15 +90,70 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  SetupContext,
+} from '@vue/composition-api'
 
 export default defineComponent({
   name: 'MainLayout',
   components: {},
-  setup() {
-    const leftDrawerOpen = ref(false)
+  setup(_props, _ctx) {
+    //animated slideInUp
+    const fullScreen = computed(() => _ctx.root.$route.meta?.fullscreen)
 
-    return { leftDrawerOpen }
+    const showDialog = computed(() => _ctx.root.$store.state.app.showDialog)
+    const dialogComp = computed(() => _ctx.root.$store.state.app.dialogComp)
+
+    function dismissDialog() {
+      console.log('dismiss')
+      _ctx.root.$store.dispatch('dismissDialog')
+    }
+
+    return {
+      fullScreen,
+      ...setupPageAnim(_ctx),
+      showDialog,
+      dialogComp,
+      dismissDialog,
+    }
   },
 })
+
+function setupPageAnim(_ctx: SetupContext) {
+  const routeEnterAnim = ref()
+  const routeLeaveAnim = ref()
+
+  _ctx.root.$router.beforeEach((to, from, next) => {
+    const toFull = to.meta?.fullscreen
+    const fromFull = from.meta?.fullscreen
+
+    if (toFull && !fromFull) {
+      routeEnterAnim.value = 'slideInUp'
+      routeLeaveAnim.value = ''
+    } else if (!toFull && fromFull) {
+      routeEnterAnim.value = ''
+      routeLeaveAnim.value = 'slideOutDown'
+    } else {
+      routeEnterAnim.value = ''
+      routeLeaveAnim.value = ''
+    }
+    next()
+  })
+
+  return { routeEnterAnim, routeLeaveAnim }
+}
 </script>
+<style lang="scss" scoped>
+.slideInUp {
+  animation: slideInUp;
+  animation-duration: 0.3s;
+}
+
+.slideOutDown {
+  animation: slideOutDown;
+  animation-duration: 0.3s;
+}
+</style>

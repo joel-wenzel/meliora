@@ -22,8 +22,7 @@
 
 <script lang="ts">
 import SessionExercise from '../components/SessionExercise.vue'
-import { Session } from '@/model/session.model'
-import { computed, defineComponent, inject, Ref } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 import moment from 'moment'
 
 export default defineComponent({

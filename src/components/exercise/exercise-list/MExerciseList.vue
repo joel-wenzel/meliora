@@ -15,17 +15,17 @@
       v-on="$listeners"
     >
       <template #no-option>
-        <create-exercise-input
+        <m-create-exercise-input
           @selected="onExerciseSelect"
-        ></create-exercise-input>
+        ></m-create-exercise-input>
       </template>
       <template #before-options>
-        <create-exercise-input
+        <m-create-exercise-input
           @selected="onExerciseSelect"
-        ></create-exercise-input>
+        ></m-create-exercise-input>
       </template>
     </q-select>
-    <q-dialog v-model="needsTargetWeight">
+    <!-- <q-dialog v-model="needsTargetWeight">
       <q-card>
         <q-card-section>
           <div class="text-overline">{{ lastCreatedEx.name }}</div>
@@ -55,12 +55,11 @@
           />
         </q-card-actions>
       </q-card>
-    </q-dialog>
+    </q-dialog> -->
   </div>
 </template>
 <script lang="ts">
-import CreateExerciseInput from './CreateExerciseInput.vue'
-import { Exercise } from '@/model/workout.model'
+import MCreateExerciseInput from '../create-exercise-input/MCreateExerciseInput.vue'
 import {
   computed,
   defineComponent,
@@ -70,15 +69,14 @@ import {
   watch,
 } from '@vue/composition-api'
 import { QSelect } from 'node_modules/quasar/dist/types'
+import Exercise from '../../../store/exercises/exercise.orm'
 
 export default defineComponent({
-  components: { CreateExerciseInput },
+  components: { MCreateExerciseInput },
   setup(_props, _ctx) {
     const exerciseSelect = ref<QSelect>()
 
-    const exerciseList = computed(() => {
-      return _ctx.root.$store.getters.exercises as Array<Exercise>
-    })
+    const exerciseList = computed(() => Exercise.all())
 
     // really wouldn't think i would need to do this
     watch(exerciseList, () => {
@@ -94,44 +92,13 @@ export default defineComponent({
 })
 
 function setupNewExercise(exerciseSelect: Ref, ctx: SetupContext) {
-  const needsTargetWeight = ref<boolean>(false)
-  const targetWeight = ref<number>(75)
-  const lastCreatedEx = ref<Exercise>({
-    id: '',
-    name: '',
-  })
-
-  function onExerciseSelect({
-    isNew,
-    exercise,
-  }: {
-    isNew: boolean
-    exercise: Exercise
-  }) {
-    if (isNew) {
-      lastCreatedEx.value = exercise
-    }
+  function onExerciseSelect(exercise: Exercise) {
     ctx.emit('input', exercise.id)
     exerciseSelect.value.hidePopup()
-
-    if (isNew) {
-      needsTargetWeight.value = true
-    }
-  }
-
-  async function updateTargetWeight() {
-    await ctx.root.$store.dispatch('patchExercise', {
-      id: lastCreatedEx.value?.id,
-      targetWeight: targetWeight.value,
-    })
   }
 
   return {
     onExerciseSelect,
-    needsTargetWeight,
-    lastCreatedEx,
-    targetWeight,
-    updateTargetWeight,
   }
 }
 </script>

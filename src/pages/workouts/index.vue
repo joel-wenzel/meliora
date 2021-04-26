@@ -25,7 +25,7 @@
               <q-item-section>
                 <q-item-label caption lines="3">
                   <p
-                    v-for="exercise in workout.woExercises"
+                    v-for="exercise in workout.workoutExercises"
                     :key="exercise.id"
                     class="q-ma-none"
                   >
@@ -48,7 +48,7 @@
       <p class="text-subtitle1">Create your first workout to get started</p>
       <q-btn color="primary" @click="createWorkout">Create Workout</q-btn>
     </div>
-    <q-dialog
+    <!-- <q-dialog
       v-model="isCreating"
       persistent
       :maximized="true"
@@ -59,65 +59,49 @@
         :isNew="true"
         :defaultName="newDefaultWorkoutName"
       ></edit-workout>
-    </q-dialog>
-    <q-dialog
+    </q-dialog> -->
+    <!-- <q-dialog
       v-model="isEditing"
       persistent
       :maximized="true"
       transition-show="slide-up"
       transition-hide="slide-down"
     >
-      <edit-workout :isNew="false" :workout="workoutEdit"></edit-workout>
-    </q-dialog>
+      
+    </q-dialog> -->
   </q-page>
 </template>
 
 <script lang="ts">
-import EditWorkout from './components/EditWorkout.vue'
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import { Workout } from '@/model/workout.model'
+import Workout from '../../store/workouts/workout.orm'
 
 export default defineComponent({
-  components: { EditWorkout },
+  components: {},
   setup(_props, _ctx) {
-    const workouts = computed(
-      () => _ctx.root.$store.getters['workouts/workouts']
+    const workouts = computed(() =>
+      Workout.query().where('isPending', false).all()
     )
 
-    const newDefaultWorkoutName = computed(() => {
-      const index = (workouts.value.length as number) + 1
-      return `Workout ${index}`
-    })
+    const hasDefs = computed(() => workouts.value.length > 0)
 
-    const hasDefs = computed(() => workouts.value && workouts.value.length > 0)
-
-    const isCreating = ref<boolean>(false)
-    const isEditing = ref<boolean>(false)
-    const workoutEdit = ref<Workout>()
-
-    function createWorkout() {
-      isCreating.value = true
-    }
-
-    function editWorkout(workout: Workout) {
-      isEditing.value = true
-      workoutEdit.value = workout
+    async function createWorkout() {
+      const workout = await Workout.createNew()
+      _ctx.root.$router.push({
+        path: workout.id,
+        append: true,
+      })
     }
 
     async function deleteWorkout(id: string) {
-      await _ctx.root.$store.dispatch('workouts/deleteWorkout', id)
+      await Workout.delete(id)
     }
 
     return {
       workouts,
-      isCreating,
-      isEditing,
       createWorkout,
-      editWorkout,
       deleteWorkout,
-      workoutEdit,
       hasDefs,
-      newDefaultWorkoutName,
     }
   },
 })

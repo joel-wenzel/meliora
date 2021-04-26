@@ -1,10 +1,16 @@
+import { AppStateInterface } from './application/index'
 import { SessionsStateInterface } from './sessions/index'
-import { WorkoutsStateInterface as WorkoutsStateInterface } from './workouts/state'
-import workoutsModule from './workouts'
+
 import { store } from 'quasar/wrappers'
 import Vuex from 'vuex'
-import exercisesModule, { ExercisesStateInterface } from './exercises'
-import sessionsModule from './sessions'
+import VuexORM from '@vuex-orm/core'
+
+import Exercise, { exerciseModule } from './exercises/exercise.orm'
+import WorkoutExercise, {
+  workoutExercisesModule,
+} from './workouts/workout-exercises.orm'
+import Workout, { workoutModule } from './workouts/workout.orm'
+import appModule from './application'
 
 /*
  * If not building with SSR mode, you can
@@ -15,20 +21,25 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  workouts: WorkoutsStateInterface
-  exercises: ExercisesStateInterface
-  sessions: SessionsStateInterface
+
+  sessions: any
+  app: AppStateInterface
 }
 
 export default store(function ({ Vue }) {
   Vue.use(Vuex)
 
+  const database = new VuexORM.Database()
+
+  database.register(Exercise, exerciseModule)
+  database.register(WorkoutExercise, workoutExercisesModule)
+  database.register(Workout, workoutModule)
+
   const Store = new Vuex.Store<StateInterface>({
     modules: {
-      workouts: workoutsModule,
-      exercises: exercisesModule,
-      sessions: sessionsModule,
+      app: appModule,
     },
+    plugins: [VuexORM.install(database)],
     actions: {
       clearData() {
         localStorage.clear()

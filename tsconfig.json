@@ -3,8 +3,16 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "baseUrl": ".",
+    "lib": [
+      "ESNext",
+      "ESNext.AsyncIterable",
+      "DOM"
+    ],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/store/*": ["src/store/*"],
+      "~/*": ["src/*"]
     },
+
   }
 }

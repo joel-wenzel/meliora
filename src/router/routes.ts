@@ -2,14 +2,14 @@ import { RouteConfig } from 'vue-router'
 
 const routes: RouteConfig[] = [
   {
-    path: '/main',
+    path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', redirect: 'sessions' },
-      {
-        path: 'sessions',
-        component: () => import('src/pages/sessions/index.vue'),
-      },
+      { path: '', redirect: 'workouts' },
+      // {
+      //   path: 'sessions',
+      //   component: () => import('src/pages/sessions/index.vue'),
+      // },
       {
         path: 'history',
         component: () => import('src/pages/history/index.vue'),
@@ -22,21 +22,14 @@ const routes: RouteConfig[] = [
         path: 'workouts',
         component: () => import('src/pages/workouts/index.vue'),
       },
-    ],
-  },
-  {
-    path: '/full',
-    component: () => import('layouts/FullscreenLayout.vue'),
-    children: [
       {
-        path: 'sessions/:id',
-        component: () => import('src/pages/sessions/edit-session/index.vue'),
+        path: 'workouts/:id',
+        component: () => import('src/pages/workouts/edit-workout/index.vue'),
+        meta: {
+          fullscreen: true,
+        },
       },
     ],
-  },
-  {
-    path: '',
-    redirect: '/main',
   },
 
   // Always leave this as last one,
