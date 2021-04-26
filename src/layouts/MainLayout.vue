@@ -51,8 +51,8 @@
         <router-view :key="$route.path" />
       </transition>
     </q-page-container>
-    <q-dialog :value="showDialog" @hide="dismissDialog">
-      <component v-bind:is="dialogComp"></component>
+    <q-dialog :value="dialog.show" @hide="dismissDialog">
+      <component v-bind:is="dialog.comp" :data="dialog.data"></component>
     </q-dialog>
     <q-footer v-if="!fullScreen">
       <q-tabs dense no-caps class="shadow-2">
@@ -104,8 +104,7 @@ export default defineComponent({
     //animated slideInUp
     const fullScreen = computed(() => _ctx.root.$route.meta?.fullscreen)
 
-    const showDialog = computed(() => _ctx.root.$store.state.app.showDialog)
-    const dialogComp = computed(() => _ctx.root.$store.state.app.dialogComp)
+    const dialog = computed(() => _ctx.root.$store.getters.dialog)
 
     function dismissDialog() {
       console.log('dismiss')
@@ -115,8 +114,7 @@ export default defineComponent({
     return {
       fullScreen,
       ...setupPageAnim(_ctx),
-      showDialog,
-      dialogComp,
+      dialog,
       dismissDialog,
     }
   },

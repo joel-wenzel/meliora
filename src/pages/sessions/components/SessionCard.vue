@@ -24,7 +24,7 @@
             {{ ex.sets }} x
             {{ ex.reps }}
           </q-item-section>
-          <q-item-section>{{ ex.weight }} lbs</q-item-section>
+          <q-item-section>{{ ex.weight }} {{ $labels.uom }}</q-item-section>
         </q-item>
       </q-list>
     </q-card-section>

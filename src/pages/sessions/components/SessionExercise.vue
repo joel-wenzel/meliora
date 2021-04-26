@@ -3,7 +3,9 @@
     <q-item-section>
       <q-item-label class="row justify-between">
         <span class="text-body1">{{ exercise.exercise.name }}</span>
-        <span class="text-caption">{{ exercise.weight }} lbs</span>
+        <span class="text-caption"
+          >{{ exercise.weight }} {{ $labels.uom }}</span
+        >
       </q-item-label>
       <q-item-label class="row">
         <set-tracker

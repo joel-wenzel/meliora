@@ -2,36 +2,49 @@ import { Module, GetterTree, ActionTree, MutationTree } from 'vuex'
 import { StateInterface } from '../index'
 
 export type AppStateInterface = {
-  showDialog: boolean
-  dialogComp: any
+  dialog: {
+    show: boolean
+    comp: string | null
+    data: any
+  }
 }
+
+const defaultDialogState = Object.freeze({
+  show: false,
+  comp: null,
+  data: null,
+})
 
 function state(): AppStateInterface {
   return {
-    showDialog: false,
-    dialogComp: null,
+    dialog: defaultDialogState,
   }
 }
 
 const getters: GetterTree<AppStateInterface, StateInterface> = {
   dialog(state: AppStateInterface) {
-    return state.showDialog ? state.dialogComp : null
+    return state.dialog
   },
 }
 
 const mutations: MutationTree<AppStateInterface> = {
-  showDialog(state: AppStateInterface, payload: any) {
-    state.showDialog = true
-    state.dialogComp = payload
+  showDialog(
+    state: AppStateInterface,
+    { comp, data }: { comp: string; data?: any }
+  ) {
+    state.dialog = {
+      show: true,
+      comp,
+      data,
+    }
   },
   clearDialog(state: AppStateInterface) {
-    state.dialogComp = null
-    state.showDialog = false
+    state.dialog = defaultDialogState
   },
 }
 
 const actions: ActionTree<AppStateInterface, StateInterface> = {
-  showDialog(context, payload: any) {
+  showDialog(context, payload: { comp: string; data?: any }) {
     context.commit('showDialog', payload)
   },
   dismissDialog(context) {

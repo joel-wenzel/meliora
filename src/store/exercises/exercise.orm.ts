@@ -15,7 +15,7 @@ export default class Exercise extends Model {
     return {
       id: this.attr(null),
       name: this.attr(''),
-      targetWeight: this.attr(75),
+      targetWeight: this.number(75),
     }
   }
 
@@ -35,7 +35,10 @@ export default class Exercise extends Model {
       })
     ).exercises[0] as Exercise
 
-    this.store().dispatch('showDialog', 'MTargetWeightDialog')
+    this.store().dispatch('showDialog', {
+      comp: 'MTargetWeightDialog',
+      data: exercise.id,
+    })
     // TODO dispatch dialog event to get target weight
     return exercise
   }
