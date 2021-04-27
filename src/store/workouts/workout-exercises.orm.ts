@@ -6,6 +6,7 @@ export default class WorkoutExercise extends Model {
   // This is the name used as module name of the Vuex Store.
   static entity = 'workout_exercises'
 
+  id
   workoutId
   exerciseId
   targetSets
@@ -21,7 +22,7 @@ export default class WorkoutExercise extends Model {
       exerciseId: this.attr(null),
       targetSets: this.number(5),
       targetReps: this.number(5),
-      exercise: this.hasOne(Exercise, 'exerciseId', 'id'),
+      exercise: this.hasOne(Exercise, 'id', 'exerciseId'),
     }
   }
 

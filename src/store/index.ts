@@ -11,6 +11,7 @@ import WorkoutExercise, {
 } from './workouts/workout-exercises.orm'
 import Workout, { workoutModule } from './workouts/workout.orm'
 import appModule from './application'
+import VuexPersistence from 'vuex-persist'
 
 /*
  * If not building with SSR mode, you can
@@ -35,11 +36,16 @@ export default store(function ({ Vue }) {
   database.register(WorkoutExercise, workoutExercisesModule)
   database.register(Workout, workoutModule)
 
+  const vuexLocal = new VuexPersistence<StateInterface>({
+    storage: window.localStorage,
+    key: 'meliora.state',
+  })
+
   const Store = new Vuex.Store<StateInterface>({
     modules: {
       app: appModule,
     },
-    plugins: [VuexORM.install(database)],
+    plugins: [VuexORM.install(database), vuexLocal.plugin],
     actions: {
       clearData() {
         localStorage.clear()

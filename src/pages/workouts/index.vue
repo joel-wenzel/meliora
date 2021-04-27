@@ -11,7 +11,7 @@
                 <q-icon name="mdi-delete" />
               </div>
             </template>
-            <q-item clickable v-ripple @click="editWorkout(workout)">
+            <q-item clickable v-ripple :to="{ path: workout.id, append: true }">
               <q-item-section avatar>
                 <q-icon name="mdi-dumbbell" size="md"></q-icon>
               </q-item-section>
@@ -25,12 +25,12 @@
               <q-item-section>
                 <q-item-label caption lines="3">
                   <p
-                    v-for="exercise in workout.workoutExercises"
-                    :key="exercise.id"
+                    v-for="woExercise in workout.workoutExercises"
+                    :key="woExercise.id"
                     class="q-ma-none"
                   >
-                    {{ exercise.targetSets }} x {{ exercise.targetReps }} -
-                    {{ exercise.name }}
+                    {{ woExercise.targetSets }} x {{ woExercise.targetReps }} -
+                    {{ woExercise.exercise.name }}
                   </p>
                 </q-item-label>
               </q-item-section>
@@ -48,27 +48,6 @@
       <p class="text-subtitle1">Create your first workout to get started</p>
       <q-btn color="primary" @click="createWorkout">Create Workout</q-btn>
     </div>
-    <!-- <q-dialog
-      v-model="isCreating"
-      persistent
-      :maximized="true"
-      transition-show="slide-up"
-      transition-hide="slide-down"
-    >
-      <edit-workout
-        :isNew="true"
-        :defaultName="newDefaultWorkoutName"
-      ></edit-workout>
-    </q-dialog> -->
-    <!-- <q-dialog
-      v-model="isEditing"
-      persistent
-      :maximized="true"
-      transition-show="slide-up"
-      transition-hide="slide-down"
-    >
-      
-    </q-dialog> -->
   </q-page>
 </template>
 
@@ -80,7 +59,12 @@ export default defineComponent({
   components: {},
   setup(_props, _ctx) {
     const workouts = computed(() =>
-      Workout.query().where('isPending', false).all()
+      Workout.query()
+        .whereHas('workoutExercises', (query) => {
+          query.exists()
+        })
+        .withAllRecursive()
+        .all()
     )
 
     const hasDefs = computed(() => workouts.value.length > 0)

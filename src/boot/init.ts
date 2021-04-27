@@ -35,8 +35,4 @@ export default boot(({ Vue, store }: BootFileParams<Store<StateInterface>>) => {
       })
     },
   })
-
-  Exercise.dispatch('fetch')
-  WorkoutExercise.dispatch('fetch')
-  Workout.dispatch('fetch')
 })

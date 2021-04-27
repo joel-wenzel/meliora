@@ -2,13 +2,11 @@
   <q-layout view="hHh LpR fFf">
     <q-header v-if="!fullScreen" elevated class="bg-primary text-white">
       <q-toolbar>
-        <!-- <q-btn dense flat round icon="mdi-menu" @click="leftDrawerOpen = !leftDrawerOpen" /> -->
-
         <q-toolbar-title>
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
           </q-avatar>
-          Title
+          Meliora
         </q-toolbar-title>
 
         <q-btn flat round icon="mdi-dots-vertical">
@@ -37,11 +35,6 @@
         </q-btn>
       </q-toolbar>
     </q-header>
-
-    <!-- <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
-      
-    </q-drawer> -->
-
     <q-page-container>
       <transition
         appear
@@ -51,9 +44,6 @@
         <router-view :key="$route.path" />
       </transition>
     </q-page-container>
-    <q-dialog :value="dialog.show" @hide="dismissDialog">
-      <component v-bind:is="dialog.comp" :data="dialog.data"></component>
-    </q-dialog>
     <q-footer v-if="!fullScreen">
       <q-tabs dense no-caps class="shadow-2">
         <q-route-tab
@@ -86,6 +76,9 @@
         />
       </q-tabs>
     </q-footer>
+    <q-dialog :value="dialog.show" @hide="dismissDialog">
+      <component v-bind:is="dialog.comp" :data="dialog.data"></component>
+    </q-dialog>
   </q-layout>
 </template>
 
@@ -107,7 +100,6 @@ export default defineComponent({
     const dialog = computed(() => _ctx.root.$store.getters.dialog)
 
     function dismissDialog() {
-      console.log('dismiss')
       _ctx.root.$store.dispatch('dismissDialog')
     }
 
@@ -147,11 +139,11 @@ function setupPageAnim(_ctx: SetupContext) {
 <style lang="scss" scoped>
 .slideInUp {
   animation: slideInUp;
-  animation-duration: 0.3s;
+  animation-duration: 0.2s;
 }
 
 .slideOutDown {
   animation: slideOutDown;
-  animation-duration: 0.3s;
+  animation-duration: 0.2s;
 }
 </style>

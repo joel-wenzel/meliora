@@ -78,7 +78,7 @@ export default defineComponent({
     )
 
     function onCancel() {
-      Workout.deleteRecursive(workoutId)
+      // Workout.deleteRecursive(workoutId)
       _ctx.root.$router.back()
     }
 

@@ -16,7 +16,6 @@ export default class Workout extends Model {
     return {
       id: this.attr(null),
       name: this.attr(''),
-      isPending: this.attr(true),
       workoutExercises: this.hasMany(WorkoutExercise, 'workoutId'),
     }
   }
