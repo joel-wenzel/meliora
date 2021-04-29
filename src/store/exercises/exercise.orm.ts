@@ -43,14 +43,4 @@ export default class Exercise extends Model {
     return exercise
   }
 }
-export const exerciseModule = {
-  actions: {
-    fetch() {
-      const exercises = JSON.parse(
-        localStorage.getItem('meliora.exercises') || '[]'
-      )
-
-      void Exercise.create({ data: exercises })
-    },
-  },
-}
+export const exerciseModule = {}

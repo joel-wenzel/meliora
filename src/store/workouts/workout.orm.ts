@@ -40,14 +40,4 @@ export default class Workout extends Model {
   }
 }
 
-export const workoutModule = {
-  actions: {
-    fetch() {
-      const workouts = JSON.parse(
-        localStorage.getItem('meliora.workouts') || '[]'
-      )
-
-      void Workout.create({ data: workouts })
-    },
-  },
-}
+export const workoutModule = {}

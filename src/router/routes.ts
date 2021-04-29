@@ -6,10 +6,10 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', redirect: 'workouts' },
-      // {
-      //   path: 'sessions',
-      //   component: () => import('src/pages/sessions/index.vue'),
-      // },
+      {
+        path: 'sessions',
+        component: () => import('src/pages/sessions/index.vue'),
+      },
       {
         path: 'history',
         component: () => import('src/pages/history/index.vue'),

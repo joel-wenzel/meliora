@@ -7,12 +7,7 @@
       "ESNext",
       "ESNext.AsyncIterable",
       "DOM"
-    ],
-    "paths": {
-      "@/*": ["src/*"],
-      "@/store/*": ["src/store/*"],
-      "~/*": ["src/*"]
-    },
-
-  }
+    ]
+  },
+  
 }

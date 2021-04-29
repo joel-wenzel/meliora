@@ -6,7 +6,7 @@
           {{ isNew ? 'Add' : 'Edit' }} Workout
         </q-toolbar-title>
         <q-space />
-        <q-btn dense flat icon="mdi-close" @click="onCancel">
+        <q-btn dense flat icon="mdi-close" @click="onClose" v-close-popup>
           <q-tooltip content-class="bg-white text-primary"></q-tooltip>
         </q-btn>
       </q-toolbar>
@@ -36,7 +36,7 @@
           unelevated
           color="primary"
           class="full-width"
-          @click="done"
+          @click="onClose"
           v-close-popup
         ></q-btn>
       </q-card-actions>
@@ -46,9 +46,7 @@
 
 <script lang="ts">
 import MEditWorkoutExercises from '../../../components/workout/edit-workout-exercises/MEditWorkoutExercises.vue'
-
 import { computed, defineComponent, ref } from '@vue/composition-api'
-
 import Workout from '../../../store/workouts/workout.orm'
 
 export default defineComponent({
@@ -68,7 +66,11 @@ export default defineComponent({
   },
   setup(_props, _ctx) {
     const workoutId = _ctx.root.$route.params.id
-    const workout = computed(() => Workout.find(workoutId))
+    const workout = computed(() =>
+      Workout.query().with('workoutExercises').find(workoutId)
+    )
+
+    //invalid id, send back to /workouts
     if (!workout.value) {
       _ctx.root.$router.push({ path: '/workouts', append: false })
     }
@@ -77,27 +79,14 @@ export default defineComponent({
       _props.isNew ? _props.defaultName : workout.value?.name
     )
 
-    function onCancel() {
-      // Workout.deleteRecursive(workoutId)
+    function onClose() {
+      if (workout.value?.workoutExercises.length == 0) {
+        Workout.deleteRecursive(workoutId)
+      }
       _ctx.root.$router.back()
     }
 
-    function done() {
-      // if (_props.isNew) {
-      //   _ctx.root.$store.dispatch('workouts/addWorkout', {
-      //     name: name.value,
-      //     woExercises: exercises.value,
-      //   })
-      // } else {
-      //   _ctx.root.$store.dispatch('workouts/updateWorkout', {
-      //     id: workoutId,
-      //     name: name.value,
-      //     woExercises: exercises.value,
-      //   })
-      // }
-    }
-
-    return { name, workoutId, done, onCancel }
+    return { name, workoutId, onClose }
   },
 })
 </script>

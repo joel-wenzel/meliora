@@ -1,5 +1,7 @@
+import SessionExercise, {
+  sessionExerciseModule,
+} from './sessions/session-exercise.orm'
 import { AppStateInterface } from './application/index'
-import { SessionsStateInterface } from './sessions/index'
 
 import { store } from 'quasar/wrappers'
 import Vuex from 'vuex'
@@ -12,6 +14,7 @@ import WorkoutExercise, {
 import Workout, { workoutModule } from './workouts/workout.orm'
 import appModule from './application'
 import VuexPersistence from 'vuex-persist'
+import Session, { sessionModule } from './sessions/session.orm'
 
 /*
  * If not building with SSR mode, you can
@@ -22,8 +25,6 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-
-  sessions: any
   app: AppStateInterface
 }
 
@@ -35,6 +36,8 @@ export default store(function ({ Vue }) {
   database.register(Exercise, exerciseModule)
   database.register(WorkoutExercise, workoutExercisesModule)
   database.register(Workout, workoutModule)
+  database.register(Session, sessionModule)
+  database.register(SessionExercise, sessionExerciseModule)
 
   const vuexLocal = new VuexPersistence<StateInterface>({
     storage: window.localStorage,
