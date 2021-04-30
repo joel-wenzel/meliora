@@ -1,16 +1,20 @@
 <template>
   <q-card @click="$emit('edit')">
     <q-card-section>
-      <q-item-label overline lines="1">
-        {{ session.workoutName }}
-      </q-item-label>
-      <div class="text-h6 capitalize">{{ session.title }}</div>
+      <div class="text-h6 capitalize">{{ session.workout.name }}</div>
       <q-item-label caption lines="1">
-        {{ session.date ? session.date.format('dddd, MMMM DD') : 'tbd' }}
+        {{ sessionDate }}
       </q-item-label>
     </q-card-section>
+    <q-badge
+      class="m-workout-status capitalize"
+      rounded
+      :color="session.completed ? 'positive' : 'accent'"
+    >
+      {{ session.completed ? 'complete' : 'in progress' }}
+    </q-badge>
     <q-card-section class="q-pt-none">
-      <q-list>
+      <!-- <q-list>
         <q-item
           v-for="ex in session.sessionExercises"
           :key="ex.exerciseName"
@@ -26,24 +30,30 @@
           </q-item-section>
           <q-item-section>{{ ex.weight }} {{ $labels.uom }}</q-item-section>
         </q-item>
-      </q-list>
+      </q-list> -->
     </q-card-section>
   </q-card>
 </template>
 
 <script lang="ts">
-import { SessionDisplay } from '@/model/session.model'
-import { defineComponent, PropType } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
+import moment from 'moment'
+import Session from 'src/store/sessions/session.orm'
 
 export default defineComponent({
   props: {
-    session: {
-      type: Object as PropType<SessionDisplay>,
+    sessionId: {
+      type: String,
       required: true,
     },
   },
   setup(_props, _ctx) {
-    return {}
+    const session = Session.query()
+      .withAllRecursive()
+      .find(_props.sessionId) as Session
+
+    const sessionDate = moment(session.date).format('dddd, MMMM DD')
+    return { session, sessionDate }
   },
 })
 </script>
@@ -55,5 +65,12 @@ export default defineComponent({
 
 .q-item--dense {
   min-height: 22px;
+}
+
+.m-workout-status {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border-radius: 3px !important;
 }
 </style>

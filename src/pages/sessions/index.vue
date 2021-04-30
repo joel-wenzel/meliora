@@ -6,7 +6,7 @@
         v-for="(session, index) of sessions"
         :key="index"
       >
-        {{ index }}
+        <session-card :sessionId="session.id"></session-card>
       </div>
     </q-list>
     <div class="column justify-end q-pa-md">
@@ -16,13 +16,14 @@
 </template>
 
 <script lang="ts">
+import SessionCard from './components/SessionCard.vue'
 import StartSessionBtn from './components/StartSessionBtn.vue'
 import { computed, defineComponent } from '@vue/composition-api'
 import { sessionDisplayCount } from 'src/model/app.constants'
 import Session from 'src/store/sessions/session.orm'
 
 export default defineComponent({
-  components: { StartSessionBtn },
+  components: { StartSessionBtn, SessionCard },
   setup(_props, _ctx) {
     const sessions = computed(() => {
       return Session.query().limit(sessionDisplayCount).orderBy('date').get()
