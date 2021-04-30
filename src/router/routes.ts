@@ -11,6 +11,13 @@ const routes: RouteConfig[] = [
         component: () => import('src/pages/sessions/index.vue'),
       },
       {
+        path: 'sessions/:id',
+        component: () => import('src/pages/sessions/edit-session/index.vue'),
+        meta: {
+          fullscreen: true,
+        },
+      },
+      {
         path: 'history',
         component: () => import('src/pages/history/index.vue'),
       },
@@ -25,6 +32,13 @@ const routes: RouteConfig[] = [
       {
         path: 'workouts/:id',
         component: () => import('src/pages/workouts/edit-workout/index.vue'),
+        meta: {
+          fullscreen: true,
+        },
+      },
+      {
+        path: 'settings',
+        component: () => import('src/pages/settings/index.vue'),
         meta: {
           fullscreen: true,
         },

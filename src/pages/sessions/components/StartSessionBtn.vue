@@ -36,9 +36,11 @@ export default defineComponent({
     const nextWorkout = computed(() => {
       const lastSession = Session.query().limit(1).orderBy('date').get()[0]
       const lastWorkoutId = lastSession?.workoutId
+
       if (lastWorkoutId) {
         const lastIndex = workouts.findIndex((wo) => wo.id === lastWorkoutId)
-        return workouts[lastIndex % workouts.length]
+
+        return workouts[(lastIndex + 1) % workouts.length]
       } else return workouts[0]
     })
 

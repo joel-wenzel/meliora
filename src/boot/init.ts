@@ -1,13 +1,10 @@
 import { Store } from 'vuex'
-import { StateInterface } from '@/store'
 import fragment from 'vue-fragment'
 import { boot } from 'quasar/wrappers'
 import { weightUoM } from '../model/app.constants'
 import { BootFileParams } from '@quasar/app'
-import Exercise from '../store/exercises/exercise.orm'
-import WorkoutExercise from '../store/workouts/workout-exercises.orm'
-import Workout from '../store/workouts/workout.orm'
 import MTargetWeightDialog from '../components/exercise/target-weight-dialog/MTargetWeightDialog.vue'
+import MConfirmDialog from 'src/components/dialog/confirm-dialog/MConfirmDialog.vue'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -15,7 +12,7 @@ declare module 'vue/types/vue' {
   }
 }
 
-export default boot(({ Vue, store }: BootFileParams<Store<StateInterface>>) => {
+export default boot(({ Vue }: BootFileParams<Store<any>>) => {
   Vue.use(fragment.Plugin)
 
   Vue.prototype.$labels = {
@@ -23,6 +20,7 @@ export default boot(({ Vue, store }: BootFileParams<Store<StateInterface>>) => {
   }
 
   Vue.component('MTargetWeightDialog', MTargetWeightDialog)
+  Vue.component('MConfirmDialog', MConfirmDialog)
 
   Vue.directive('focus-select', {
     bind(el) {

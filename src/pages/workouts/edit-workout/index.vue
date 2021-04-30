@@ -6,7 +6,7 @@
           {{ isNew ? 'Add' : 'Edit' }} Workout
         </q-toolbar-title>
         <q-space />
-        <q-btn dense flat icon="mdi-close" @click="onClose" v-close-popup>
+        <q-btn dense flat icon="mdi-close" @click="onClose">
           <q-tooltip content-class="bg-white text-primary"></q-tooltip>
         </q-btn>
       </q-toolbar>

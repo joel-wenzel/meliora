@@ -5,7 +5,9 @@
         class="col-6 q-pa-sm"
         v-for="(session, index) of sessions"
         :key="index"
-      ></div>
+      >
+        {{ index }}
+      </div>
     </q-list>
     <div class="column justify-end q-pa-md">
       <start-session-btn @start="startSession"></start-session-btn>
@@ -26,8 +28,9 @@ export default defineComponent({
       return Session.query().limit(sessionDisplayCount).orderBy('date').get()
     })
 
-    const startSession = (workoutId) => {
-      Session.createNew(workoutId)
+    const startSession = async (workoutId) => {
+      const session = await Session.createNew(workoutId)
+      _ctx.root.$router.push({ path: session.id, append: true })
     }
 
     return { sessions, startSession }

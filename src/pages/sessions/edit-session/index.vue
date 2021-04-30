@@ -1,49 +1,33 @@
 <template>
-  <q-page class="full-height">
-    <div class="bg-primary text-white">
-      <q-toolbar>
-        <q-toolbar-title> {{ session.workoutName }} </q-toolbar-title>
-        <q-space />
-        <q-btn dense flat icon="mdi-close" v-close-popup>
-          <q-tooltip content-class="bg-white text-primary"></q-tooltip>
-        </q-btn>
-      </q-toolbar>
-      <q-toolbar inset class="session-subbar"> {{ sessionDate }} </q-toolbar>
-    </div>
-
-    <q-card-section v-for="sessEx of session.exercises" :key="sessEx.id">
-      <session-exercise :sessionExeId="sessEx.id"></session-exercise>
-    </q-card-section>
-    <q-card-actions class="q-mt-auto">
-      <q-btn color="primary" class="full-width">Finish</q-btn>
-    </q-card-actions>
+  <q-page>
+    <q-toolbar class="bg-primary text-white">
+      <q-toolbar-title> {{ title }}</q-toolbar-title>
+      <q-space />
+      <q-btn dense flat icon="mdi-close" @click="onClose">
+        <q-tooltip content-class="bg-white text-primary"></q-tooltip>
+      </q-btn>
+    </q-toolbar>
   </q-page>
 </template>
 
 <script lang="ts">
-import SessionExercise from '../components/SessionExercise.vue'
 import { computed, defineComponent } from '@vue/composition-api'
-import moment from 'moment'
+import Session from 'src/store/sessions/session.orm'
 
 export default defineComponent({
-  components: { SessionExercise },
+  components: {},
   setup(_props, _ctx) {
-    const session = computed(() => {
-      return _ctx.root.$store.getters['sessions/sessions'].find(
-        (sess) => sess.id === _ctx.root.$route.params.id
-      )
-    })
-    console.log(session)
-    session.value.exercises.forEach((exer) => {
-      exer.sets = exer.targetSets
-    })
+    const session = computed(() =>
+      Session.query().withAllRecursive().find(_ctx.root.$route.params.id)
+    )
 
-    const sessionDate = computed(() => {
-      const date = session.value.date || moment()
-      return date.format('dddd, MMMM DD')
-    })
+    const title = computed(() => `${session.value?.workout.name} Session`)
 
-    return { session, sessionDate }
+    function onClose() {
+      _ctx.root.$router.back()
+    }
+
+    return { session, title, onClose }
   },
 })
 </script>

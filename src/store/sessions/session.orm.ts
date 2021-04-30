@@ -11,7 +11,7 @@ export default class Session extends Model {
   id
   date
   workoutId
-  workout
+  workout!: Workout
   bodyWeight
   completed
 
@@ -20,7 +20,7 @@ export default class Session extends Model {
   static fields() {
     return {
       id: this.attr(null),
-      date: this.attr(moment()),
+      date: this.attr(moment().valueOf()),
       workoutId: this.attr(null),
       workout: this.hasOne(Workout, 'id', 'workoutId'),
       bodyWeight: this.number(0),
@@ -30,10 +30,18 @@ export default class Session extends Model {
   }
 
   static async createNew(workoutId: string): Promise<Session> {
+    const sessionId = uuid()
+
+    const workout = Workout.query().with('workoutExercises').find(workoutId)
+
+    workout?.workoutExercises.forEach((woExercise) => {
+      SessionExercise.createNew(sessionId, woExercise.id)
+    })
+
     return (
       await this.insert({
         data: {
-          id: uuid(),
+          id: sessionId,
           workoutId,
         },
       })

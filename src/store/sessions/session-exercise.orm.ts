@@ -1,8 +1,7 @@
 import { Model } from '@vuex-orm/core'
 import { v4 as uuid } from 'uuid'
 import moment from 'moment'
-import Workout from '../workouts/workout.orm'
-import Exercise from '../exercises/exercise.orm'
+import WorkoutExercise from '../workouts/workout-exercises.orm'
 
 export default class SessionExercise extends Model {
   // This is the name used as module name of the Vuex Store.
@@ -20,13 +19,29 @@ export default class SessionExercise extends Model {
   static fields() {
     return {
       id: this.attr(null),
+      date: this.attr(moment().valueOf()),
       sessionId: this.attr(null),
-      exerciseId: this.attr(null),
-      exercise: this.hasOne(Exercise, 'id', 'exerciseId'),
+      workoutExerciseId: this.attr(null),
+      workoutExercise: this.hasOne(WorkoutExercise, 'id', 'workoutExerciseId'),
       reps: this.number(0),
       sets: this.number(0),
       weight: this.number(0),
     }
+  }
+
+  static async createNew(
+    sessionId: string,
+    workoutExerciseId: string
+  ): Promise<SessionExercise> {
+    return (
+      await this.insert({
+        data: {
+          id: uuid(),
+          sessionId,
+          workoutExerciseId,
+        },
+      })
+    ).session_exercises[0] as SessionExercise
   }
 }
 export const sessionExerciseModule = {}
