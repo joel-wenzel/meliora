@@ -1,7 +1,7 @@
 <template>
   <q-btn-dropdown
     split
-    color="primary"
+    color="primary-dark"
     :label="`Start ${nextWorkout.name}`"
     icon="mdi-clock-outline"
     @click="startSession(nextWorkout.id)"

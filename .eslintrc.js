@@ -78,6 +78,7 @@ module.exports = {
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/restrict-template-expressions': 'off',
+    '@typescript-eslint/ban-ts-comment': 'warn',
     '@typescript-eslint/no-unused-vars': ["warn", { "argsIgnorePattern": "^_" }],
     // TypeScript
     quotes: ['warn', 'single', { avoidEscape: true }],

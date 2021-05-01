@@ -1,64 +1,54 @@
 <template>
-  <q-item>
-    <q-item-section>
-      <q-item-label class="row justify-between">
-        <span class="text-body1">{{ exercise.exercise.name }}</span>
-        <span class="text-caption"
-          >{{ exercise.weight }} {{ $labels.uom }}</span
-        >
-      </q-item-label>
-      <q-item-label class="row">
-        <set-tracker
-          class="q-mr-sm"
-          v-for="(set, index) in sets"
-          :key="index"
-          v-model="set.count"
-          :target="set.target"
-        ></set-tracker>
-      </q-item-label>
-    </q-item-section>
-  </q-item>
+  <q-card flat>
+    <q-item>
+      <q-item-section>
+        <q-item-label class="text-body1">{{
+          sessionExercise.workoutExercise.exercise.name
+        }}</q-item-label>
+      </q-item-section>
+      <q-item-section side>
+        <q-item-label caption>Target: {{ sessionTarget }}</q-item-label>
+      </q-item-section>
+    </q-item>
+    <q-card-section class="row q-pt-xs">
+      <session-set-tracker
+        v-for="set in sessionExercise.sessionExerciseSets"
+        :key="set.id"
+        :sessionSetId="set.id"
+        :targetReps="sessionExercise.workoutExercise.targetReps"
+        class="q-mr-sm"
+      ></session-set-tracker>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script lang="ts">
-import SetTracker from '../../../components/SetTracker.vue'
-import { Session, SessionExercise } from '@/model/session.model'
-import {
-  computed,
-  ComputedRef,
-  defineComponent,
-  inject,
-  ref,
-  Ref,
-} from '@vue/composition-api'
+import SessionSetTracker from './SessionSetTracker.vue'
+import { computed, defineComponent } from '@vue/composition-api'
+import SessionExercise from 'src/store/sessions/session-exercise.orm'
 
 export default defineComponent({
   props: {
-    sessionExeId: {
+    sessionExerciseId: {
       type: String,
       required: true,
     },
   },
-  components: { SetTracker },
+  components: { SessionSetTracker },
   setup(_props, _ctx) {
-    const activeSession = inject('activeSession') as Ref<Session>
-    const exercise = computed(() => {
-      return activeSession.value.exercises.find(
-        (ex) => ex.id === _props.sessionExeId
-      )
-    }) as ComputedRef<SessionExercise>
+    const sessionExercise = computed(
+      () =>
+        SessionExercise.query()
+          .withAllRecursive()
+          .find(_props.sessionExerciseId) as SessionExercise
+    )
 
-    const defaultSets: Array<any> = []
-    for (let i = 0; i < exercise.value.targetSets; i++) {
-      defaultSets.push({
-        count: 1,
-        target: exercise.value.targetReps,
-      })
-    }
+    const sessionTarget = computed(() => {
+      const woEx = sessionExercise.value.workoutExercise
+      return `${woEx.targetSets}x${woEx.targetReps} at ${woEx.exercise.targetWeight} lbs`
+    })
 
-    const sets = ref(defaultSets)
-
-    return { exercise, sets }
+    return { sessionExercise, sessionTarget }
   },
 })
 </script>

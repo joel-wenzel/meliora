@@ -15,6 +15,9 @@ import Workout, { workoutModule } from './workouts/workout.orm'
 import appModule from './application'
 import VuexPersistence from 'vuex-persist'
 import Session, { sessionModule } from './sessions/session.orm'
+import SessionExerciseSet, {
+  sessionExerciseSetModule,
+} from './sessions/session-exercise-set.orm'
 
 /*
  * If not building with SSR mode, you can
@@ -38,6 +41,7 @@ export default store(function ({ Vue }) {
   database.register(Workout, workoutModule)
   database.register(Session, sessionModule)
   database.register(SessionExercise, sessionExerciseModule)
+  database.register(SessionExerciseSet, sessionExerciseSetModule)
 
   const vuexLocal = new VuexPersistence<StateInterface>({
     storage: window.localStorage,

@@ -30,11 +30,6 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
-import Exercise from 'src/store/exercises/exercise.orm'
-import SessionExercise from 'src/store/sessions/session-exercise.orm'
-import Session from 'src/store/sessions/session.orm'
-import WorkoutExercise from 'src/store/workouts/workout-exercises.orm'
-import Workout from 'src/store/workouts/workout.orm'
 
 export default defineComponent({
   setup(_props, _ctx) {
@@ -55,16 +50,7 @@ export default defineComponent({
       if (!confirmed) {
         return
       }
-      if (dataToReset.value === 'all') {
-        SessionExercise.deleteAll()
-        Session.deleteAll()
-        WorkoutExercise.deleteAll()
-        Workout.deleteAll()
-        Exercise.deleteAll()
-      } else if (dataToReset.value === 'session') {
-        SessionExercise.deleteAll()
-        Session.deleteAll()
-      }
+      _ctx.root.$store.dispatch('resetData', dataToReset.value)
     }
     return { dataToReset, onClearData }
   },

@@ -6,7 +6,10 @@
         v-for="(session, index) of sessions"
         :key="index"
       >
-        <session-card :sessionId="session.id"></session-card>
+        <session-card
+          :sessionId="session.id"
+          @click="openSession(session.id)"
+        ></session-card>
       </div>
     </q-list>
     <div class="column justify-end q-pa-md">
@@ -31,10 +34,14 @@ export default defineComponent({
 
     const startSession = async (workoutId) => {
       const session = await Session.createNew(workoutId)
-      _ctx.root.$router.push({ path: session.id, append: true })
+      openSession(session.id)
     }
 
-    return { sessions, startSession }
+    const openSession = (sessionId) => {
+      _ctx.root.$router.push({ path: sessionId, append: true })
+    }
+
+    return { sessions, startSession, openSession }
   },
 })
 </script>

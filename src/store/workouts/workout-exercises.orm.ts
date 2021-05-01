@@ -6,12 +6,12 @@ export default class WorkoutExercise extends Model {
   // This is the name used as module name of the Vuex Store.
   static entity = 'workout_exercises'
 
-  id
-  workoutId
-  exerciseId
-  targetSets
-  targetReps
-  exercise
+  id!: string
+  workoutId!: string
+  exerciseId!: string
+  targetSets!: number
+  targetReps!: number
+  exercise!: Exercise
 
   // List of all fields (schema) of the post model. `this.attr` is used
   // for the generic field type. The argument is the default value.

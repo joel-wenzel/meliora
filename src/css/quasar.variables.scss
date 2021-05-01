@@ -12,13 +12,57 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary   : #228f89;
-$secondary : #1976D2;
-$accent    : #9C27B0;
+$primary          : hsl(var(--q-color-primary-h), var(--q-color-primary-s), var(--q-color-primary-l));
+$primary-light    : var(--q-color-primary-light);
+$primary-dark     : var(--q-color-primary-dark);
+$secondary        : hsl(var(--q-color-secondary-h), var(--q-color-secondary-s), var(--q-color-secondary-l));
+$secondary-light  : var(--q-color-secondary-light);
+$secondary-dark   : var(--q-color-secondary-dark);
 
-$dark      : #1D1D1D;
+$accent           : #9C27B0;
 
-$positive  : #21BA45;
-$negative  : #C10015;
-$info      : #31CCEC;
-$warning   : #F2C037;
+$dark             : #1D1D1D;
+
+$positive         : #088326;
+$negative         : #C10015;
+$info             : #31CCEC;
+$warning          : #F2C037;
+
+:root {
+  --darken: -9%;
+  --lighten: 9%;
+
+  --q-color-primary-h: 177;
+  --q-color-primary-s: 62%;
+  --q-color-primary-l: 35%;
+  --q-color-secondary-h: 210;
+  --q-color-secondary-s: 79%;
+  --q-color-secondary-l: 46%;
+  
+  --q-color-primary-light: hsl(var(--q-color-primary-h), var(--q-color-primary-s), calc(var(--q-color-primary-l) + var(--lighten)));
+  --q-color-primary-dark: hsl(var(--q-color-primary-h), var(--q-color-primary-s), calc(var(--q-color-primary-l) + var(--darken)));
+
+  --q-color-secondary: hsl(var(--q-color-secondary-h), var(--q-color-secondary-s), var(--q-color-secondary-l));
+  --q-color-secondary-light: hsl(var(--q-color-secondary-h), var(--q-color-secondary-s), calc(var(--q-color-secondary-l) + var(--lighten)));
+  --q-color-secondary-dark: hsl(var(--q-color-secondary-h), var(--q-color-secondary-s), calc(var(--q-color-secondary-l) + var(--darken)));
+}
+
+.bg-primary-light {
+  background: var(--q-color-primary-light) !important;
+  color: white;
+}
+
+.bg-primary-dark {
+  background: var(--q-color-primary-dark) !important;
+  color: white;
+}
+
+.bg-secondary-light {
+  background: var(--q-color-secondary-light) !important;
+  color: white;
+}
+
+.bg-secondary-dark {
+  background: var(--q-color-secondary-dark) !important;
+  color: white;
+}

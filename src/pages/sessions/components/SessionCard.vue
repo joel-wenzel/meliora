@@ -1,5 +1,5 @@
 <template>
-  <q-card @click="$emit('edit')">
+  <q-card @click="$emit('click')">
     <q-card-section>
       <div class="text-h6 capitalize">{{ session.workout.name }}</div>
       <q-item-label caption lines="1">
@@ -14,15 +14,15 @@
       {{ session.completed ? 'complete' : 'in progress' }}
     </q-badge>
     <q-card-section class="q-pt-none">
-      <!-- <q-list>
+      <q-list>
         <q-item
           v-for="ex in session.sessionExercises"
-          :key="ex.exerciseName"
+          :key="ex.id"
           dense
           class="q-pa-none"
         >
           <q-item-section>
-            {{ ex.exerciseName }}
+            {{ ex.workoutExercise.exercise.name }}
           </q-item-section>
           <q-item-section>
             {{ ex.sets }} x
@@ -30,7 +30,7 @@
           </q-item-section>
           <q-item-section>{{ ex.weight }} {{ $labels.uom }}</q-item-section>
         </q-item>
-      </q-list> -->
+      </q-list>
     </q-card-section>
   </q-card>
 </template>
@@ -48,7 +48,7 @@ export default defineComponent({
     },
   },
   setup(_props, _ctx) {
-    const session = Session.query()
+    const session: Session = Session.query()
       .withAllRecursive()
       .find(_props.sessionId) as Session
 

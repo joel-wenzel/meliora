@@ -40,7 +40,9 @@
         </div>
       </q-list>
       <div class="column justify-end q-pa-md">
-        <q-btn color="primary" @click="createWorkout">Create Workout</q-btn>
+        <q-btn color="primary-dark" @click="createWorkout"
+          >Create Workout</q-btn
+        >
       </div>
     </template>
     <div v-else class="grid-center">
