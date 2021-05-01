@@ -9,7 +9,7 @@ export default class SessionExerciseSet extends Model {
   sessionExerciseId!: string
   index!: number
   reps!: number
-  started!: boolean
+  complete!: boolean
 
   // TODO allow weight specification on sess exercise set
   // Idea is lowering weight if you are fatigued
@@ -23,7 +23,7 @@ export default class SessionExerciseSet extends Model {
       sessionExerciseId: this.attr(null),
       index: this.number(-1),
       reps: this.number(0),
-      started: this.boolean(false),
+      complete: this.boolean(false),
     }
   }
 

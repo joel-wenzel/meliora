@@ -14,7 +14,7 @@
         v-close-popup
       >
         <q-item-section avatar>
-          <q-icon name="mdi-dumbbell" color="secondary" />
+          <q-icon name="mdi-dumbbell" color="accent" />
         </q-item-section>
         <q-item-section>
           <q-item-label>{{ workout.name }}</q-item-label>

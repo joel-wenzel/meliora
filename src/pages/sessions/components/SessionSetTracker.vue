@@ -1,7 +1,7 @@
 <template>
   <m-number-tapper
     v-model="setReps"
-    :dormant="!sessionSet.started"
+    :dormant="!sessionSet.complete"
     decrement
     :max="targetReps * 2"
     :target="targetReps"
@@ -32,14 +32,14 @@ export default defineComponent({
     ) as SessionExerciseSet
 
     const setReps = ref<number>(
-      sessionSet.started ? sessionSet.reps : _props.targetReps
+      sessionSet.complete ? sessionSet.reps : _props.targetReps
     )
 
     function onInput() {
       SessionExerciseSet.update({
         where: sessionSet.id,
         data: {
-          started: true,
+          complete: true,
           reps: setReps.value,
         },
       })

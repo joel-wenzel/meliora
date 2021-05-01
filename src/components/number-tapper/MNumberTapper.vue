@@ -93,8 +93,11 @@ export default defineComponent({
         : // @ts-ignore
           _props.value + (!isDecrement.value * 2 - 1)
 
-      const clamped = clamp(raw, _props.min, _props.max)
-      _ctx.emit('input', clamped)
+      const { clamped, inRange } = clamp(raw, _props.min, _props.max)
+
+      if (inRange) {
+        _ctx.emit('input', clamped)
+      }
 
       isDormant.value = false
     }
@@ -104,7 +107,10 @@ export default defineComponent({
 })
 
 function clamp(num, min, max) {
-  return Math.min(Math.max(num, min), max)
+  return {
+    clamped: Math.min(Math.max(num, min), max),
+    inRange: num <= max && num >= min,
+  }
 }
 </script>
 
@@ -114,7 +120,6 @@ function clamp(num, min, max) {
   color: white;
   display: grid;
   place-items: center;
-
   background: var(--q-color-primary-light);
 
   &--dormant {
@@ -123,6 +128,7 @@ function clamp(num, min, max) {
 
   &--target {
     background: var(--q-color-primary-dark);
+    color: white;
   }
 }
 </style>

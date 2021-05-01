@@ -48,5 +48,9 @@ export default class Session extends Model {
       })
     ).sessions[0] as Session
   }
+
+  // static completeSession(sessionId, bodyWeight) {
+
+  // }
 }
 export const sessionModule = {}

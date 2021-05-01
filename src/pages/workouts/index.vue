@@ -13,7 +13,7 @@
             </template>
             <q-item clickable v-ripple :to="{ path: workout.id, append: true }">
               <q-item-section avatar>
-                <q-icon name="mdi-dumbbell" size="md"></q-icon>
+                <q-icon name="mdi-dumbbell" color="accent" size="md"></q-icon>
               </q-item-section>
 
               <q-item-section>

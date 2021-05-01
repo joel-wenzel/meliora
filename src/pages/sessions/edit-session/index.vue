@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="column">
     <q-toolbar class="bg-primary text-white" elevated>
       <q-toolbar-title shrink> {{ title }}</q-toolbar-title>
       <q-space />
@@ -20,6 +20,12 @@
         <q-separator></q-separator>
       </div>
     </q-list>
+    <div class="col-grow column justify-end q-pa-md">
+      <div class="row items-end">
+        <q-input class="q-mr-md" dense label="Body Weight"></q-input>
+        <q-btn color="primary-dark" class="col-grow">Finish Session</q-btn>
+      </div>
+    </div>
   </q-page>
 </template>
 

@@ -7,7 +7,20 @@
         }}</q-item-label>
       </q-item-section>
       <q-item-section side>
-        <q-item-label caption>Target: {{ sessionTarget }}</q-item-label>
+        <q-item-label v-if="!exerciseComplete" caption
+          >Target: {{ sessionTarget }}</q-item-label
+        >
+        <transition enter-active-class="animated slideInUp">
+          <q-item-label v-if="exerciseComplete && exerciseSuccess" caption>
+            <q-badge color="positive" class="q-pa-xs"
+              >Completed: {{ sessionTarget }}</q-badge
+            >
+          </q-item-label>
+
+          <q-item-label v-if="exerciseComplete && !exerciseSuccess" caption>
+            <q-badge color="negative" class="q-pa-xs">Not quite</q-badge>
+          </q-item-label>
+        </transition>
       </q-item-section>
     </q-item>
     <q-card-section class="row q-pt-xs">
@@ -48,7 +61,19 @@ export default defineComponent({
       return `${woEx.targetSets}x${woEx.targetReps} at ${woEx.exercise.targetWeight} lbs`
     })
 
-    return { sessionExercise, sessionTarget }
+    const exerciseComplete = computed(() => {
+      return sessionExercise.value.sessionExerciseSets.every(
+        (set) => set.complete
+      )
+    })
+
+    const exerciseSuccess = computed(() => {
+      return sessionExercise.value.sessionExerciseSets.every(
+        (set) => set.reps >= sessionExercise.value.workoutExercise.targetReps
+      )
+    })
+
+    return { sessionExercise, sessionTarget, exerciseComplete, exerciseSuccess }
   },
 })
 </script>
