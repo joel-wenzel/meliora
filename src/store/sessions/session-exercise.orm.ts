@@ -10,6 +10,7 @@ export default class SessionExercise extends Model {
   static entity = 'session_exercises'
 
   id!: string
+  date!: number
   workoutExerciseId!: string
   workoutExercise!: WorkoutExercise
   sessionExerciseSets!: Array<SessionExerciseSet>

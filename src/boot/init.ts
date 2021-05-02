@@ -4,6 +4,7 @@ import { boot } from 'quasar/wrappers'
 import { BootFileParams } from '@quasar/app'
 import MTargetWeightDialog from '../components/exercise/target-weight-dialog/MTargetWeightDialog.vue'
 import MConfirmDialog from 'src/components/dialog/confirm-dialog/MConfirmDialog.vue'
+import VueApexCharts from 'vue-apexcharts'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -14,6 +15,9 @@ declare module 'vue/types/vue' {
 export default boot(({ Vue }: BootFileParams<Store<any>>) => {
   Vue.use(fragment.Plugin)
 
+  Vue.use(VueApexCharts)
+
+  Vue.component('apexchart', VueApexCharts)
   Vue.component('MTargetWeightDialog', MTargetWeightDialog)
   Vue.component('MConfirmDialog', MConfirmDialog)
 
