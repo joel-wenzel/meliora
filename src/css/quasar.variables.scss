@@ -19,25 +19,28 @@ $secondary        : hsl(var(--q-color-secondary-h), var(--q-color-secondary-s), 
 $secondary-light  : var(--q-color-secondary-light);
 $secondary-dark   : var(--q-color-secondary-dark);
 
-$accent           : #9C27B0;
+$accent           : #917522;
 
 $dark             : #1D1D1D;
 
 $positive         : #088326;
 $negative         : #910010;
-$info             : #31CCEC;
-$warning          : #F2C037;
+$info             : #0095b3;
+$warning          : hsl(209, 100%, 50%);
 
 :root {
   --darken: -9%;
   --lighten: 9%;
 
-  --q-color-primary-h: 177;
+  --q-color-primary-h: 270;
   --q-color-primary-s: 62%;
   --q-color-primary-l: 35%;
-  --q-color-secondary-h: 210;
-  --q-color-secondary-s: 79%;
-  --q-color-secondary-l: 46%;
+  --q-color-secondary-h: 239;
+  --q-color-secondary-s: 62%;
+  --q-color-secondary-l: 35%;
+  // --q-color-secondary-h: 210;
+  // --q-color-secondary-s: 79%;
+  // --q-color-secondary-l: 46%;
   
   --q-color-primary-light: hsl(var(--q-color-primary-h), var(--q-color-primary-s), calc(var(--q-color-primary-l) + var(--lighten)));
   --q-color-primary-dark: hsl(var(--q-color-primary-h), var(--q-color-primary-s), calc(var(--q-color-primary-l) + var(--darken)));

@@ -8,7 +8,11 @@
         <span style="line-height: 1px" class="q-pr-xs"
           >{{ sets.length }} x {{ reps }}</span
         >
-        <q-icon v-if="inconsistentReps" name="mdi-information"></q-icon>
+        <q-icon
+          v-if="inconsistentReps"
+          name="mdi-information"
+          color="info"
+        ></q-icon>
       </q-item-label>
     </q-item-section>
     <q-item-section>{{ weight }} {{ $labels.uom }}</q-item-section>

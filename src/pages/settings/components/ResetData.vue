@@ -3,7 +3,7 @@
     <q-item-label header>Clear Data</q-item-label>
     <q-item class="q-mb-sm">
       <q-item-section avatar>
-        <q-radio v-model="dataToReset" val="all" color="negative" />
+        <q-radio v-model="dataToReset" val="all" color="accent" />
       </q-item-section>
       <q-item-section @click="dataToReset = 'all'">
         <q-item-label>All Data</q-item-label>
@@ -14,7 +14,7 @@
     </q-item>
     <q-item class="q-mb-sm">
       <q-item-section avatar>
-        <q-radio v-model="dataToReset" val="session" color="negative" />
+        <q-radio v-model="dataToReset" val="session" color="accent" />
       </q-item-section>
       <q-item-section @click="dataToReset = 'session'">
         <q-item-label>Sessions Only</q-item-label>
