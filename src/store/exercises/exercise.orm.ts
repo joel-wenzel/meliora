@@ -7,7 +7,9 @@ export default class Exercise extends Model {
 
   id!: string
   name!: string
+  startingWeight!: number
   targetWeight!: number
+  increment!: number
 
   // List of all fields (schema) of the post model. `this.attr` is used
   // for the generic field type. The argument is the default value.
@@ -15,14 +17,15 @@ export default class Exercise extends Model {
     return {
       id: this.attr(null),
       name: this.attr(''),
+      startingWeight: this.number(75),
       targetWeight: this.number(75),
+      increment: this.number(5),
     }
   }
 
   static async createNew(name: string) {
     const existing = Exercise.query().where('name', name).all()
     if (existing[0]) {
-      console.log('exercise exists')
       return existing[0]
     }
 
@@ -41,6 +44,20 @@ export default class Exercise extends Model {
     })
     // TODO dispatch dialog event to get target weight
     return exercise
+  }
+
+  static incrementTargetWeight(exerciseId: string) {
+    const exercise = Exercise.find(exerciseId) as Exercise
+
+    exercise.$update({
+      targetWeight: exercise.targetWeight + (exercise.increment || 5),
+    })
+  }
+
+  static resetAllTargetWeights() {
+    Exercise.all().forEach(
+      (ex) => void ex.$update({ targetWeight: ex.startingWeight })
+    )
   }
 }
 export const exerciseModule = {}

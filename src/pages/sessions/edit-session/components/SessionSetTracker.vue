@@ -5,12 +5,13 @@
     decrement
     :max="targetReps * 2"
     :target="targetReps"
+    :disable="readonly"
     @input="onInput"
   ></m-number-tapper>
 </template>
 
 <script lang="ts">
-import MNumberTapper from '../../../components/number-tapper/MNumberTapper.vue'
+import MNumberTapper from '../../../../components/number-tapper/MNumberTapper.vue'
 import { defineComponent, ref } from '@vue/composition-api'
 import SessionExerciseSet from 'src/store/sessions/session-exercise-set.orm'
 
@@ -24,6 +25,11 @@ export default defineComponent({
     targetReps: {
       type: Number,
       required: true,
+    },
+    readonly: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup(_props) {

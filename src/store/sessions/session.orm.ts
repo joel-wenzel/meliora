@@ -33,10 +33,16 @@ export default class Session extends Model {
   static async createNew(workoutId: string): Promise<Session> {
     const sessionId = uuid()
 
-    const workout = Workout.query().with('workoutExercises').find(workoutId)
+    const workout = Workout.query()
+      .with('workoutExercises.exercise')
+      .find(workoutId)
 
     workout?.workoutExercises.forEach((woExercise) => {
-      SessionExercise.createNew(sessionId, woExercise.id)
+      SessionExercise.createNew(
+        sessionId,
+        woExercise.id,
+        woExercise.exercise.targetWeight
+      )
     })
 
     return (
@@ -44,13 +50,34 @@ export default class Session extends Model {
         data: {
           id: sessionId,
           workoutId,
+          bodyWeight: this.store().state.app.settings.bodyWeight,
         },
       })
     ).sessions[0] as Session
   }
 
-  // static completeSession(sessionId, bodyWeight) {
+  static completeSession(sessionId, bodyWeight) {
+    Session.update({
+      where: sessionId,
+      data: {
+        completed: true,
+        bodyWeight,
+      },
+    })
+    this.store().dispatch('updateSettings', {
+      bodyWeight,
+    })
+  }
 
-  // }
+  static deleteSession(sessionId) {
+    // need to delete session, session exercises and session exercise sets
+    const session = Session.query().withAllRecursive().find(sessionId)
+    session?.sessionExercises.forEach((sEx) => {
+      sEx.sessionExerciseSets.forEach((sExSet) => void sExSet.$delete())
+      sEx.$delete()
+    })
+
+    session?.$delete()
+  }
 }
 export const sessionModule = {}

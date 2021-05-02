@@ -28,6 +28,7 @@
         v-for="set in sessionExercise.sessionExerciseSets"
         :key="set.id"
         :sessionSetId="set.id"
+        :readonly="readonly"
         :targetReps="sessionExercise.workoutExercise.targetReps"
         class="q-mr-sm"
       ></session-set-tracker>
@@ -37,7 +38,7 @@
 
 <script lang="ts">
 import SessionSetTracker from './SessionSetTracker.vue'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, watch } from '@vue/composition-api'
 import SessionExercise from 'src/store/sessions/session-exercise.orm'
 
 export default defineComponent({
@@ -45,6 +46,11 @@ export default defineComponent({
     sessionExerciseId: {
       type: String,
       required: true,
+    },
+    readonly: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   components: { SessionSetTracker },
@@ -58,13 +64,17 @@ export default defineComponent({
 
     const sessionTarget = computed(() => {
       const woEx = sessionExercise.value.workoutExercise
-      return `${woEx.targetSets}x${woEx.targetReps} at ${woEx.exercise.targetWeight} lbs`
+      return `${woEx.targetSets}x${woEx.targetReps} at ${sessionExercise.value.weight} lbs`
     })
 
     const exerciseComplete = computed(() => {
       return sessionExercise.value.sessionExerciseSets.every(
         (set) => set.complete
       )
+    })
+
+    watch(exerciseComplete, () => {
+      SessionExercise.completeSessionExercise(sessionExercise.value.id)
     })
 
     const exerciseSuccess = computed(() => {

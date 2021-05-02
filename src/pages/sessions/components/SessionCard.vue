@@ -15,32 +15,24 @@
     </q-badge>
     <q-card-section class="q-pt-none">
       <q-list>
-        <q-item
+        <session-exercise-result
           v-for="ex in session.sessionExercises"
           :key="ex.id"
-          dense
-          class="q-pa-none"
-        >
-          <q-item-section>
-            {{ ex.workoutExercise.exercise.name }}
-          </q-item-section>
-          <q-item-section>
-            {{ ex.sets }} x
-            {{ ex.reps }}
-          </q-item-section>
-          <q-item-section>{{ ex.weight }} {{ $labels.uom }}</q-item-section>
-        </q-item>
+          :sessionExerciseId="ex.id"
+        ></session-exercise-result>
       </q-list>
     </q-card-section>
   </q-card>
 </template>
 
 <script lang="ts">
+import SessionExerciseResult from './SessionExerciseResult.vue'
 import { defineComponent } from '@vue/composition-api'
 import moment from 'moment'
 import Session from 'src/store/sessions/session.orm'
 
 export default defineComponent({
+  components: { SessionExerciseResult },
   props: {
     sessionId: {
       type: String,
@@ -52,7 +44,7 @@ export default defineComponent({
       .withAllRecursive()
       .find(_props.sessionId) as Session
 
-    const sessionDate = moment(session.date).format('dddd, MMMM DD')
+    const sessionDate = moment(session.date).fromNow()
     return { session, sessionDate }
   },
 })

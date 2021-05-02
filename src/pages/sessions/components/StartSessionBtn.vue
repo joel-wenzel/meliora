@@ -11,6 +11,7 @@
         v-for="workout in workouts"
         :key="workout.id"
         clickable
+        @click="startSession(workout.id)"
         v-close-popup
       >
         <q-item-section avatar>
@@ -34,14 +35,18 @@ export default defineComponent({
     const workouts = Workout.all()
 
     const nextWorkout = computed(() => {
-      const lastSession = Session.query().limit(1).orderBy('date').get()[0]
+      const lastSession = Session.query()
+        .limit(1)
+        .orderBy('date', 'desc')
+        .get()[0]
+
       const lastWorkoutId = lastSession?.workoutId
 
       if (lastWorkoutId) {
         const lastIndex = workouts.findIndex((wo) => wo.id === lastWorkoutId)
 
         return workouts[(lastIndex + 1) % workouts.length]
-      } else return workouts[0]
+      } else return workouts[0] || {}
     })
 
     function startSession(workoutId: string) {

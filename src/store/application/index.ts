@@ -13,10 +13,13 @@ export type AppStateInterface = {
     comp: string | null
     data: any
   }
-  settings: {
-    dateFormat: string
-    uom: 'lbs' | 'kg'
-  }
+  settings: AppSettings
+}
+
+export type AppSettings = {
+  dateFormat: string
+  uom: 'lbs' | 'kg'
+  bodyWeight: number
 }
 
 const defaultDialogState = Object.freeze({
@@ -29,8 +32,9 @@ function state(): AppStateInterface {
   return {
     dialog: defaultDialogState,
     settings: {
-      dateFormat: 'MMMM Do YYYY, h:mm:ss a',
+      dateFormat: 'MMMM D YYYY, h:mm A',
       uom: 'lbs',
+      bodyWeight: 150,
     },
   }
 }
@@ -41,6 +45,9 @@ const getters: GetterTree<AppStateInterface, StateInterface> = {
   },
   dateFormat(state: AppStateInterface) {
     return state.settings.dateFormat
+  },
+  settings(state: AppStateInterface) {
+    return state.settings
   },
 }
 
@@ -58,6 +65,12 @@ const mutations: MutationTree<AppStateInterface> = {
   clearDialog(state: AppStateInterface) {
     state.dialog = defaultDialogState
   },
+  setSettings(state: AppStateInterface, payload: AppSettings) {
+    state.settings = {
+      ...state.settings,
+      ...payload,
+    }
+  },
 }
 
 const actions: ActionTree<AppStateInterface, StateInterface> = {
@@ -72,6 +85,8 @@ const actions: ActionTree<AppStateInterface, StateInterface> = {
       SessionExerciseSet.deleteAll()
       SessionExercise.deleteAll()
       Session.deleteAll()
+
+      Exercise.resetAllTargetWeights()
     }
 
     if (payload === 'all') {
@@ -79,6 +94,9 @@ const actions: ActionTree<AppStateInterface, StateInterface> = {
       Workout.deleteAll()
       Exercise.deleteAll()
     }
+  },
+  updateSettings(context, payload: AppSettings) {
+    context.commit('setSettings', payload)
   },
 }
 

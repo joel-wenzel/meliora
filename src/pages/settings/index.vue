@@ -11,6 +11,8 @@
 
       <q-card-section class="q-pa-sm">
         <q-list>
+          <app-settings></app-settings>
+          <q-separator class="q-my-sm"></q-separator>
           <reset-data></reset-data>
           <q-separator class="q-my-sm"></q-separator>
         </q-list>
@@ -22,11 +24,12 @@
 </template>
 
 <script lang="ts">
+import AppSettings from './components/AppSettings.vue'
 import ResetData from './components/ResetData.vue'
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-  components: { ResetData },
+  components: { ResetData, AppSettings },
   setup(_props, _ctx) {
     function onClose() {
       _ctx.root.$router.back()

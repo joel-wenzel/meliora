@@ -1,7 +1,6 @@
 import { Store } from 'vuex'
 import fragment from 'vue-fragment'
 import { boot } from 'quasar/wrappers'
-import { weightUoM } from '../model/app.constants'
 import { BootFileParams } from '@quasar/app'
 import MTargetWeightDialog from '../components/exercise/target-weight-dialog/MTargetWeightDialog.vue'
 import MConfirmDialog from 'src/components/dialog/confirm-dialog/MConfirmDialog.vue'
@@ -14,10 +13,6 @@ declare module 'vue/types/vue' {
 
 export default boot(({ Vue }: BootFileParams<Store<any>>) => {
   Vue.use(fragment.Plugin)
-
-  Vue.prototype.$labels = {
-    uom: weightUoM,
-  }
 
   Vue.component('MTargetWeightDialog', MTargetWeightDialog)
   Vue.component('MConfirmDialog', MConfirmDialog)

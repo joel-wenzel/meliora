@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid'
 import moment from 'moment'
 import WorkoutExercise from '../workouts/workout-exercises.orm'
 import SessionExerciseSet from './session-exercise-set.orm'
+import Exercise from '../exercises/exercise.orm'
 
 export default class SessionExercise extends Model {
   // This is the name used as module name of the Vuex Store.
@@ -33,7 +34,8 @@ export default class SessionExercise extends Model {
 
   static async createNew(
     sessionId: string,
-    workoutExerciseId: string
+    workoutExerciseId: string,
+    targetWeight: number
   ): Promise<SessionExercise> {
     const sessionEx = (
       await this.insert({
@@ -41,6 +43,7 @@ export default class SessionExercise extends Model {
           id: uuid(),
           sessionId,
           workoutExerciseId,
+          weight: targetWeight,
         },
       })
     ).session_exercises[0] as SessionExercise
@@ -53,6 +56,16 @@ export default class SessionExercise extends Model {
     }
 
     return sessionEx
+  }
+
+  static completeSessionExercise(sessionExerciseId: string) {
+    const sExercise = SessionExercise.query()
+      .with('workoutExercise')
+      .find(sessionExerciseId)
+
+    Exercise.incrementTargetWeight(
+      sExercise?.workoutExercise.exerciseId as string
+    )
   }
 }
 export const sessionExerciseModule = {}

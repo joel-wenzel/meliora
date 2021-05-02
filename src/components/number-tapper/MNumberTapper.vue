@@ -2,7 +2,7 @@
   <div
     class="m-number-tapper relative-position"
     :class="classes"
-    v-ripple
+    v-ripple="!disable"
     @click="onTap"
     v-touch-hold.mouse="onShortHold"
     :style="style"
@@ -62,6 +62,11 @@ export default defineComponent({
       required: false,
       default: '40px',
     },
+    disable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(_props, _ctx) {
     const isDormant = ref<boolean>(_props.dormant)
@@ -79,6 +84,7 @@ export default defineComponent({
         'm-number-tapper--dormant': isDormant.value,
         'm-number-tapper--target':
           !isDormant.value && _props.target === _props.value,
+        'm-number-tapper--disabled': _props.disable,
       }
     })
 
@@ -87,6 +93,9 @@ export default defineComponent({
     }
 
     function onTap() {
+      if (_props.disable) {
+        return
+      }
       // if dormant, we dont increment on first tap
       const raw = isDormant.value
         ? _props.value
@@ -129,6 +138,10 @@ function clamp(num, min, max) {
   &--target {
     background: var(--q-color-primary-dark);
     color: white;
+  }
+
+  &--disabled {
+    opacity: 0.65;
   }
 }
 </style>

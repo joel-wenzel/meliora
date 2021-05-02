@@ -41,6 +41,7 @@ export default defineComponent({
       Exercise.update({
         where: _props.data,
         data: {
+          startingWeight: targetWeight.value,
           targetWeight: targetWeight.value,
         },
       })
