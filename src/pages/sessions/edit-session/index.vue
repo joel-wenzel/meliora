@@ -31,6 +31,7 @@
           v-model="bodyWeight"
           class="q-mr-md col-5"
           dense
+          type="number"
           label="Body Weight"
           :disable="isLocked"
           :suffix="$labels.uom"

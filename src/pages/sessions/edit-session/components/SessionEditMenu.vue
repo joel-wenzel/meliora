@@ -43,7 +43,9 @@ export default defineComponent({
     },
   },
   setup(_props, _ctx) {
-    function onViewNotes() {}
+    function onViewNotes() {
+      // TODO
+    }
 
     function onEdit() {
       Session.update({
