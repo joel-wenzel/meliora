@@ -15,7 +15,7 @@
         ></q-icon>
       </q-item-label>
     </q-item-section>
-    <q-item-section>{{ weight }} {{ $labels.uom }}</q-item-section>
+    <q-item-section>{{ Math.round(weight) }} {{ $labels.uom }}</q-item-section>
   </q-item>
 </template>
 

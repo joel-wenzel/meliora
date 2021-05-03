@@ -64,7 +64,9 @@ export default defineComponent({
 
     const sessionTarget = computed(() => {
       const woEx = sessionExercise.value.workoutExercise
-      return `${woEx.targetSets}x${woEx.targetReps} at ${sessionExercise.value.weight} lbs`
+      return `${woEx.targetSets}x${woEx.targetReps} at ${Math.round(
+        sessionExercise.value.weight
+      )} lbs`
     })
 
     const exerciseComplete = computed(() => {

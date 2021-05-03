@@ -20,7 +20,7 @@
           emit-value
           :options="uomOptions"
           label="Unit of Measure"
-          @input="updateSettings"
+          @input="updateUOM"
         />
       </q-item-section>
     </q-item>
@@ -39,14 +39,22 @@
   </fragment>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { AppSettings } from 'src/store/application'
 import moment from 'moment'
+import updateUoMInDatabase from 'src/model/util/uom.util'
 export default defineComponent({
   setup(_props, _ctx) {
     const settings = _ctx.root.$store.getters['settings'] as AppSettings
 
     const bodyWeight = ref<number>(settings.bodyWeight)
+
+    watch(
+      computed(() => _ctx.root.$store.getters['settings'].bodyWeight),
+      (newWeight) => {
+        bodyWeight.value = newWeight
+      }
+    )
     const uom = ref<string>(settings.uom)
 
     const uomOptions = [
@@ -68,6 +76,23 @@ export default defineComponent({
       })
     }
 
+    function updateUOM(val) {
+      updateSettings()
+      _ctx.root.$store.dispatch('showDialog', {
+        comp: 'MConfirmDialog',
+        data: {
+          title: 'Update Measurements',
+          message: `Do you want us to update existing measurements to ${val}? It is not recommended to switch UoM's often.`,
+          callback: updateUOMValues,
+          callbackData: val,
+        },
+      })
+    }
+
+    function updateUOMValues(val) {
+      updateUoMInDatabase(val, _ctx.root.$store)
+    }
+
     const dateFormat = ref<string>(settings.dateFormat)
     const now = moment()
     const dateOptions = [
@@ -87,6 +112,7 @@ export default defineComponent({
       dateFormat,
       dateOptions,
       updateSettings,
+      updateUOM,
     }
   },
 })

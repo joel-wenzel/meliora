@@ -9,11 +9,12 @@
     </q-card-section>
 
     <q-card-actions align="right">
+      <q-btn flat label="Cancel" v-close-popup />
       <q-btn
-        flat
+        unelevated
         label="Confirm"
         color="primary"
-        @click="data.callback(true)"
+        @click="data.callback(data.callbackData)"
         v-close-popup
       />
     </q-card-actions>

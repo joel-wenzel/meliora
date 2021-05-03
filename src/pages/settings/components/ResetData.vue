@@ -42,15 +42,13 @@ export default defineComponent({
           title: `Clear ${dataToReset.value} data`,
           message: 'This cannot be undone. Are you sure you wish to continue?',
           callback: onClearConfirm,
+          callbackData: dataToReset.value,
         },
       })
     }
 
-    function onClearConfirm(confirmed: boolean) {
-      if (!confirmed) {
-        return
-      }
-      _ctx.root.$store.dispatch('resetData', dataToReset.value)
+    function onClearConfirm(data) {
+      _ctx.root.$store.dispatch('resetData', data)
     }
     return { dataToReset, onClearData }
   },
