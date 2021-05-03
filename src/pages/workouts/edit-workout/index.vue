@@ -24,9 +24,7 @@
           </q-item-section>
         </q-item>
         <q-separator></q-separator>
-        <m-edit-workout-exercises
-          :workoutId="workoutId"
-        ></m-edit-workout-exercises>
+        <edit-workout-exercises :workoutId="workoutId"></edit-workout-exercises>
       </q-card-section>
 
       <q-card-actions class="q-mt-auto">
@@ -45,12 +43,12 @@
 </template>
 
 <script lang="ts">
-import MEditWorkoutExercises from '../../../components/workout/edit-workout-exercises/MEditWorkoutExercises.vue'
+import EditWorkoutExercises from './components/EditWorkoutExercises.vue'
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import Workout from '../../../store/workouts/workout.orm'
+import Workout from 'src/store/workouts/workout.orm'
 
 export default defineComponent({
-  components: { MEditWorkoutExercises },
+  components: { EditWorkoutExercises },
   props: {
     isNew: {
       type: Boolean,

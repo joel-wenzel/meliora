@@ -1,11 +1,11 @@
 <template>
   <q-item>
     <q-item-section class="col-7">
-      <exercise-list
+      <exercise-select
         v-model="workoutExercise.exerciseId"
         @input="updateExercise"
         dense
-      ></exercise-list>
+      ></exercise-select>
     </q-item-section>
 
     <q-item-section>
@@ -36,9 +36,9 @@
 </template>
 
 <script lang="ts">
-import ExerciseList from '../../exercise/exercise-list/MExerciseList.vue'
-import WorkoutExercise from '../../../store/workouts/workout-exercises.orm'
+import ExerciseSelect from './ExerciseSelect.vue'
 import { defineComponent, ref } from '@vue/composition-api'
+import WorkoutExercise from 'src/store/workouts/workout-exercises.orm'
 
 export default defineComponent({
   props: {
@@ -47,7 +47,7 @@ export default defineComponent({
       required: true,
     },
   },
-  components: { ExerciseList },
+  components: { ExerciseSelect },
   setup(_props) {
     const workoutExercise = ref(
       WorkoutExercise.find(_props.workoutExerciseId) as WorkoutExercise

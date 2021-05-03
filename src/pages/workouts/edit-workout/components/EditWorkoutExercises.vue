@@ -12,11 +12,11 @@
           <q-item-label>Reps</q-item-label>
         </q-item-section>
       </q-item>
-      <m-edit-workout-exercise
+      <edit-workout-exercise
         v-for="(exercise, index) in workoutExercises"
         :key="index"
         :workoutExerciseId="exercise.id"
-      ></m-edit-workout-exercise>
+      ></edit-workout-exercise>
     </q-list>
     <q-btn
       icon="mdi-plus"
@@ -31,12 +31,12 @@
 </template>
 
 <script lang="ts">
-import MEditWorkoutExercise from '../edit-workout-exercise/MEditWorkoutExercise.vue'
-import WorkoutExercise from '../../../store/workouts/workout-exercises.orm'
+import EditWorkoutExercise from './EditWorkoutExercise.vue'
 import { computed, defineComponent } from '@vue/composition-api'
+import WorkoutExercise from 'src/store/workouts/workout-exercises.orm'
 
 export default defineComponent({
-  components: { MEditWorkoutExercise },
+  components: { EditWorkoutExercise },
   props: {
     workoutId: {
       type: String,
