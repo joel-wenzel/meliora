@@ -11,10 +11,12 @@ export default class SessionExercise extends Model {
 
   id!: string
   date!: number
-  workoutExerciseId!: string
-  workoutExercise!: WorkoutExercise
   sessionExerciseSets!: Array<SessionExerciseSet>
   weight!: number
+  exerciseId!: string
+  targetSets!: number
+  targetReps!: number
+  exercise!: Exercise
 
   // List of all fields (schema) of the post model. `this.attr` is used
   // for the generic field type. The argument is the default value.
@@ -23,13 +25,18 @@ export default class SessionExercise extends Model {
       id: this.attr(null),
       date: this.attr(moment().valueOf()),
       sessionId: this.attr(null),
-      workoutExerciseId: this.attr(null),
-      workoutExercise: this.hasOne(WorkoutExercise, 'id', 'workoutExerciseId'),
       sessionExerciseSets: this.hasMany(
         SessionExerciseSet,
         'sessionExerciseId'
       ),
       weight: this.number(0),
+
+      // this is essentiall a snapshot of the workout exercise at the time of the session
+      // we dont just join to the workout exercise because that could change at some point which shouldnt change this session
+      exerciseId: this.attr(null),
+      targetSets: this.number(5),
+      targetReps: this.number(5),
+      exercise: this.hasOne(Exercise, 'id', 'exerciseId'),
     }
   }
 
@@ -38,18 +45,21 @@ export default class SessionExercise extends Model {
     workoutExerciseId: string,
     targetWeight: number
   ): Promise<SessionExercise> {
+    const workoutEx = WorkoutExercise.find(workoutExerciseId)
+
     const sessionEx = (
       await this.insert({
         data: {
           id: uuid(),
           sessionId,
-          workoutExerciseId,
+          exerciseId: workoutEx?.exerciseId,
+          targetSets: workoutEx?.targetSets,
+          targetReps: workoutEx?.targetReps,
           weight: targetWeight,
         },
       })
     ).session_exercises[0] as SessionExercise
 
-    const workoutEx = WorkoutExercise.find(workoutExerciseId)
     if (workoutEx) {
       for (let i = 0; i < workoutEx?.targetSets; i++) {
         SessionExerciseSet.createNew(sessionEx.id, i)
@@ -60,13 +70,9 @@ export default class SessionExercise extends Model {
   }
 
   static completeSessionExercise(sessionExerciseId: string) {
-    const sExercise = SessionExercise.query()
-      .with('workoutExercise')
-      .find(sessionExerciseId)
+    const sExercise = SessionExercise.find(sessionExerciseId)
 
-    Exercise.incrementTargetWeight(
-      sExercise?.workoutExercise.exerciseId as string
-    )
+    Exercise.incrementTargetWeight(sExercise?.exerciseId as string)
   }
 }
 export const sessionExerciseModule = {}

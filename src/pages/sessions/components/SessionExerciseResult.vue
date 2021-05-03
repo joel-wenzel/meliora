@@ -1,7 +1,7 @@
 <template>
   <q-item dense class="q-pa-none" v-if="sExercise && sets">
     <q-item-section>
-      {{ sExercise.workoutExercise.exercise.name }}
+      {{ sExercise.exercise.name }}
     </q-item-section>
     <q-item-section>
       <q-item-label class="row items-center">
@@ -34,7 +34,7 @@ export default defineComponent({
     const sExercise = computed(
       () =>
         SessionExercise.query()
-          .with(['sessionExerciseSets', 'workoutExercise.exercise'])
+          .with(['sessionExerciseSets', 'exercise'])
           .find(_props.sessionExerciseId) as SessionExercise
     )
 

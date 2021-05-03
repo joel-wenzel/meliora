@@ -4,6 +4,16 @@
     title="Exercises"
     contentClass="q-pa-md"
   >
+    <q-item dense id="exercise-header">
+      <q-item-section avatar> </q-item-section>
+      <q-item-section>
+        <q-item-label class="text-body1 text-grey-7"> Exercise </q-item-label>
+      </q-item-section>
+      <q-item-section side>
+        <q-item-label class="text-body1 text-grey-7">Next Weight</q-item-label>
+      </q-item-section>
+    </q-item>
+    <q-separator></q-separator>
     <q-list separator>
       <q-item v-for="exercise in exercises" :key="exercise.id">
         <q-item-section avatar>
@@ -41,3 +51,10 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss" scoped>
+#exercise-header {
+  min-height: unset;
+  height: 30px;
+  padding-bottom: 8px;
+}
+</style>

@@ -3,7 +3,7 @@
     <q-item>
       <q-item-section>
         <q-item-label class="text-body1">{{
-          sessionExercise.workoutExercise.exercise.name
+          sessionExercise.exercise.name
         }}</q-item-label>
       </q-item-section>
       <q-item-section side>
@@ -29,7 +29,7 @@
         :key="set.id"
         :sessionSetId="set.id"
         :readonly="readonly"
-        :targetReps="sessionExercise.workoutExercise.targetReps"
+        :targetReps="sessionExercise.targetReps"
         class="q-mr-sm"
       ></session-set-tracker>
     </q-card-section>
@@ -63,9 +63,9 @@ export default defineComponent({
     )
 
     const sessionTarget = computed(() => {
-      const woEx = sessionExercise.value.workoutExercise
-      return `${woEx.targetSets}x${woEx.targetReps} at ${Math.round(
-        sessionExercise.value.weight
+      const sessEx = sessionExercise.value
+      return `${sessEx.targetSets}x${sessEx.targetReps} at ${Math.round(
+        sessEx.weight
       )} lbs`
     })
 
@@ -81,7 +81,7 @@ export default defineComponent({
 
     const exerciseSuccess = computed(() => {
       return sessionExercise.value.sessionExerciseSets.every(
-        (set) => set.reps >= sessionExercise.value.workoutExercise.targetReps
+        (set) => set.reps >= sessionExercise.value.targetReps
       )
     })
 

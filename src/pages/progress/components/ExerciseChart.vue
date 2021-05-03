@@ -21,7 +21,7 @@ export default defineComponent({
 
     // TODO possibly move this to a cached getter if it doesnt load quick enough
     const sessionExercises = SessionExercise.query()
-      .with('workoutExercise.exercise')
+      .with('exercise')
       .orderBy('date', 'asc')
       .all()
 
@@ -31,7 +31,7 @@ export default defineComponent({
         acc[date] = {}
       }
 
-      acc[date][sEx.workoutExercise.exercise.name] = sEx.weight
+      acc[date][sEx.exercise.name] = sEx.weight
 
       return acc
     }, {})
