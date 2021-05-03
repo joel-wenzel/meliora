@@ -12,7 +12,7 @@
         <q-btn flat round icon="mdi-dots-vertical">
           <q-menu>
             <q-list style="min-width: 100px">
-              <q-item clickable v-close-popup>
+              <q-item clickable v-close-popup to="/exercises">
                 <q-item-section>Exercise List</q-item-section>
               </q-item>
               <q-separator />

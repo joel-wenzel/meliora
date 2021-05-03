@@ -43,6 +43,13 @@ const routes: RouteConfig[] = [
           fullscreen: true,
         },
       },
+      {
+        path: 'exercises',
+        component: () => import('src/pages/exercises/index.vue'),
+        meta: {
+          fullscreen: true,
+        },
+      },
     ],
   },
 

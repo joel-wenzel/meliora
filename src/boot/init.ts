@@ -2,7 +2,7 @@ import { Store } from 'vuex'
 import fragment from 'vue-fragment'
 import { boot } from 'quasar/wrappers'
 import { BootFileParams } from '@quasar/app'
-import MTargetWeightDialog from '../components/exercise/target-weight-dialog/MTargetWeightDialog.vue'
+import MTargetWeightDialog from 'src/components/dialog/target-weight-dialog/MTargetWeightDialog.vue'
 import MConfirmDialog from 'src/components/dialog/confirm-dialog/MConfirmDialog.vue'
 import VueApexCharts from 'vue-apexcharts'
 
