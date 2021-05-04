@@ -13,6 +13,8 @@ export default boot(({ Vue, store }: BootFileParams<Store<any>>) => {
         uom: val.uom,
         dateFormat: val.dateFormat,
       }
+
+      Vue.prototype.$q.dark.set(val.darkMode)
     },
     {
       immediate: true,

@@ -20,6 +20,7 @@ export type AppSettings = {
   dateFormat: string
   uom: 'lbs' | 'kg'
   bodyWeight: number
+  darkMode: boolean
 }
 
 const defaultDialogState = Object.freeze({
@@ -35,6 +36,7 @@ function state(): AppStateInterface {
       dateFormat: 'MMMM D YYYY, h:mm A',
       uom: 'lbs',
       bodyWeight: 150,
+      darkMode: false,
     },
   }
 }
