@@ -33,9 +33,11 @@ export default class Exercise extends Model {
 
     if (sessionsExists) {
       this.store().dispatch('showNotification', {
-        message:
-          'Cannot delete exercise. Sessions have already been logged with it.',
-        duration: 5000,
+        payload: {
+          message:
+            'Cannot delete exercise. Sessions have already been logged with it.',
+          contentClass: 'bg-negative text-white',
+        },
       })
       return false
     } else {

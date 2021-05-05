@@ -78,7 +78,8 @@
       leave-active-class="animated slideOutDown"
     >
       <q-banner
-        class="bg-negative text-white notification-banner"
+        class="notification-banner"
+        :class="notification.contentClass"
         rounded
         v-if="notification.show"
       >

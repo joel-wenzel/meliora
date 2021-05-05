@@ -16,6 +16,8 @@ export type AppStateInterface = {
   notification: {
     show: boolean
     message: string | null
+    dismissable: boolean
+    contentClass: string | null
   }
   settings: AppSettings
 }
@@ -36,6 +38,8 @@ const defaultDialogState = Object.freeze({
 const defaultNotificationState = Object.freeze({
   show: false,
   message: null,
+  dismissable: false,
+  contentClass: null,
 })
 
 function state(): AppStateInterface {
@@ -77,10 +81,19 @@ const mutations: MutationTree<AppStateInterface> = {
       data,
     }
   },
-  showNotification(state: AppStateInterface, message: string) {
+  showNotification(
+    state: AppStateInterface,
+    {
+      message,
+      dismissable,
+      contentClass,
+    }: { message: string; dismissable: boolean; contentClass: string }
+  ) {
     state.notification = {
       show: true,
       message,
+      dismissable,
+      contentClass,
     }
   },
   clearDialog(state: AppStateInterface) {
@@ -104,8 +117,8 @@ const actions: ActionTree<AppStateInterface, StateInterface> = {
   dismissDialog(context) {
     context.commit('clearDialog')
   },
-  showNotification(context, payload: { message: string; duration?: number }) {
-    context.commit('showNotification', payload.message)
+  showNotification(context, payload: { payload: any; duration?: number }) {
+    context.commit('showNotification', payload.payload)
     const duration = payload.duration || 3000
     setTimeout(() => {
       context.commit('clearNotification')
