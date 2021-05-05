@@ -73,6 +73,18 @@
     <q-dialog :value="dialog.show" @hide="dismissDialog">
       <component v-bind:is="dialog.comp" :data="dialog.data"></component>
     </q-dialog>
+    <transition
+      enter-active-class="animated slideInUp"
+      leave-active-class="animated slideOutDown"
+    >
+      <q-banner
+        class="bg-negative text-white notification-banner"
+        rounded
+        v-if="notification.show"
+      >
+        {{ notification.message }}
+      </q-banner>
+    </transition>
   </q-layout>
 </template>
 
@@ -93,6 +105,8 @@ export default defineComponent({
 
     const dialog = computed(() => _ctx.root.$store.getters.dialog)
 
+    const notification = computed(() => _ctx.root.$store.getters.notification)
+
     function dismissDialog() {
       _ctx.root.$store.dispatch('dismissDialog')
     }
@@ -102,6 +116,7 @@ export default defineComponent({
       ...setupPageAnim(_ctx),
       dialog,
       dismissDialog,
+      notification,
     }
   },
 })
@@ -139,5 +154,13 @@ function setupPageAnim(_ctx: SetupContext) {
 .slideOutDown {
   animation: slideOutDown;
   animation-duration: 0.2s;
+}
+
+.notification-banner {
+  position: fixed;
+  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.3);
+  bottom: 32px;
+  right: 16px;
+  width: calc(100% - 32px);
 }
 </style>

@@ -13,6 +13,10 @@ export type AppStateInterface = {
     comp: string | null
     data: any
   }
+  notification: {
+    show: boolean
+    message: string | null
+  }
   settings: AppSettings
 }
 
@@ -29,9 +33,15 @@ const defaultDialogState = Object.freeze({
   data: null,
 })
 
+const defaultNotificationState = Object.freeze({
+  show: false,
+  message: null,
+})
+
 function state(): AppStateInterface {
   return {
     dialog: defaultDialogState,
+    notification: defaultNotificationState,
     settings: {
       dateFormat: 'MMMM D YYYY, h:mm A',
       uom: 'lbs',
@@ -44,6 +54,9 @@ function state(): AppStateInterface {
 const getters: GetterTree<AppStateInterface, StateInterface> = {
   dialog(state: AppStateInterface) {
     return state.dialog
+  },
+  notification(state: AppStateInterface) {
+    return state.notification
   },
   dateFormat(state: AppStateInterface) {
     return state.settings.dateFormat
@@ -64,8 +77,17 @@ const mutations: MutationTree<AppStateInterface> = {
       data,
     }
   },
+  showNotification(state: AppStateInterface, message: string) {
+    state.notification = {
+      show: true,
+      message,
+    }
+  },
   clearDialog(state: AppStateInterface) {
     state.dialog = defaultDialogState
+  },
+  clearNotification(state: AppStateInterface) {
+    state.notification = defaultNotificationState
   },
   setSettings(state: AppStateInterface, payload: AppSettings) {
     state.settings = {
@@ -81,6 +103,13 @@ const actions: ActionTree<AppStateInterface, StateInterface> = {
   },
   dismissDialog(context) {
     context.commit('clearDialog')
+  },
+  showNotification(context, payload: { message: string; duration?: number }) {
+    context.commit('showNotification', payload.message)
+    const duration = payload.duration || 3000
+    setTimeout(() => {
+      context.commit('clearNotification')
+    }, duration)
   },
   resetData(context, payload: 'all' | 'session') {
     if (payload === 'all' || payload === 'session') {

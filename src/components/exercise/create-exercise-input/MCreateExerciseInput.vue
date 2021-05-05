@@ -27,7 +27,7 @@ export default defineComponent({
 
     async function createExercise() {
       if (newExerciseText.value.length > 0) {
-        const exercise = await Exercise.createNew(newExerciseText.value)
+        const exercise = await Exercise.createFromName(newExerciseText.value)
         newExerciseText.value = ''
         _ctx.emit('selected', exercise)
       }

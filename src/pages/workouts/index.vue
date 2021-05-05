@@ -4,7 +4,10 @@
       <q-list class="rounded-borders" style="width: 100%">
         <q-item-label header>Workout Routine</q-item-label>
         <div v-for="workout in workouts" :key="workout.id">
-          <q-slide-item @right="deleteWorkout(workout.id)" right-color="red">
+          <q-slide-item
+            @right="deleteWorkout(workout.id)"
+            right-color="negative"
+          >
             <template v-slot:right>
               <div class="row items-center">
                 <span class="text-body1 q-mr-md">Delete Workout</span>
@@ -40,9 +43,13 @@
         </div>
       </q-list>
       <div class="column justify-end q-pa-md">
-        <q-btn color="primary-dark" @click="createWorkout"
-          >Create Workout</q-btn
+        <q-btn
+          color="primary-dark"
+          label="Create Workout"
+          icon="mdi-dumbbell"
+          @click="createWorkout"
         >
+        </q-btn>
       </div>
     </template>
     <div v-else class="grid-center">

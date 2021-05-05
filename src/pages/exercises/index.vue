@@ -2,38 +2,49 @@
   <m-app-fullscreen
     icon="mdi-weight-lifter"
     title="Exercises"
-    contentClass="q-pa-md"
+    contentClass="q-px-md q-py-sm column col-grow"
   >
-    <q-item dense id="exercise-header">
-      <q-item-section avatar> </q-item-section>
-      <q-item-section>
-        <q-item-label class="text-body1 text-grey-7"> Exercise </q-item-label>
-      </q-item-section>
-      <q-item-section side>
-        <q-item-label class="text-body1 text-grey-7">Next Weight</q-item-label>
-      </q-item-section>
-    </q-item>
-    <q-separator></q-separator>
-    <q-list separator>
-      <q-item v-for="exercise in exercises" :key="exercise.id">
-        <q-item-section avatar>
-          <q-icon name="mdi-weight-lifter"></q-icon>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>{{ exercise.name }}</q-item-label>
-          <q-item-label caption
-            >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt
-            amet, cum magni
-          </q-item-label>
-        </q-item-section>
-        <q-item-section side>
-          <q-item-label
-            >{{ Math.round(exercise.targetWeight) }}
-            {{ $labels.uom }}</q-item-label
-          >
-        </q-item-section>
-      </q-item>
+    <q-list>
+      <q-item-label header>My Exercises</q-item-label>
+      <div v-for="exercise in exercises" :key="exercise.id">
+        <q-slide-item
+          @right="deleteExercise($event, exercise.id)"
+          right-color="negative"
+        >
+          <template v-slot:right>
+            <div class="row items-center">
+              <span class="text-body1 q-mr-md">Delete Exercise</span>
+              <q-icon name="mdi-delete" />
+            </div>
+          </template>
+          <q-item clickable v-ripple :to="{ path: exercise.id, append: true }">
+            <q-item-section avatar>
+              <q-icon name="mdi-weight-lifter"></q-icon>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ exercise.name }}</q-item-label>
+              <q-item-label caption>{{ exercise.notes }} </q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label
+                >{{ Math.round(exercise.targetWeight) }}
+                {{ $labels.uom }}</q-item-label
+              >
+            </q-item-section>
+          </q-item>
+        </q-slide-item>
+        <q-separator></q-separator>
+      </div>
     </q-list>
+    <div class="column col-grow justify-end q-pa-md">
+      <q-btn
+        color="primary-dark"
+        label="Add Exercise"
+        icon="mdi-weight-lifter"
+        @click="addExercise"
+      >
+      </q-btn>
+    </div>
   </m-app-fullscreen>
 </template>
 
@@ -44,10 +55,21 @@ import Exercise from 'src/store/exercises/exercise.orm'
 
 export default defineComponent({
   components: { MAppFullscreen },
-  setup() {
+  setup(_props, _ctx) {
     const exercises = computed(() => Exercise.all())
 
-    return { exercises }
+    function deleteExercise({ reset }, id: string) {
+      if (!Exercise.deleteExercise(id)) {
+        reset()
+      }
+    }
+
+    async function addExercise() {
+      const ex = await Exercise.createNew()
+      _ctx.root.$router.push({ path: ex.id, append: true })
+    }
+
+    return { exercises, deleteExercise, addExercise }
   },
 })
 </script>

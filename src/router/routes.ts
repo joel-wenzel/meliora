@@ -50,6 +50,13 @@ const routes: RouteConfig[] = [
           fullscreen: true,
         },
       },
+      {
+        path: 'exercises/:id',
+        component: () => import('src/pages/exercises/edit-exercise/index.vue'),
+        meta: {
+          fullscreen: true,
+        },
+      },
     ],
   },
 
