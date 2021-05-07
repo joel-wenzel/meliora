@@ -73,11 +73,16 @@ export default class Exercise extends Model {
     ).exercises[0] as Exercise
   }
 
-  static incrementTargetWeight(exerciseId: string) {
+  /**
+   *
+   * @param exerciseId
+   * @param completedWeight They may have altered the weight on the session, so we cannot use the current targetweight on the exercise
+   */
+  static incrementTargetWeight(exerciseId: string, completedWeight?: number) {
     const exercise = Exercise.find(exerciseId) as Exercise
-
+    completedWeight = completedWeight || exercise.targetWeight
     exercise.$update({
-      targetWeight: exercise.targetWeight + (exercise.increment || 5),
+      targetWeight: completedWeight + (exercise.increment || 5),
     })
   }
 

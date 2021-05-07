@@ -29,7 +29,11 @@ export default defineComponent({
   components: { StartSessionBtn, SessionCard },
   setup(_props, _ctx) {
     const sessions = computed(() => {
-      return Session.query().limit(sessionDisplayCount).orderBy('date').get()
+      return Session.query()
+        .limit(sessionDisplayCount)
+        .orderBy('date', 'desc')
+        .get()
+        .reverse()
     })
 
     const startSession = async (workoutId) => {

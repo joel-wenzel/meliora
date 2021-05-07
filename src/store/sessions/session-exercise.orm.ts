@@ -72,7 +72,10 @@ export default class SessionExercise extends Model {
   static completeSessionExercise(sessionExerciseId: string) {
     const sExercise = SessionExercise.find(sessionExerciseId)
 
-    Exercise.incrementTargetWeight(sExercise?.exerciseId as string)
+    Exercise.incrementTargetWeight(
+      sExercise?.exerciseId as string,
+      sExercise?.weight
+    )
   }
 }
 export const sessionExerciseModule = {}

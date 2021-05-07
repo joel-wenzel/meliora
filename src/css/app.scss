@@ -18,3 +18,11 @@
 .capitalize {
   text-transform: capitalize;
 }
+
+.link {
+  color: var(--q-color-secondary);
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}

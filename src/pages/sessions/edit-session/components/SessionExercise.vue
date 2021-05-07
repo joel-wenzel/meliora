@@ -7,14 +7,14 @@
         }}</q-item-label>
       </q-item-section>
       <q-item-section side>
-        <q-item-label v-if="!exerciseComplete" caption
-          >Target: {{ sessionTarget }}</q-item-label
-        >
+        <q-item-label v-if="!exerciseComplete" caption>
+          <session-exercise-target
+            :sessionExerciseId="sessionExerciseId"
+          ></session-exercise-target>
+        </q-item-label>
         <transition enter-active-class="animated slideInUp">
           <q-item-label v-if="exerciseComplete && exerciseSuccess" caption>
-            <q-badge color="positive" class="q-pa-xs"
-              >Completed: {{ sessionTarget }}</q-badge
-            >
+            <q-badge color="positive" class="q-pa-xs">Completed</q-badge>
           </q-item-label>
 
           <q-item-label v-if="exerciseComplete && !exerciseSuccess" caption>
@@ -37,6 +37,7 @@
 </template>
 
 <script lang="ts">
+import SessionExerciseTarget from './SessionExerciseTarget.vue'
 import SessionSetTracker from './SessionSetTracker.vue'
 import { computed, defineComponent, watch } from '@vue/composition-api'
 import SessionExercise from 'src/store/sessions/session-exercise.orm'
@@ -53,7 +54,7 @@ export default defineComponent({
       default: false,
     },
   },
-  components: { SessionSetTracker },
+  components: { SessionSetTracker, SessionExerciseTarget },
   setup(_props, _ctx) {
     const sessionExercise = computed(
       () =>
@@ -61,13 +62,6 @@ export default defineComponent({
           .withAllRecursive()
           .find(_props.sessionExerciseId) as SessionExercise
     )
-
-    const sessionTarget = computed(() => {
-      const sessEx = sessionExercise.value
-      return `${sessEx.targetSets}x${sessEx.targetReps} at ${Math.round(
-        sessEx.weight
-      )} lbs`
-    })
 
     const exerciseComplete = computed(() => {
       return sessionExercise.value.sessionExerciseSets.every(
@@ -85,7 +79,7 @@ export default defineComponent({
       )
     })
 
-    return { sessionExercise, sessionTarget, exerciseComplete, exerciseSuccess }
+    return { sessionExercise, exerciseComplete, exerciseSuccess }
   },
 })
 </script>

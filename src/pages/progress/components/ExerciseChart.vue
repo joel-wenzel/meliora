@@ -36,6 +36,8 @@ export default defineComponent({
       return acc
     }, {})
 
+    console.log(sessionData)
+
     const options = {
       chart: {
         id: 'progress-chart',
@@ -48,13 +50,17 @@ export default defineComponent({
     const exercises = Exercise.all()
 
     const series = exercises.map((ex) => {
+      let lastNonNull = null
       return {
         name: ex.name,
-        data: Object.entries(sessionData).map(
-          (entry) => (entry[1] as Dictionary)[ex.name]
-        ),
+        data: Object.entries(sessionData).map((entry) => {
+          lastNonNull = (entry[1] as Dictionary)[ex.name] || lastNonNull
+          return lastNonNull
+        }),
       }
     })
+
+    console.log(series)
 
     return { height, options, series }
   },

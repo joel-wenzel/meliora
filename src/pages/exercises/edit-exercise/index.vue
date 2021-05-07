@@ -92,6 +92,8 @@ export default defineComponent({
       exercise.value?.$update({
         name: exercise.value.name,
         notes: exercise.value.notes,
+        targetWeight: exercise.value.targetWeight,
+        increment: exercise.value.increment,
       })
     }
 
