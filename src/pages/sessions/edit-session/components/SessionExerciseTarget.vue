@@ -5,34 +5,41 @@
     <q-icon color="secondary" name="mdi-pencil" size="xs"></q-icon>
     <q-dialog v-model="isEditing">
       <q-card v-if="snapshot">
-        <q-card-section>
-          <q-input label="Sets" v-model="snapshot.targetSets" type="number">
-          </q-input>
-          <q-input label="Reps" v-model="snapshot.targetReps" type="number">
-          </q-input>
-          <q-input
-            label="Weight"
-            v-model="snapshot.weight"
-            :suffix="$labels.uom"
-            type="number"
-          >
-          </q-input>
-        </q-card-section>
-        <q-card-actions>
-          <q-btn
-            class="full-width"
-            color="primary"
-            @click="updateTarget"
-            v-close-popup
-            >Update</q-btn
-          >
-        </q-card-actions>
+        <q-form @submit="updateTarget">
+          <q-card-section class="q-pb-none">
+            <span class="text-h6"
+              >Edit {{ sessionExercise.exercise.name }} Target</span
+            >
+          </q-card-section>
+          <q-card-section>
+            <q-input label="Sets" v-model="snapshot.targetSets" type="number">
+            </q-input>
+            <q-input label="Reps" v-model="snapshot.targetReps" type="number">
+            </q-input>
+            <q-input
+              label="Weight"
+              v-model="snapshot.weight"
+              :suffix="$labels.uom"
+              type="number"
+            >
+            </q-input>
+          </q-card-section>
+          <q-card-actions>
+            <q-btn
+              class="full-width"
+              color="primary"
+              type="submit"
+              v-close-popup
+              >Update</q-btn
+            >
+          </q-card-actions>
+        </q-form>
       </q-card>
     </q-dialog>
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
 import SessionExercise from 'src/store/sessions/session-exercise.orm'
 
 export default defineComponent({
@@ -78,7 +85,14 @@ export default defineComponent({
         targetReps: snapshot.value.targetReps,
       })
     }
-    return { snapshot, target, editTarget, isEditing, updateTarget }
+    return {
+      snapshot,
+      target,
+      editTarget,
+      isEditing,
+      updateTarget,
+      sessionExercise,
+    }
   },
 })
 </script>

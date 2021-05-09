@@ -18,6 +18,7 @@
               dense
               filled
               v-model="exercise.name"
+              v-focus-select
               @change="updateExercise"
               autofocus
             ></q-input>

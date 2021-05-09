@@ -17,7 +17,13 @@
             <q-item-label class="text-h6 row items-center">
               <span class="q-mr-sm">{{ name }}</span>
               <q-popup-edit v-model="name">
-                <q-input dense filled v-model="name" autofocus></q-input>
+                <q-input
+                  dense
+                  filled
+                  v-model="name"
+                  autofocus
+                  v-focus-select
+                ></q-input>
               </q-popup-edit>
               <q-icon color="primary" name="mdi-pencil" />
             </q-item-label>

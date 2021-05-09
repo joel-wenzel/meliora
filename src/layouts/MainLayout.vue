@@ -2,11 +2,11 @@
   <q-layout view="hHh LpR fFf">
     <q-header v-if="!fullScreen" elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-toolbar-title>
+        <q-toolbar-title class="m-title row items-center">
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
+            <q-icon name="mdi-webhook" size="lg"></q-icon>
           </q-avatar>
-          Meliora
+          <span class="q-px-sm">Meliora</span>
         </q-toolbar-title>
 
         <q-btn flat round icon="mdi-dots-vertical">
@@ -47,13 +47,13 @@
           label="sessions"
           exact
         />
-        <q-route-tab
+        <!-- <q-route-tab
           name="history"
           icon="mdi-history"
           to="/history"
           label="history"
           exact
-        />
+        /> -->
         <q-route-tab
           name="progress"
           icon="mdi-chart-timeline-variant"
@@ -147,6 +147,10 @@ function setupPageAnim(_ctx: SetupContext) {
 }
 </script>
 <style lang="scss" scoped>
+.m-title {
+  letter-spacing: 1px;
+  font-size: 1.7em;
+}
 .slideInUp {
   animation: slideInUp;
   animation-duration: 0.2s;

@@ -40,6 +40,28 @@ export default class SessionExercise extends Model {
     }
   }
 
+  /**
+   * Syncronizes session exercise sets with target sets if it has changed
+   * @param model
+   */
+  static afterUpdate(model: SessionExercise) {
+    const targetSets = model.targetSets
+    const currentSets = SessionExerciseSet.query()
+      .where('sessionExerciseId', model.id)
+      .get()
+    const diff = targetSets - currentSets.length
+
+    if (diff > 0) {
+      for (let i = 0; i < diff; i++) {
+        SessionExerciseSet.createNew(model.id, currentSets.length + i)
+      }
+    } else if (diff < 0) {
+      for (let i = currentSets.length - 1; i >= targetSets; i--) {
+        currentSets[i].$delete()
+      }
+    }
+  }
+
   static async createNew(
     sessionId: string,
     workoutExerciseId: string,

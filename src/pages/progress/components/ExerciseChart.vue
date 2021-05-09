@@ -36,8 +36,6 @@ export default defineComponent({
       return acc
     }, {})
 
-    console.log(sessionData)
-
     const options = {
       chart: {
         id: 'progress-chart',
@@ -59,8 +57,6 @@ export default defineComponent({
         }),
       }
     })
-
-    console.log(series)
 
     return { height, options, series }
   },

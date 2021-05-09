@@ -12,6 +12,7 @@
           <q-item-label>Reps</q-item-label>
         </q-item-section>
       </q-item>
+
       <edit-workout-exercise
         v-for="(exercise, index) in workoutExercises"
         :key="index"

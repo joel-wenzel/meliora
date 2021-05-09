@@ -32,8 +32,11 @@
                     :key="woExercise.id"
                     class="q-ma-none"
                   >
-                    {{ woExercise.targetSets }} x {{ woExercise.targetReps }} -
-                    {{ woExercise.exercise.name }}
+                    <span v-if="woExercise.exercise">
+                      {{ woExercise.targetSets }} x
+                      {{ woExercise.targetReps }} -
+                      {{ woExercise.exercise.name }}
+                    </span>
                   </p>
                 </q-item-label>
               </q-item-section>
