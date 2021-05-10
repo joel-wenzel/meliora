@@ -5,10 +5,10 @@ A mobile workout app built with VueJS, VuexORM and Quasar. The app loosely follo
 Right now the App is in on going development with an expected beta release on Android in the near future.
 
 <div style="display: flex">
-<img style="margin-right: 10px" src="docs/images/Home.png" alt="drawing" width="200"/>
-<img style="margin-right: 10px" src="docs/images/Session.png" alt="drawing" width="200"/>
-<img style="margin-right: 10px" src="docs/images/Progress.png" alt="drawing" width="200"/>
-<img style="margin-right: 10px" src="docs/images/EditWorkout.png" alt="drawing" width="200"/>
+<img style="margin-right: 15px" src="docs/images/Home.png" alt="drawing" width="200"/>
+<img style="margin-right: 15px" src="docs/images/Session.png" alt="drawing" width="200"/>
+<img style="margin-right: 15px" src="docs/images/Progress.png" alt="drawing" width="200"/>
+<img style="margin-right: 15px" src="docs/images/EditWorkout.png" alt="drawing" width="200"/>
 </div>
 
 ## Beta Features
