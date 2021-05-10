@@ -1,6 +1,6 @@
 # Meliora
 
-A mobile workout app built with VueJS, VuexORM and Quasar. The app loosely follows the 5x5 workout program found [here](https://stronglifts.com/5x5/) but allows for more user customizations.
+A mobile workout app built with [VueJS](https://vuejs.org/), [VuexORM](https://vuex-orm.org/) and [Quasar](https://quasar.dev/). The app loosely follows the 5x5 workout program found [here](https://stronglifts.com/5x5/) but allows for more user customizations.
 
 Right now the App is in on going development with an expected beta release on Android in the near future.
 
