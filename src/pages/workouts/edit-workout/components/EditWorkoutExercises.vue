@@ -24,7 +24,7 @@
       label="Add Exercise"
       unelevated
       outline
-      color="secondary"
+      color="accent"
       class="full-width"
       @click="addWorkoutExercise"
     ></q-btn>

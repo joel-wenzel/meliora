@@ -7,20 +7,12 @@
         }}</q-item-label>
       </q-item-section>
       <q-item-section side>
-        <q-item-label v-if="!exerciseComplete" caption>
+        <q-item-label caption>
           <session-exercise-target
             :sessionExerciseId="sessionExerciseId"
+            :state="state"
           ></session-exercise-target>
         </q-item-label>
-        <transition enter-active-class="animated slideInUp">
-          <q-item-label v-if="exerciseComplete && exerciseSuccess" caption>
-            <q-badge color="positive" class="q-pa-xs">Completed</q-badge>
-          </q-item-label>
-
-          <q-item-label v-if="exerciseComplete && !exerciseSuccess" caption>
-            <q-badge color="negative" class="q-pa-xs">Not quite</q-badge>
-          </q-item-label>
-        </transition>
       </q-item-section>
     </q-item>
     <q-card-section class="row q-pt-xs">
@@ -69,17 +61,21 @@ export default defineComponent({
       )
     })
 
-    watch(exerciseComplete, () => {
-      SessionExercise.completeSessionExercise(sessionExercise.value.id)
-    })
-
     const exerciseSuccess = computed(() => {
       return sessionExercise.value.sessionExerciseSets.every(
         (set) => set.reps >= sessionExercise.value.targetReps
       )
     })
 
-    return { sessionExercise, exerciseComplete, exerciseSuccess }
+    const state = computed(() => {
+      if (exerciseComplete.value && exerciseSuccess.value) {
+        return 'COMPLETE'
+      } else if (exerciseComplete.value) {
+        return 'FAILED'
+      } else return 'PENDING'
+    })
+
+    return { sessionExercise, state }
   },
 })
 </script>

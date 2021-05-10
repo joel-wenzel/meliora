@@ -1,6 +1,6 @@
 <template>
   <q-page :class="pageClass">
-    <q-toolbar class="bg-primary-light text-white">
+    <q-toolbar class="m-primary-container">
       <slot name="toolbar" :title="title" :icon="icon">
         <q-toolbar-title class="row items-center">
           <q-icon :name="icon" size="md" class="q-mr-sm"></q-icon>

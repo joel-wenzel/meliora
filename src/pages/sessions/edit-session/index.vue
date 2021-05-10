@@ -1,6 +1,6 @@
 <template>
   <q-page class="column" v-if="session">
-    <q-toolbar class="bg-primary text-white" elevated>
+    <q-toolbar class="m-primary-container" elevated>
       <q-toolbar-title shrink> {{ title }}</q-toolbar-title>
       <q-space />
       <q-btn dense flat icon="mdi-close" @click="onClose">
@@ -9,7 +9,7 @@
     </q-toolbar>
     <q-toolbar
       inset
-      class="bg-primary-light session-subbar row justify-between"
+      class="m-primary-sub-container session-subbar row justify-between"
     >
       <span>{{ sessionDate }}</span>
       <q-btn unelevated icon="mdi-dots-vertical" padding="0">

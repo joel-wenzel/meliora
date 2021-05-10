@@ -12,7 +12,6 @@
 .grid-center {
   display: grid;
   place-items: center;
-  
 }
 
 .capitalize {
@@ -20,9 +19,35 @@
 }
 
 .link {
-  color: var(--q-color-secondary);
-  
+  color: var(--q-color-accent);
+
   &:hover {
     text-decoration: underline;
   }
+}
+
+.m-primary-container {
+  background: var(--q-color-primary-dark);
+  color: white;
+}
+
+.m-primary-sub-container {
+  background: var(--q-color-primary-light);
+  color: white;
+}
+
+body.body--dark {
+  & .m-primary-container {
+    background: #313131;
+    color: white;
+  }
+
+  & .m-primary-sub-container {
+    background: #414141;
+    color: white;
+  }
+}
+
+.q-menu.q-menu--dark.m-app-menu {
+  background: #282828;
 }

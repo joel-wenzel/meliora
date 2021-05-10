@@ -23,9 +23,14 @@
         >
       </q-item-section>
     </q-item>
-    <q-btn class="full-width" color="secondary" unelevated @click="onClearData"
-      >Clear Data</q-btn
-    >
+    <q-btn
+      class="full-width"
+      color="accent"
+      label="Clear Data"
+      icon="mdi-delete"
+      unelevated
+      @click="onClearData"
+    ></q-btn>
   </fragment>
 </template>
 <script lang="ts">

@@ -91,13 +91,10 @@ export default class SessionExercise extends Model {
     return sessionEx
   }
 
-  static completeSessionExercise(sessionExerciseId: string) {
-    const sExercise = SessionExercise.find(sessionExerciseId)
-
-    Exercise.incrementTargetWeight(
-      sExercise?.exerciseId as string,
-      sExercise?.weight
-    )
+  completeSessionExercise(success: boolean) {
+    if (success) {
+      Exercise.incrementTargetWeight(this.exerciseId, this.weight)
+    }
   }
 }
 export const sessionExerciseModule = {}

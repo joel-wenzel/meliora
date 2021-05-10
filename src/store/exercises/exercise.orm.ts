@@ -58,7 +58,6 @@ export default class Exercise extends Model {
       comp: 'MTargetWeightDialog',
       data: exercise.id,
     })
-    // TODO dispatch dialog event to get target weight
     return exercise
   }
 

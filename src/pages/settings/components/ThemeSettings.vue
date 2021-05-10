@@ -3,7 +3,7 @@
     <q-item-label header>Theme</q-item-label>
     <q-item class="q-mb-sm">
       <q-item-section avatar>
-        <q-toggle v-model="dark" color="secondary" />
+        <q-toggle v-model="dark" color="accent" />
       </q-item-section>
       <q-item-section @click="dark = !dark">
         <q-item-label>Toggle Dark Mode</q-item-label>

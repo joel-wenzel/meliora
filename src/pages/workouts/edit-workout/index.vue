@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <q-card class="column full-height">
-      <q-toolbar class="bg-primary text-white">
+      <q-toolbar class="m-primary-container">
         <q-toolbar-title>
           {{ isNew ? 'Add' : 'Edit' }} Workout
         </q-toolbar-title>

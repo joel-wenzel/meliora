@@ -7,7 +7,7 @@
       </q-item-label>
     </q-card-section>
     <q-badge
-      class="m-workout-status capitalize"
+      class="m-workout-status capitalize text-body2"
       rounded
       :color="session.completed ? 'positive' : 'accent'"
     >

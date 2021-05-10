@@ -12,64 +12,37 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary          : hsl(var(--q-color-primary-h), var(--q-color-primary-s), var(--q-color-primary-l));
-$primary-light    : var(--q-color-primary-light);
-$primary-dark     : var(--q-color-primary-dark);
-$secondary        : hsl(var(--q-color-secondary-h), var(--q-color-secondary-s), var(--q-color-secondary-l));
-$secondary-light  : var(--q-color-secondary-light);
-$secondary-dark   : var(--q-color-secondary-dark);
 
-$accent           : #917522;
 
-$dark             : #1D1D1D;
-
-$positive         : #088326;
-$negative         : #910010;
-$info             : #0095b3;
+$primary          : hsl(185, 63%, 33%);
+$secondary        : hsl(16, 63%, 33%);
+$accent           : hsl(205, 63%, 42%);
+$dark             : hsl(0, 0%, 11%);
+$positive         : hsl(135, 88%, 27%);
+$negative         : hsl(353, 100%, 28%);
+$info             : hsl(190, 100%, 35%);
 $warning          : hsl(209, 100%, 50%);
 
+@mixin customColor($name, $hue, $saturation, $light) {
+  --q-color-#{$name}: hsl(#{$hue}, #{$saturation}, #{$light});
+
+  .bg-#{$name} {
+    background: var(--q-color-#{$name});
+  }
+
+  .text-#{$name} {
+    color: var(--q-color-#{$name});
+  }
+}
+
 :root {
-  --darken: -9%;
-  --lighten: 9%;
-
-  --q-color-primary-h: 270;
-  --q-color-primary-s: 62%;
-  --q-color-primary-l: 35%;
-  --q-color-secondary-h: 137;
-  --q-color-secondary-s: 43%;
-  --q-color-secondary-l: 46%;
-  // --q-color-secondary-h: 210;
-  // --q-color-secondary-s: 79%;
-  // --q-color-secondary-l: 46%;
-  
-  --q-color-primary-light: hsl(var(--q-color-primary-h), var(--q-color-primary-s), calc(var(--q-color-primary-l) + var(--lighten)));
-  --q-color-primary-dark: hsl(var(--q-color-primary-h), var(--q-color-primary-s), calc(var(--q-color-primary-l) + var(--darken)));
-
-  --q-color-secondary: hsl(var(--q-color-secondary-h), var(--q-color-secondary-s), var(--q-color-secondary-l));
-  --q-color-secondary-light: hsl(var(--q-color-secondary-h), var(--q-color-secondary-s), calc(var(--q-color-secondary-l) + var(--lighten)));
-  --q-color-secondary-dark: hsl(var(--q-color-secondary-h), var(--q-color-secondary-s), calc(var(--q-color-secondary-l) + var(--darken)));
+  @include customColor('primary-light', 185, 63%, 48%);
+  @include customColor('primary-dark', 185, 63%, 24%);
+  @include customColor('secondary-light', 16, 63%, 57%);
+  @include customColor('secondary-dark', 16, 63%, 33%);
 }
 
-.bg-primary-light {
-  background: var(--q-color-primary-light) !important;
-  color: white;
-}
 
-.bg-primary-dark {
-  background: var(--q-color-primary-dark) !important;
-  color: white;
-}
 
-.bg-secondary-light {
-  background: var(--q-color-secondary-light) !important;
-  color: white;
-}
 
-.bg-secondary-dark {
-  background: var(--q-color-secondary-dark) !important;
-  color: white;
-}
 
-body.body--dark {
-  
-}

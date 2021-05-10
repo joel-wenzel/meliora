@@ -67,6 +67,13 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    // When min or max range is reached the tapper will "wrap" to the other extreme and begin the sequence
+    // a new.
+    wrap: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   setup(_props, _ctx) {
     const isDormant = ref<boolean>(_props.dormant)
@@ -102,10 +109,21 @@ export default defineComponent({
         : // @ts-ignore
           _props.value + (!isDecrement.value * 2 - 1)
 
-      const { clamped, inRange } = clamp(raw, _props.min, _props.max)
+      if (!_props.wrap) {
+        const { clamped, inRange } = clamp(raw, _props.min, _props.max)
 
-      if (inRange) {
-        _ctx.emit('input', clamped)
+        if (inRange) {
+          _ctx.emit('input', clamped)
+        }
+      } else {
+        let wrapped = raw
+        if (raw < _props.min) {
+          wrapped = _props.max
+        } else if (raw > _props.max) {
+          wrapped = _props.min
+        }
+
+        _ctx.emit('input', wrapped)
       }
 
       isDormant.value = false
@@ -143,5 +161,9 @@ function clamp(num, min, max) {
   &--disabled {
     opacity: 0.65;
   }
+}
+
+body.body--dark .m-number-tapper--dormant {
+  background: #6f6f6f;
 }
 </style>

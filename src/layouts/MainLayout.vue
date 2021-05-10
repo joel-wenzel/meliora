@@ -1,34 +1,6 @@
 <template>
   <q-layout view="hHh LpR fFf">
-    <q-header v-if="!fullScreen" elevated class="bg-primary text-white">
-      <q-toolbar>
-        <q-toolbar-title class="m-title row items-center">
-          <q-avatar>
-            <q-icon name="mdi-webhook" size="lg"></q-icon>
-          </q-avatar>
-          <span class="q-px-sm">Meliora</span>
-        </q-toolbar-title>
-
-        <q-btn flat round icon="mdi-dots-vertical">
-          <q-menu>
-            <q-list style="min-width: 100px">
-              <q-item clickable v-close-popup to="/exercises">
-                <q-item-section>Exercise List</q-item-section>
-              </q-item>
-              <q-separator />
-              <q-item clickable v-close-popup to="/settings">
-                <q-item-section>Settings</q-item-section>
-              </q-item>
-
-              <q-separator />
-              <q-item clickable v-close-popup>
-                <q-item-section>Help &amp; Feedback</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
-      </q-toolbar>
-    </q-header>
+    <TheHeader v-if="!fullScreen"></TheHeader>
     <q-page-container>
       <transition
         appear
@@ -38,38 +10,7 @@
         <router-view :key="$route.path" />
       </transition>
     </q-page-container>
-    <q-footer v-if="!fullScreen">
-      <q-tabs dense no-caps class="shadow-2">
-        <q-route-tab
-          name="sessions"
-          icon="mdi-home"
-          to="/sessions"
-          label="sessions"
-          exact
-        />
-        <!-- <q-route-tab
-          name="history"
-          icon="mdi-history"
-          to="/history"
-          label="history"
-          exact
-        /> -->
-        <q-route-tab
-          name="progress"
-          icon="mdi-chart-timeline-variant"
-          to="/progress"
-          label="progress"
-          exact
-        />
-        <q-route-tab
-          name="workouts"
-          icon="mdi-dumbbell"
-          to="/workouts"
-          label="workouts"
-          exact
-        />
-      </q-tabs>
-    </q-footer>
+    <TheFooter v-if="!fullScreen"></TheFooter>
     <q-dialog :value="dialog.show" @hide="dismissDialog">
       <component v-bind:is="dialog.comp" :data="dialog.data"></component>
     </q-dialog>
@@ -90,6 +31,8 @@
 </template>
 
 <script lang="ts">
+import TheFooter from './components/TheFooter.vue'
+import TheHeader from './components/TheHeader.vue'
 import {
   computed,
   defineComponent,
@@ -99,13 +42,12 @@ import {
 
 export default defineComponent({
   name: 'MainLayout',
-  components: {},
+  components: { TheHeader, TheFooter },
   setup(_props, _ctx) {
     //animated slideInUp
     const fullScreen = computed(() => _ctx.root.$route.meta?.fullscreen)
 
     const dialog = computed(() => _ctx.root.$store.getters.dialog)
-
     const notification = computed(() => _ctx.root.$store.getters.notification)
 
     function dismissDialog() {

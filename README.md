@@ -1,26 +1,29 @@
-# Meliora (meliora)
+# Meliora
 
-A workout app to better yourself. Follows 5x5 format but allows custom exercises
+A mobile workout app built with VueJS, VuexORM and Quasar. The app loosely follows the 5x5 workout program found [here](https://stronglifts.com/5x5/) but allows for more user customizations.
 
-## Install the dependencies
-```bash
-npm install
-```
+Right now the App is in on going development with an expected beta release on Android in the near future.
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
+<div style="display: flex">
+<img style="margin-right: 10px" src="docs/images/Home.png" alt="drawing" width="200"/>
+<img style="margin-right: 10px" src="docs/images/Session.png" alt="drawing" width="200"/>
+<img style="margin-right: 10px" src="docs/images/Progress.png" alt="drawing" width="200"/>
+<img style="margin-right: 10px" src="docs/images/EditWorkout.png" alt="drawing" width="200"/>
+</div>
 
-### Lint the files
-```bash
-npm run lint
-```
+## Beta Features
+* Customized Workouts
+* Visual Progress Tracker
+* Dark Mode
 
-### Build the app for production
-```bash
-quasar build
-```
+## General Release Features
+* Session History
+* Session Notes
+* Workout Types
+  * Currently the app targets resistance training but support for cardio/yoga and other exercise types will be supported as well.
+* Account Persistance (Optional)
 
-### Customize the configuration
-See [Configuring quasar.conf.js](https://v1.quasar.dev/quasar-cli/quasar-conf-js).
+## Future Roadmap
+* Sharing workouts
+* Friends
+* Tracking progress against friends

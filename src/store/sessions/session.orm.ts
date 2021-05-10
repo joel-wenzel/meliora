@@ -57,13 +57,28 @@ export default class Session extends Model {
   }
 
   static completeSession(sessionId, bodyWeight) {
-    Session.update({
-      where: sessionId,
-      data: {
-        completed: true,
-        bodyWeight,
-      },
+    const session = Session.query()
+      .with('sessionExercises.sessionExerciseSets')
+      .find(sessionId)
+
+    if (!session) {
+      console.error('No Session ', sessionId)
+      return
+    }
+
+    session.$update({
+      completed: true,
+      bodyWeight,
     })
+
+    //check each session exercise to see if all sets are complete
+    session.sessionExercises.forEach((sessEx) => {
+      const exComplete = sessEx.sessionExerciseSets.every(
+        (set) => set.complete && set.reps >= sessEx.targetReps
+      )
+      sessEx.completeSessionExercise(exComplete)
+    })
+
     this.store().dispatch('updateSettings', {
       bodyWeight,
     })
