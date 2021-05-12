@@ -61,6 +61,11 @@ export default defineComponent({
         route: '/settings',
       },
       {
+        title: 'About',
+        icon: 'mdi-information',
+        route: '/about',
+      },
+      {
         title: 'Help & Feedback',
         icon: 'mdi-help',
         route: '/exercises',

@@ -3,7 +3,7 @@
     <q-tabs dense no-caps class="shadow-2" :content-class="textColor">
       <q-route-tab
         name="sessions"
-        icon="mdi-home"
+        icon="mdi-clock-check"
         to="/sessions"
         :disable="!hasWorkouts"
         label="sessions"
