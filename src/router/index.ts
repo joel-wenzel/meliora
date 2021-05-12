@@ -1,4 +1,5 @@
 import { route } from 'quasar/wrappers'
+import Workout from 'src/store/workouts/workout.orm'
 import VueRouter from 'vue-router'
 import { Store } from 'vuex'
 import { StateInterface } from '../store'
@@ -21,6 +22,13 @@ export default route<Store<StateInterface>>(function ({ Vue }) {
     // quasar.conf.js -> build -> publicPath
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE,
+  })
+
+  Router.beforeEach((to, from, next) => {
+    const hasWorkouts = Workout.exists()
+    if (to.path === '/sessions' && !hasWorkouts) {
+      next('/workouts')
+    } else next()
   })
 
   return Router

@@ -13,12 +13,12 @@
         <q-card v-if="snapshot">
           <q-form @submit="updateTarget">
             <q-toolbar>
-              <q-toolbar-title
+              <q-toolbar-title shrink
                 >Edit
                 {{ sessionExercise.exercise.name }} Target</q-toolbar-title
               >
-              <q-spacer></q-spacer>
-              <q-btn flat round icon="mdi-close"></q-btn>
+              <q-space></q-space>
+              <q-btn flat round icon="mdi-close" v-close-popup></q-btn>
             </q-toolbar>
 
             <q-card-section>

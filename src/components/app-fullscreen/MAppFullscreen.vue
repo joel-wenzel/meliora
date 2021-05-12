@@ -1,16 +1,23 @@
 <template>
   <q-page :class="pageClass">
-    <q-toolbar class="m-primary-container">
-      <slot name="toolbar" :title="title" :icon="icon">
-        <q-toolbar-title class="row items-center">
-          <q-icon :name="icon" size="md" class="q-mr-sm"></q-icon>
-          <span>{{ title }}</span>
-        </q-toolbar-title>
-        <q-space />
-        <q-btn dense flat icon="mdi-close" @click="onClose"> </q-btn>
-      </slot>
-    </q-toolbar>
-    <div :class="contentClass">
+    <q-page-sticky position="top" expand style="z-index: 10">
+      <q-toolbar class="m-primary-container">
+        <slot name="toolbar" :title="title" :icon="icon">
+          <q-toolbar-title class="row items-center" shrink>
+            <q-icon :name="icon" size="md" class="q-mr-sm" v-if="icon"></q-icon>
+            <span>{{ title }}</span>
+          </q-toolbar-title>
+          <q-space />
+          <q-btn dense flat icon="mdi-close" @click="onClose"> </q-btn>
+        </slot>
+      </q-toolbar>
+    </q-page-sticky>
+
+    <div
+      style="margin-top: 50px"
+      class="q-px-md q-py-sm column col-grow"
+      :class="contentClass"
+    >
       <slot></slot>
     </div>
   </q-page>
@@ -24,7 +31,7 @@ export default defineComponent({
     icon: {
       type: String,
       required: false,
-      default: 'mdi-home',
+      default: '',
     },
     title: {
       type: String,

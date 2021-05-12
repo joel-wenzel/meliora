@@ -25,7 +25,7 @@
       unelevated
       outline
       color="accent"
-      class="full-width"
+      class="full-width q-mt-sm"
       @click="addWorkoutExercise"
     ></q-btn>
   </div>

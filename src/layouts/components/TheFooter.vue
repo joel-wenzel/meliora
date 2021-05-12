@@ -5,6 +5,7 @@
         name="sessions"
         icon="mdi-home"
         to="/sessions"
+        :disable="!hasWorkouts"
         label="sessions"
         exact
       />
@@ -19,6 +20,7 @@
         name="progress"
         icon="mdi-chart-timeline-variant"
         to="/progress"
+        :disable="!hasWorkouts"
         label="progress"
         exact
       />
@@ -34,13 +36,17 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
+import Workout from 'src/store/workouts/workout.orm'
 
 export default defineComponent({
   setup(_props, _ctx) {
     const textColor = computed(() =>
       _ctx.root.$q.dark.isActive ? 'text-primary-light' : ''
     )
-    return { textColor }
+
+    const hasWorkouts = computed(() => Workout.exists())
+
+    return { textColor, hasWorkouts }
   },
 })
 </script>

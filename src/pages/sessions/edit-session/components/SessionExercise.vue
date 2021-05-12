@@ -2,11 +2,23 @@
   <q-card flat>
     <q-item>
       <q-item-section>
-        <q-item-label class="text-body1">{{
-          sessionExercise.exercise.name
-        }}</q-item-label>
+        <q-item-label class="text-body1">
+          <q-expansion-item
+            v-if="sessionExercise.exercise.notes"
+            class="m-exercise-expand"
+            expand-separator
+            :label="sessionExercise.exercise.name"
+            :caption="'Show notes'"
+            header-class="text-no-wrap q-pl-none"
+          >
+            <p class="text-caption q-mb-none">
+              {{ sessionExercise.exercise.notes }}
+            </p>
+          </q-expansion-item>
+          <span v-else>{{ sessionExercise.exercise.name }}</span>
+        </q-item-label>
       </q-item-section>
-      <q-item-section side>
+      <q-item-section side top>
         <q-item-label caption>
           <session-exercise-target
             :sessionExerciseId="sessionExerciseId"
@@ -29,9 +41,10 @@
 </template>
 
 <script lang="ts">
+import MLongText from '../../../../components/long-text/MLongText.vue'
 import SessionExerciseTarget from './SessionExerciseTarget.vue'
 import SessionSetTracker from './SessionSetTracker.vue'
-import { computed, defineComponent, watch } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 import SessionExercise from 'src/store/sessions/session-exercise.orm'
 
 export default defineComponent({
@@ -46,7 +59,7 @@ export default defineComponent({
       default: false,
     },
   },
-  components: { SessionSetTracker, SessionExerciseTarget },
+  components: { SessionSetTracker, SessionExerciseTarget, MLongText },
   setup(_props, _ctx) {
     const sessionExercise = computed(
       () =>
@@ -80,4 +93,11 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.m-exercise-expand ::v-deep .q-item__label--caption {
+  width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

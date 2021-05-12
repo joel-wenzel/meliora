@@ -10,7 +10,7 @@
         </q-item-section>
       </q-item>
       <q-separator />
-      <q-item clickable v-close-popup @click="onEdit">
+      <q-item clickable v-close-popup @click="onEdit" v-if="session.completed">
         <q-item-section side>
           <q-icon name="mdi-pencil"></q-icon>
         </q-item-section>
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 import Session from 'src/store/sessions/session.orm'
 
 export default defineComponent({
@@ -47,12 +47,11 @@ export default defineComponent({
       // TODO
     }
 
+    const session = computed(() => Session.find(_props.sessionId) as Session)
+
     function onEdit() {
-      Session.update({
-        where: _props.sessionId,
-        data: {
-          completed: false,
-        },
+      session.value?.$update({
+        completed: false,
       })
     }
 
@@ -72,7 +71,7 @@ export default defineComponent({
       Session.deleteSession(_props.sessionId)
     }
 
-    return { onViewNotes, onEdit, onDelete }
+    return { session, onViewNotes, onEdit, onDelete }
   },
 })
 </script>

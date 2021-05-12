@@ -5,7 +5,7 @@ const routes: RouteConfig[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', redirect: 'workouts' },
+      { path: '', redirect: 'sessions' },
       {
         path: 'sessions',
         component: () => import('src/pages/sessions/index.vue'),

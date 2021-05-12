@@ -1,9 +1,5 @@
 <template>
-  <m-app-fullscreen
-    icon="mdi-weight-lifter"
-    title="Exercises"
-    contentClass="q-px-md q-py-sm column col-grow"
-  >
+  <m-app-fullscreen icon="mdi-weight-lifter" title="Exercises">
     <q-list>
       <q-item-label header>My Exercises</q-item-label>
       <div v-for="exercise in exercises" :key="exercise.id">

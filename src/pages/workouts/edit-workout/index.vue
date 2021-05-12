@@ -1,60 +1,39 @@
 <template>
-  <q-page>
-    <q-card class="column full-height">
-      <q-toolbar class="m-primary-container">
-        <q-toolbar-title>
-          {{ isNew ? 'Add' : 'Edit' }} Workout
-        </q-toolbar-title>
-        <q-space />
-        <q-btn dense flat icon="mdi-close" @click="onClose">
-          <q-tooltip content-class="bg-white text-primary"></q-tooltip>
-        </q-btn>
-      </q-toolbar>
-
-      <q-card-section>
-        <q-item>
-          <q-item-section>
-            <q-item-label class="text-h6 row items-center">
-              <span class="q-mr-sm">{{ name }}</span>
-              <q-popup-edit v-model="name">
-                <q-input
-                  dense
-                  filled
-                  v-model="name"
-                  autofocus
-                  v-focus-select
-                ></q-input>
-              </q-popup-edit>
-              <q-icon color="primary" name="mdi-pencil" />
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-separator></q-separator>
-        <edit-workout-exercises :workoutId="workoutId"></edit-workout-exercises>
-      </q-card-section>
-
-      <q-card-actions class="q-mt-auto">
-        <q-btn
-          icon="mdi-save"
-          label="Done"
-          unelevated
-          color="primary"
-          class="full-width"
-          @click="onClose"
-          v-close-popup
-        ></q-btn>
-      </q-card-actions>
-    </q-card>
-  </q-page>
+  <m-app-fullscreen
+    :title="`${isNew ? 'Add' : 'Edit'} Workout`"
+    icon="mdi-pencil"
+    @close="onClose"
+  >
+    <q-item>
+      <q-item-section>
+        <q-item-label class="text-h6 row items-center">
+          <span class="q-mr-sm">{{ name }}</span>
+          <q-popup-edit v-model="name">
+            <q-input
+              dense
+              filled
+              v-model="name"
+              autofocus
+              v-focus-select
+            ></q-input>
+          </q-popup-edit>
+          <q-icon color="primary" name="mdi-pencil" />
+        </q-item-label>
+      </q-item-section>
+    </q-item>
+    <q-separator></q-separator>
+    <edit-workout-exercises :workoutId="workoutId"></edit-workout-exercises>
+  </m-app-fullscreen>
 </template>
 
 <script lang="ts">
+import MAppFullscreen from '../../../components/app-fullscreen/MAppFullscreen.vue'
 import EditWorkoutExercises from './components/EditWorkoutExercises.vue'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import Workout from 'src/store/workouts/workout.orm'
 
 export default defineComponent({
-  components: { EditWorkoutExercises },
+  components: { EditWorkoutExercises, MAppFullscreen },
   props: {
     isNew: {
       type: Boolean,
@@ -87,7 +66,6 @@ export default defineComponent({
       if (workout.value?.workoutExercises.length == 0) {
         Workout.deleteRecursive(workoutId)
       }
-      _ctx.root.$router.back()
     }
 
     return { name, workoutId, onClose }
