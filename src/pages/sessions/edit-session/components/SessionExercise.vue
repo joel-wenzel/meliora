@@ -41,7 +41,6 @@
 </template>
 
 <script lang="ts">
-import MLongText from '../../../../components/long-text/MLongText.vue'
 import SessionExerciseTarget from './SessionExerciseTarget.vue'
 import SessionSetTracker from './SessionSetTracker.vue'
 import { computed, defineComponent } from '@vue/composition-api'
@@ -59,7 +58,7 @@ export default defineComponent({
       default: false,
     },
   },
-  components: { SessionSetTracker, SessionExerciseTarget, MLongText },
+  components: { SessionSetTracker, SessionExerciseTarget },
   setup(_props, _ctx) {
     const sessionExercise = computed(
       () =>
