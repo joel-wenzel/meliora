@@ -18,7 +18,15 @@ export default defineComponent({
   components: { ExerciseChart },
   setup() {
     const hasEnoughSessions = computed(() => Session.all().length >= 3)
-    return { hasEnoughSessions }
+
+    const options = [
+      {
+        label: 'Sessions',
+        value: 'sessions',
+        description: 'View your previous sessions',
+      },
+    ]
+    return { hasEnoughSessions, options }
   },
 })
 </script>

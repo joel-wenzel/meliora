@@ -22,8 +22,8 @@ const routes: RouteConfig[] = [
         component: () => import('src/pages/history/index.vue'),
       },
       {
-        path: 'progress',
-        component: () => import('src/pages/progress/index.vue'),
+        path: 'charts',
+        component: () => import('src/pages/charts/index.vue'),
       },
       {
         path: 'workouts',

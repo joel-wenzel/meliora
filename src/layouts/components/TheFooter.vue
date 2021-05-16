@@ -9,19 +9,21 @@
         label="sessions"
         exact
       />
-      <!-- <q-route-tab
-          name="history"
-          icon="mdi-history"
-          to="/history"
-          label="history"
-          exact
-        /> -->
+
       <q-route-tab
-        name="progress"
-        icon="mdi-chart-timeline-variant"
-        to="/progress"
+        name="history"
+        icon="mdi-history"
+        to="/history"
         :disable="!hasWorkouts"
-        label="progress"
+        label="history"
+        exact
+      />
+      <q-route-tab
+        name="charts"
+        icon="mdi-chart-timeline-variant"
+        to="/charts"
+        :disable="!hasWorkouts"
+        label="charts"
         exact
       />
       <q-route-tab
